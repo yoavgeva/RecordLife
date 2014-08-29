@@ -1,6 +1,7 @@
 package com.liferecords.application;
 
 import android.app.Activity;
+import com.parse.Parse;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
+				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
+
 	}
 
 	@Override
