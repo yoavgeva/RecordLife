@@ -407,12 +407,15 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f060014;
+        public static final int action_settings=0x7f060017;
         public static final int book_now=0x7f060010;
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
         public static final int classic=0x7f060011;
+        public static final int edittext_signup_name=0x7f060014;
+        public static final int edittext_signup_pw=0x7f060015;
+        public static final int edittext_signup_pw_repeat=0x7f060016;
         public static final int grayscale=0x7f060012;
         public static final int holo_dark=0x7f060005;
         public static final int holo_light=0x7f060006;
@@ -434,9 +437,11 @@ containing a value of this type.
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int activity_sign_up=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
+        public static final int sign_up=0x7f0a0001;
     }
     public static final class string {
         public static final int action_settings=0x7f040022;
@@ -537,6 +542,12 @@ containing a value of this type.
          */
         public static final int common_signin_button_text_long=0x7f04001e;
         public static final int hello_world=0x7f040021;
+        /**  Sign Up screen Strings  
+         */
+        public static final int screen_signup_name_hint=0x7f040024;
+        public static final int screen_signup_password_hint=0x7f040025;
+        public static final int screen_signup_password_repeat_hint=0x7f040026;
+        public static final int title_activity_sign_up=0x7f040023;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

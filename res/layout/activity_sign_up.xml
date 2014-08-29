@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.liferecords.application.SignUpActivity" >
+
+    <EditText
+        android:id="@+id/edittext_signup_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="@string/screen_signup_name_hint"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edittext_signup_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_signup_name"
+        android:hint="@string/screen_signup_password_hint"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/edittext_signup_pw_repeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_signup_pw"
+        android:hint="@string/screen_signup_password_repeat_hint"
+        android:inputType="textPassword" />
+
+</RelativeLayout>
