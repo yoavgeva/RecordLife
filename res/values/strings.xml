@@ -27,5 +27,6 @@
     <string name="error_end">.</string>
     <string name="progress_title">Please wait.</string>
     <string name="progress_message">Signing up. Please wait.</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>

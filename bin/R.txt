@@ -116,10 +116,12 @@ int id strict_sandbox 0x7f060009
 int id terrain 0x7f060003
 int id wrap_content 0x7f06000d
 int integer google_play_services_version 0x7f070000
-int layout activity_main 0x7f030000
-int layout activity_sign_up 0x7f030001
-int menu main 0x7f0a0000
-int menu sign_up 0x7f0a0001
+int layout activity_login 0x7f030000
+int layout activity_main 0x7f030001
+int layout activity_sign_up 0x7f030002
+int menu login 0x7f0a0000
+int menu main 0x7f0a0001
+int menu sign_up 0x7f0a0002
 int string action_forgot_password 0x7f04002a
 int string action_settings 0x7f040022
 int string action_sign_in_register 0x7f040028
@@ -174,6 +176,7 @@ int string screen_signup_button_signup 0x7f040027
 int string screen_signup_name_hint 0x7f040024
 int string screen_signup_password_hint 0x7f040025
 int string screen_signup_password_repeat_hint 0x7f040026
+int string title_activity_login 0x7f040038
 int string title_activity_sign_up 0x7f040023
 int string wallet_buy_button_place_holder 0x7f04001f
 int style AppBaseTheme 0x7f080004
