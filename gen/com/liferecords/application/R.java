@@ -407,6 +407,7 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
+        public static final int action_logout=0x7f06001e;
         public static final int action_settings=0x7f06001d;
         public static final int book_now=0x7f060010;
         public static final int button_login=0x7f06001b;
@@ -448,11 +449,7 @@ containing a value of this type.
         public static final int activity_sign_up_or_login=0x7f030003;
     }
     public static final class menu {
-        public static final int dispatch=0x7f0a0000;
-        public static final int login=0x7f0a0001;
-        public static final int main=0x7f0a0002;
-        public static final int sign_up=0x7f0a0003;
-        public static final int sign_up_or_login=0x7f0a0004;
+        public static final int main=0x7f0a0000;
     }
     public static final class string {
         public static final int action_forgot_password=0x7f04002a;

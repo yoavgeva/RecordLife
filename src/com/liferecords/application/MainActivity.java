@@ -1,7 +1,11 @@
 package com.liferecords.application;
 
 import android.app.Activity;
+import android.content.Intent;
+
 import com.parse.Parse;
+import com.parse.ParseUser;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +35,13 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			return true;
+		}
+		if(id == R.id.action_logout){
+			ParseUser.logOut();
+			Intent intent = new Intent(MainActivity.this, SignUpOrLoginActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
