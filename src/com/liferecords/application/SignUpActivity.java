@@ -26,6 +26,7 @@ public class SignUpActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_up);
+		setScreenDesign();
 		userNameView = (EditText) findViewById(R.id.edittext_signup_name);
 		passwordAgainView = (EditText) findViewById(R.id.edittext_signup_pw_repeat);
 		passwordView = (EditText) findViewById(R.id.edittext_signup_pw);
@@ -133,5 +134,9 @@ public class SignUpActivity extends Activity {
 		} else {
 			return false;
 		}
+	}
+	
+	private void setScreenDesign(){
+		getActionBar().hide();
 	}
 }

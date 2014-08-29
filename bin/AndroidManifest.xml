@@ -53,6 +53,10 @@
             android:name=".DispatchActivity"
             android:label="@string/title_activity_dispatch" >
         </activity>
+        <activity
+            android:name=".SignUpOrLoginActivity"
+            android:label="@string/title_activity_sign_up_or_login" >
+        </activity>
     </application>
 
 </manifest>

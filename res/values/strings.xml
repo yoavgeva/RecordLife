@@ -35,5 +35,7 @@
     <string name="login_button">Log in</string>
     <string name="logout_menu">Log out</string>
     <string name="title_activity_dispatch">DispatchActivity</string>
+    <string name="title_activity_sign_up_or_login">SignUpOrLoginActivity</string>
+    <string name="signup_button">Sign Up</string>
 
 </resources>

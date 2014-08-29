@@ -26,6 +26,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		setScreenDesign();
 		usernameText = (EditText) findViewById(R.id.editText_username_login);
 		passwordText = (EditText) findViewById(R.id.editText_password_login);
 		signinButton = (Button) findViewById(R.id.button_loginscreen);
@@ -112,4 +113,7 @@ public class LoginActivity extends Activity {
 		}
 	}
 
+	private void setScreenDesign(){
+		getActionBar().hide();
+	}
 }
