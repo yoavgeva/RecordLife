@@ -407,8 +407,9 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f060017;
+        public static final int action_settings=0x7f060018;
         public static final int book_now=0x7f060010;
+        public static final int button_signup=0x7f060017;
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
@@ -444,7 +445,10 @@ containing a value of this type.
         public static final int sign_up=0x7f0a0001;
     }
     public static final class string {
+        public static final int action_forgot_password=0x7f04002a;
         public static final int action_settings=0x7f040022;
+        public static final int action_sign_in_register=0x7f040028;
+        public static final int action_sign_in_short=0x7f040029;
         public static final int app_name=0x7f040020;
         public static final int auth_client_needs_enabling_title=0x7f040001;
         public static final int auth_client_needs_installation_title=0x7f040002;
@@ -541,7 +545,21 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f04001e;
+        public static final int error_blank_password=0x7f040032;
+        public static final int error_blank_username=0x7f040031;
+        public static final int error_end=0x7f040035;
+        public static final int error_field_required=0x7f04002f;
+        public static final int error_incorrect_password=0x7f04002e;
+        public static final int error_intro=0x7f040030;
+        public static final int error_invalid_email=0x7f04002c;
+        public static final int error_invalid_password=0x7f04002d;
+        public static final int error_join=0x7f040034;
+        public static final int error_mismatched_passwords=0x7f040033;
         public static final int hello_world=0x7f040021;
+        public static final int login_progress_signing_in=0x7f04002b;
+        public static final int progress_message=0x7f040037;
+        public static final int progress_title=0x7f040036;
+        public static final int screen_signup_button_signup=0x7f040027;
         /**  Sign Up screen Strings  
          */
         public static final int screen_signup_name_hint=0x7f040024;

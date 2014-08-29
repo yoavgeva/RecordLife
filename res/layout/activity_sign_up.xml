@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edittext_signup_name"
+        android:ems="10"
         android:hint="@string/screen_signup_password_hint"
         android:inputType="textPassword" />
 
@@ -31,7 +32,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edittext_signup_pw"
+        android:ems="10"
         android:hint="@string/screen_signup_password_repeat_hint"
         android:inputType="textPassword" />
+    <Button 
+        android:id="@+id/button_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_signup_pw_repeat"
+        android:text="@string/screen_signup_button_signup"/>
 
 </RelativeLayout>
