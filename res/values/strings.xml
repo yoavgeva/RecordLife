@@ -29,4 +29,11 @@
     <string name="progress_message">Signing up. Please wait.</string>
     <string name="title_activity_login">LoginActivity</string>
 
+    <!-- login screen -->
+    <string name="username_signup">Username</string>
+    <string name="password_signup">Password</string>
+    <string name="login_button">Log in</string>
+    <string name="logout_menu">Log out</string>
+    <string name="title_activity_dispatch">DispatchActivity</string>
+
 </resources>

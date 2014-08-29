@@ -71,7 +71,7 @@ public class SignUpActivity extends Activity {
 				final ProgressDialog progressDialogSignup = new ProgressDialog(
 						SignUpActivity.this);
 				progressDialogSignup.setTitle(R.string.progress_title);
-				progressDialogSignup.setMessage("Signing up. Please wait");
+				progressDialogSignup.setMessage("Signing to LifeRecords. Please wait");
 				progressDialogSignup.show();
 
 				ParseUser user = new ParseUser();
@@ -89,6 +89,7 @@ public class SignUpActivity extends Activity {
 							Intent intent = new Intent(SignUpActivity.this, DispatchActivity.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 							startActivity(intent);
+							finish();
 
 						}
 					}

@@ -49,6 +49,10 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name=".DispatchActivity"
+            android:label="@string/title_activity_dispatch" >
+        </activity>
     </application>
 
 </manifest>

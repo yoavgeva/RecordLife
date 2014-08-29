@@ -407,16 +407,19 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f060018;
+        public static final int action_settings=0x7f06001b;
         public static final int book_now=0x7f060010;
-        public static final int button_signup=0x7f060017;
+        public static final int button_loginscreen=0x7f060016;
+        public static final int button_signup=0x7f06001a;
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
         public static final int classic=0x7f060011;
-        public static final int edittext_signup_name=0x7f060014;
-        public static final int edittext_signup_pw=0x7f060015;
-        public static final int edittext_signup_pw_repeat=0x7f060016;
+        public static final int editText_password_login=0x7f060015;
+        public static final int editText_username_login=0x7f060014;
+        public static final int edittext_signup_name=0x7f060017;
+        public static final int edittext_signup_pw=0x7f060018;
+        public static final int edittext_signup_pw_repeat=0x7f060019;
         public static final int grayscale=0x7f060012;
         public static final int holo_dark=0x7f060005;
         public static final int holo_light=0x7f060006;
@@ -437,14 +440,16 @@ containing a value of this type.
         public static final int google_play_services_version=0x7f070000;
     }
     public static final class layout {
-        public static final int activity_login=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int activity_sign_up=0x7f030002;
+        public static final int activity_dispatch=0x7f030000;
+        public static final int activity_login=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int activity_sign_up=0x7f030003;
     }
     public static final class menu {
-        public static final int login=0x7f0a0000;
-        public static final int main=0x7f0a0001;
-        public static final int sign_up=0x7f0a0002;
+        public static final int dispatch=0x7f0a0000;
+        public static final int login=0x7f0a0001;
+        public static final int main=0x7f0a0002;
+        public static final int sign_up=0x7f0a0003;
     }
     public static final class string {
         public static final int action_forgot_password=0x7f04002a;
@@ -558,7 +563,10 @@ containing a value of this type.
         public static final int error_join=0x7f040034;
         public static final int error_mismatched_passwords=0x7f040033;
         public static final int hello_world=0x7f040021;
+        public static final int login_button=0x7f04003b;
         public static final int login_progress_signing_in=0x7f04002b;
+        public static final int logout_menu=0x7f04003c;
+        public static final int password_signup=0x7f04003a;
         public static final int progress_message=0x7f040037;
         public static final int progress_title=0x7f040036;
         public static final int screen_signup_button_signup=0x7f040027;
@@ -567,8 +575,12 @@ containing a value of this type.
         public static final int screen_signup_name_hint=0x7f040024;
         public static final int screen_signup_password_hint=0x7f040025;
         public static final int screen_signup_password_repeat_hint=0x7f040026;
+        public static final int title_activity_dispatch=0x7f04003d;
         public static final int title_activity_login=0x7f040038;
         public static final int title_activity_sign_up=0x7f040023;
+        /**  login screen 
+         */
+        public static final int username_signup=0x7f040039;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */
