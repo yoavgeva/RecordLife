@@ -563,6 +563,12 @@ containing a value of this type.
         public static final int error_join=0x7f040034;
         public static final int error_mismatched_passwords=0x7f040033;
         public static final int hello_world=0x7f040021;
+        public static final int location_alert_dialog_message=0x7f040041;
+        public static final int location_alert_dialog_negative=0x7f040043;
+        public static final int location_alert_dialog_positive=0x7f040042;
+        /**  Main Activity 
+         */
+        public static final int location_alert_dialog_title=0x7f040040;
         public static final int login_button=0x7f04003b;
         public static final int login_progress_signing_in=0x7f04002b;
         public static final int logout_menu=0x7f04003c;

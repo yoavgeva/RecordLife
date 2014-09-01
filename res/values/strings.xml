@@ -37,5 +37,11 @@
     <string name="title_activity_dispatch">DispatchActivity</string>
     <string name="title_activity_sign_up_or_login">SignUpOrLoginActivity</string>
     <string name="signup_button">Sign Up</string>
+    
+    <!-- Main Activity -->
+    <string name="location_alert_dialog_title">Location aint working</string>
+    <string name="location_alert_dialog_message">would you change location to on ? </string>
+    <string name="location_alert_dialog_positive">OK</string>
+    <string name="location_alert_dialog_negative">Cancel</string>
 
 </resources>

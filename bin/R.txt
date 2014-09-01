@@ -174,6 +174,10 @@ int string error_invalid_password 0x7f04002d
 int string error_join 0x7f040034
 int string error_mismatched_passwords 0x7f040033
 int string hello_world 0x7f040021
+int string location_alert_dialog_message 0x7f040041
+int string location_alert_dialog_negative 0x7f040043
+int string location_alert_dialog_positive 0x7f040042
+int string location_alert_dialog_title 0x7f040040
 int string login_button 0x7f04003b
 int string login_progress_signing_in 0x7f04002b
 int string logout_menu 0x7f04003c

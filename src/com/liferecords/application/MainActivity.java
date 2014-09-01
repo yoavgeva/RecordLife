@@ -2,12 +2,16 @@ package com.liferecords.application;
 
 import service.MainService;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
 
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,6 +24,21 @@ public class MainActivity extends Activity {
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
 		startMainService();
+		if (savedInstanceState == null) {
+			checkGpsWorking();
+		}
+
+	}
+
+	private void checkGpsWorking() {
+		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean isEnabled = locationManager
+				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		isEnabled |= locationManager
+				.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		if (!isEnabled) {
+			dialogLocationNotWorking();
+		}
 
 	}
 
@@ -58,5 +77,32 @@ public class MainActivity extends Activity {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
+	}
+
+	private void dialogLocationNotWorking() {
+		AlertDialog.Builder locationDialog = new AlertDialog.Builder(this);
+		locationDialog.setTitle(R.string.location_alert_dialog_title);
+		locationDialog.setMessage(R.string.location_alert_dialog_message);
+		locationDialog.setPositiveButton(
+				R.string.location_alert_dialog_positive,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(
+								Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+						startActivity(intent);
+					}
+				});
+		locationDialog.setNegativeButton(
+				R.string.location_alert_dialog_negative,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+		locationDialog.show();
 	}
 }
