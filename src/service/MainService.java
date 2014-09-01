@@ -42,12 +42,15 @@ public class MainService extends Service {
 	@Override
 	public void onCreate() {
 		registerReciver();
+		startServices();
 		super.onCreate();
 	}
 
 	@Override
 	public void onDestroy() {
+		stopTimer();
 		unregisterReciver();
+		stopServices();
 		super.onDestroy();
 	}
 
@@ -79,5 +82,13 @@ public class MainService extends Service {
 
 	private void stopTimer() {
 		timerHandler.removeCallbacks(timerTask);
+	}
+	
+	private void startServices(){
+		startService(new Intent(this,LocationServ.class));
+	}
+	
+	private void stopServices(){
+		stopService(new Intent(this, LocationServ.class));
 	}
 }
