@@ -1,5 +1,6 @@
 package com.liferecords.application;
 
+import service.MainService;
 import android.app.Activity;
 import android.content.Intent;
 
@@ -18,6 +19,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
+		startMainService();
 
 	}
 
@@ -37,13 +39,24 @@ public class MainActivity extends Activity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
-		if(id == R.id.action_logout){
-			ParseUser.logOut();
-			Intent intent = new Intent(MainActivity.this, SignUpOrLoginActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(intent);
+		if (id == R.id.action_logout) {
+			logoutAction();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void startMainService() {
+		Intent intent = new Intent(this, MainService.class);
+		startService(intent);
+	}
+
+	private void logoutAction() {
+		ParseUser.logOut();
+		Intent intent = new Intent(MainActivity.this,
+				SignUpOrLoginActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+				| Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
 	}
 }
