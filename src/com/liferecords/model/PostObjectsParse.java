@@ -2,17 +2,23 @@ package com.liferecords.model;
 
 import java.util.Date;
 
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+@ParseClassName("HistoryParse")
 public class PostObjectsParse extends ParseObject {
+
+	public PostObjectsParse() {
+
+	};
 
 	public ParseUser getUser() {
 		return getParseUser("user");
 	}
 
-	public void setUser() {
-		put("user", ParseUser.getCurrentUser());
+	public void setUser(ParseUser value) {
+		put("user", value);
 	}
 
 	public double getLatitude() {
