@@ -1,32 +1,35 @@
 package com.liferecords.application;
 
+import android.content.Context;
+
 public class HistoryData {
 	private Double latitude;
 	private Double longitude;
-	private Double accuracy;
+	private float accuracy;
 	private String address;
+	public Context content;
 	
 	
 	
 	
+
+	public HistoryData(Context content) {
+		super();
+		this.content = content;
+	}
+
 	public Double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Double latitude) {
-		this.latitude = latitude;
-	}
+	
 	public Double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
-	}
-	public Double getAccuracy() {
+	
+	public float getAccuracy() {
 		return accuracy;
 	}
-	public void setAccuracy(Double accuracy) {
-		this.accuracy = accuracy;
-	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -34,4 +37,9 @@ public class HistoryData {
 		this.address = address;
 	}
 
+	public void updateGeo(double latitude,double longitude,float accuracy){
+		this.accuracy = accuracy;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 }
