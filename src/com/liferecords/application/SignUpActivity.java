@@ -32,70 +32,9 @@ public class SignUpActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				boolean validationError = false;
-				StringBuilder validationErrorMessage = new StringBuilder(
-						getResources().getString(R.string.error_intro));
-				if (isEmpty(userNameView)) {
-					validationError = true;
-					validationErrorMessage.append(getResources().getString(
-							R.string.error_blank_username));
-				}
-				if (isEmpty(passwordView)) {
-					if (validationError) {
-						validationErrorMessage.append(getResources().getString(
-								R.string.error_join));
-					}
-					validationError = true;
-					validationErrorMessage.append(getResources().getString(
-							R.string.error_blank_password));
-				}
-				if (!isMatching(passwordView, passwordAgainView)) {
-					if (validationError) {
-						validationErrorMessage.append(getResources().getString(
-								R.string.error_join));
-					}
-					validationError = true;
-					validationErrorMessage.append(getResources().getString(
-							R.string.error_mismatched_passwords));
-				}
-				validationErrorMessage.append(getResources().getString(
-						R.string.error_end));
-				if (validationError) {
-					Toast.makeText(SignUpActivity.this, validationErrorMessage,
-							Toast.LENGTH_LONG).show();
-					return;
-				}
-
-				final ProgressDialog progressDialogSignup = new ProgressDialog(
-						SignUpActivity.this);
-				progressDialogSignup.setTitle(R.string.progress_title);
-				progressDialogSignup
-						.setMessage("Signing to LifeRecords. Please wait");
-				progressDialogSignup.show();
-
-				ParseUser user = new ParseUser();
-				user.setUsername(userNameView.getText().toString());
-				user.setPassword(passwordView.getText().toString());
-				user.signUpInBackground(new SignUpCallback() {
-
-					@Override
-					public void done(ParseException e) {
-						progressDialogSignup.dismiss();
-						if (e != null) {
-							Toast.makeText(SignUpActivity.this, e.getMessage(),
-									Toast.LENGTH_LONG).show();
-						} else {
-							Intent intent = new Intent(SignUpActivity.this,
-									DispatchActivity.class);
-							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-									| Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
-							finish();
-
-						}
-					}
-				});
-
+				checkSignUpErrors();
+				signUpParseUser();
+				
 			}
 		});
 
@@ -119,5 +58,74 @@ public class SignUpActivity extends Activity {
 
 	private void setScreenDesign() {
 		getActionBar().hide();
+	}
+	
+	private void checkSignUpErrors(){
+		boolean validationError = false;
+		StringBuilder validationErrorMessage = new StringBuilder(
+				getResources().getString(R.string.error_intro));
+		if (isEmpty(userNameView)) {
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_blank_username));
+		}
+		if (isEmpty(passwordView)) {
+			if (validationError) {
+				validationErrorMessage.append(getResources().getString(
+						R.string.error_join));
+			}
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_blank_password));
+		}
+		if (!isMatching(passwordView, passwordAgainView)) {
+			if (validationError) {
+				validationErrorMessage.append(getResources().getString(
+						R.string.error_join));
+			}
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_mismatched_passwords));
+		}
+		validationErrorMessage.append(getResources().getString(
+				R.string.error_end));
+		if (validationError) {
+			Toast.makeText(SignUpActivity.this, validationErrorMessage,
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+
+	}
+	private void signUpParseUser(){
+		final ProgressDialog progressDialogSignup = new ProgressDialog(
+				SignUpActivity.this);
+		progressDialogSignup.setTitle(R.string.progress_title);
+		progressDialogSignup
+				.setMessage("Signing to LifeRecords. Please wait");
+		progressDialogSignup.show();
+
+		ParseUser user = new ParseUser();
+		user.setUsername(userNameView.getText().toString());
+		user.setPassword(passwordView.getText().toString());
+		user.signUpInBackground(new SignUpCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				progressDialogSignup.dismiss();
+				if (e != null) {
+					Toast.makeText(SignUpActivity.this, e.getMessage(),
+							Toast.LENGTH_LONG).show();
+				} else {
+					Intent intent = new Intent(SignUpActivity.this,
+							DispatchActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+							| Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent);
+					finish();
+
+				}
+			}
+		});
+
 	}
 }
