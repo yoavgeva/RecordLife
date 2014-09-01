@@ -47,7 +47,7 @@
         </activity>
         <activity
             android:name=".DispatchActivity"
-            android:label="@string/title_activity_dispatch" >
+            android:label="@string/app_name" >
                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,6 +58,8 @@
             android:name=".SignUpOrLoginActivity"
             android:label="@string/title_activity_sign_up_or_login" >
         </activity>
+        <service android:name="service.LocationServ"></service>
+        <service android:name="service.MainService"></service>
     </application>
 
 </manifest>
