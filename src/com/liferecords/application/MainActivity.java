@@ -72,6 +72,7 @@ public class MainActivity extends Activity {
 
 	private void logoutAction() {
 		ParseUser.logOut();
+		stopMainService();
 		Intent intent = new Intent(MainActivity.this,
 				SignUpOrLoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -104,5 +105,10 @@ public class MainActivity extends Activity {
 					}
 				});
 		locationDialog.show();
+	}
+	
+	private void stopMainService(){
+		Intent inte = new Intent(this, MainService.class);
+		stopService(inte);
 	}
 }
