@@ -31,61 +31,8 @@ public class LoginActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				boolean validationError = false;
-				StringBuilder validationErrorMessage = new StringBuilder(
-						getResources().getString(R.string.error_intro));
-				if (isEmpty(usernameText)) {
-					validationError = true;
-					validationErrorMessage.append(getResources().getString(
-							R.string.error_blank_username));
-				}
-				if (isEmpty(passwordText)) {
-					if (validationError) {
-						validationErrorMessage.append(getResources().getString(
-								R.string.error_join));
-					}
-					validationError = true;
-					validationErrorMessage.append(getResources().getString(
-							R.string.error_blank_password));
-				}
-				validationErrorMessage.append(getResources().getString(
-						R.string.error_end));
-
-				if (validationError) {
-					Toast.makeText(LoginActivity.this,
-							validationErrorMessage.toString(),
-							Toast.LENGTH_LONG).show();
-					return;
-				}
-
-				final ProgressDialog pDlg = new ProgressDialog(
-						LoginActivity.this);
-				pDlg.setTitle(R.string.progress_title);
-				pDlg.setMessage("Login to LifeRecords. Please Wait.");
-				pDlg.show();
-
-				ParseUser.logInInBackground(usernameText.getText().toString(),
-						passwordText.getText().toString(), new LogInCallback() {
-
-							@Override
-							public void done(ParseUser user, ParseException e) {
-								pDlg.dismiss();
-								if (e != null) {
-									Toast.makeText(LoginActivity.this,
-											e.getMessage(), Toast.LENGTH_LONG)
-											.show();
-								} else {
-									Intent intent = new Intent(
-											LoginActivity.this,
-											DispatchActivity.class);
-									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-											| Intent.FLAG_ACTIVITY_NEW_TASK);
-									startActivity(intent);
-									finish();
-								}
-
-							}
-						});
+				checkLoginErrors();
+				loginParseUser();
 
 			}
 		});
@@ -101,5 +48,62 @@ public class LoginActivity extends Activity {
 
 	private void setScreenDesign() {
 		getActionBar().hide();
+	}
+
+	private void checkLoginErrors() {
+		boolean validationError = false;
+		StringBuilder validationErrorMessage = new StringBuilder(getResources()
+				.getString(R.string.error_intro));
+		if (isEmpty(usernameText)) {
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_blank_username));
+		}
+		if (isEmpty(passwordText)) {
+			if (validationError) {
+				validationErrorMessage.append(getResources().getString(
+						R.string.error_join));
+			}
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_blank_password));
+		}
+		validationErrorMessage.append(getResources().getString(
+				R.string.error_end));
+
+		if (validationError) {
+			Toast.makeText(LoginActivity.this,
+					validationErrorMessage.toString(), Toast.LENGTH_LONG)
+					.show();
+			return;
+		}
+	}
+
+	private void loginParseUser() {
+		final ProgressDialog pDlg = new ProgressDialog(LoginActivity.this);
+		pDlg.setTitle(R.string.progress_title);
+		pDlg.setMessage("Login to LifeRecords. Please Wait.");
+		pDlg.show();
+
+		ParseUser.logInInBackground(usernameText.getText().toString(),
+				passwordText.getText().toString(), new LogInCallback() {
+
+					@Override
+					public void done(ParseUser user, ParseException e) {
+						pDlg.dismiss();
+						if (e != null) {
+							Toast.makeText(LoginActivity.this, e.getMessage(),
+									Toast.LENGTH_LONG).show();
+						} else {
+							Intent intent = new Intent(LoginActivity.this,
+									DispatchActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+									| Intent.FLAG_ACTIVITY_NEW_TASK);
+							startActivity(intent);
+							finish();
+						}
+
+					}
+				});
 	}
 }
