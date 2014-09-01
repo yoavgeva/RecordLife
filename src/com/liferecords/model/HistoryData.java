@@ -1,4 +1,4 @@
-package com.liferecords.application;
+package com.liferecords.model;
 
 import android.content.Context;
 

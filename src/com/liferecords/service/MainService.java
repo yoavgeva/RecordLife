@@ -1,4 +1,4 @@
-package service;
+package com.liferecords.service;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;

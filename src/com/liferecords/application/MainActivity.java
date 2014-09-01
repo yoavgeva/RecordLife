@@ -1,11 +1,11 @@
 package com.liferecords.application;
 
-import service.MainService;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
 

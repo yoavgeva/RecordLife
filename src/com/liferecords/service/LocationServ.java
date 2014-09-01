@@ -1,4 +1,4 @@
-package service;
+package com.liferecords.service;
 
 import android.app.Service;
 import android.content.Context;
@@ -14,7 +14,7 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.liferecords.application.HistoryData;
+import com.liferecords.model.HistoryData;
 
 public class LocationServ extends Service implements LocationListener,
 		GooglePlayServicesClient.ConnectionCallbacks,

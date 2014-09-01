@@ -58,8 +58,9 @@
             android:name=".SignUpOrLoginActivity"
             android:label="@string/title_activity_sign_up_or_login" >
         </activity>
-        <service android:name="service.LocationServ"></service>
-        <service android:name="service.MainService"></service>
+        <service android:name="com.liferecords.service.LocationServ"></service>
+        <service android:name="com.liferecords.service.MainService"></service>
+       
     </application>
 
 </manifest>
