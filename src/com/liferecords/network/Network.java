@@ -7,8 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.google.android.gms.drive.internal.OpenContentsRequest;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -69,7 +67,7 @@ public class Network {
 				+ latitude
 				+ ","
 				+ longitude
-				+ "&sensor=false&key=AIzaSyDoPeXZWol6dnBfmY7gFK2LJCMbPqBb8dw";//need to put new api code for my applicaion
+				+ "&sensor=false&key=AIzaSyDgS65mEWkDVVkybtOz1Gq0ZGLzr61t22E";//added browser api key
 		Bitmap bitmap = null;
 		try{
 			InputStream in = new java.net.URL(url).openStream();
