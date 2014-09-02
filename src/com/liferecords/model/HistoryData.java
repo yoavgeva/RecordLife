@@ -1,8 +1,13 @@
 package com.liferecords.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
+import android.location.Location;
 
 import com.liferecords.network.Network;
+import com.liferecords.network.Respone;
 
 public class HistoryData {
 	private static final String TAG = HistoryData.class.getSimpleName();
@@ -15,8 +20,8 @@ public class HistoryData {
 	private boolean batteryCharge;
 	private int motion;
 	private Network network;
-	private double pivotLatitude;
-	private double pivotLongitude;
+	private Double pivotLatitude;
+	private Double pivotLongitude;
 	private double pivotAccuracy;
 	private PostObjectsParse account;
 
@@ -104,8 +109,8 @@ public class HistoryData {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
-	
-	public void setObjectsInAccountToParse(){
+
+	public void setObjectsInAccountToParse() {
 		account.setLatitude(latitude);
 		account.setLongitude(longitude);
 		account.setAccuracy(accuracy);
@@ -118,4 +123,36 @@ public class HistoryData {
 		account.setPivotAccuracy(pivotAccuracy);
 	}
 
+	public void sendGetAddress(){
+		if(pivotLongitude != null && pivotLatitude != null){
+			float distance = distanceBetween(latitude, longitude, pivotLatitude, pivotLongitude);
+			if(distance < 100) {
+				return;
+			}
+		}
+		Respone respone = network.getAddress(latitude, longitude);
+		if(respone == null || !respone.isOK()){
+			return;
+		}
+		try{
+			JSONObject result = new JSONObject(respone.body);
+			JSONObject results = result.getJSONArray("results").getJSONObject(0);
+			this.address = results.getString("formatted_address");
+		} catch (JSONException e){
+			e.printStackTrace();
+		}
+		this.pivotLatitude = this.latitude;
+		this.pivotLongitude = this.longitude;
+		this.pivotAccuracy = this.accuracy;
+		
+	}
+
+	public float distanceBetween(double startlangtitude, double startlongitude,
+			double endlangitude, double endlongitude) {
+		float[] results = new float[2];
+		Location.distanceBetween(startlangtitude, startlongitude, endlangitude,
+				endlongitude, results);
+		float distance = results[0];
+		return distance;
+	}
 }

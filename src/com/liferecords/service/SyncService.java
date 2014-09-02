@@ -1,5 +1,7 @@
 package com.liferecords.service;
 
+import java.util.Date;
+
 import com.liferecords.model.HistoryData;
 
 import android.app.IntentService;
@@ -48,5 +50,11 @@ public class SyncService extends IntentService {
 		int batteryLevel = (int)(((float)level * (float)scale) * 100.0f);
 		model.setBatteryPrecent(batteryLevel);
 		model.setBatteryCharge(isCharging);
+	}
+	private void updateAddress(){
+		if(stop){
+			return;
+		}
+		
 	}
 }

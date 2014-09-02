@@ -78,17 +78,17 @@ public class PostObjectsParse extends ParseObject {
 	public void setMotion(int motion){
 		put("motion",motion);
 	}
-	public double getPivotLatitude(){
+	public Double getPivotLatitude(){
 		return getDouble("pivotlatitude");
 	}
-	public void setPivotLatitude(double pivotLatitude){
+	public void setPivotLatitude(Double pivotLatitude){
 		put("pivotlatitude",pivotLatitude);
 	}
 	
-	public double getPivotLongitude(){
+	public Double getPivotLongitude(){
 		return getDouble("pivotlongitude");
 	}
-	public void setPivotLongitude(double pivotLongitude){
+	public void setPivotLongitude(Double pivotLongitude){
 		put("pivotlongitude",pivotLongitude);
 	}
 	public double getPivotAccuracy(){
