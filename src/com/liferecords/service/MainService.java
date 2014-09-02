@@ -21,7 +21,7 @@ public class MainService extends Service {
 	static final String TAG = MainService.class.getSimpleName();
 	private PostObjectsParse postObjects;
 	private HistoryData account;
-	
+
 	private static final int TIME = 1000 * 60 / 6; // type the minutes last
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 
@@ -40,7 +40,6 @@ public class MainService extends Service {
 		@Override
 		public void run() {
 			timerHandler.postDelayed(timerTask, TIME);
-			
 
 		}
 	};
@@ -54,7 +53,7 @@ public class MainService extends Service {
 	public void onCreate() {
 		Context content = this;
 		account = new HistoryData(content);
-		/*postObjects = new PostObjectsParse(content);*/
+		/* postObjects = new PostObjectsParse(content); */
 		registerReciver();
 		startServices();
 		super.onCreate();
@@ -71,7 +70,7 @@ public class MainService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		startTimer();
-		
+
 		return START_STICKY;
 	}
 
@@ -92,37 +91,36 @@ public class MainService extends Service {
 	private void startTimer() {
 		stopTimer();
 		timerHandler.postDelayed(timerTask, TIME);
-	
 
 	}
 
 	private void stopTimer() {
 		timerHandler.removeCallbacks(timerTask);
 	}
-	
-	private void startServices(){
-		startService(new Intent(this,LocationServ.class));
+
+	private void startServices() {
+		startService(new Intent(this, LocationServ.class));
 	}
-	
-	private void stopServices(){
+
+	private void stopServices() {
 		stopService(new Intent(this, LocationServ.class));
 	}
-	
-	private void postDataToParse(){
+
+	private void postDataToParse() {
 		postObjects.setLatitude(account.getLatitude());
 		postObjects.setLongitude(account.getLongitude());
 		postObjects.setAccuracy(account.getAccuracy());
-		
+
 		ParseACL acl = new ParseACL();
 		acl.setReadAccess(ParseUser.getCurrentUser(), true);
 		acl.setWriteAccess(ParseUser.getCurrentUser(), true);
 		postObjects.setACL(acl);
 		postObjects.saveInBackground(new SaveCallback() {
-			
+
 			@Override
 			public void done(ParseException e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
