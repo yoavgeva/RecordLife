@@ -9,6 +9,7 @@ import com.parse.ParseUser;
 @ParseClassName("HistoryParse")
 public class PostObjectsParse extends ParseObject {
 
+	
 	public PostObjectsParse() {
 
 	};
@@ -41,8 +42,8 @@ public class PostObjectsParse extends ParseObject {
 		return getDouble("accuracy");
 	}
 
-	public void setAccuracy(float accuracy) {
-		put("accuracy", accuracy);
+	public void setAccuracy(double d) {
+		put("accuracy", d);
 	}
 
 	public Date getDateInstance() {
@@ -53,4 +54,48 @@ public class PostObjectsParse extends ParseObject {
 		put("date", dateInstance);
 	}
 
+	public String getAddress(){
+		return getString("address");
+	}
+	public void setAddress(String address){
+		put("address",address);
+	}
+	public int getBatteryPrec(){
+		return getInt("batteryPrec");
+	}
+	public void setBatteryPrec(int batteryPrec){
+		put("batteryPrec",batteryPrec);
+	}
+	public boolean getBatteryCharge(){
+		return getBoolean("batteryCharge");
+	}
+	public void setBatteryCharge(boolean batteryChrage){
+		put("batteryCharge",batteryChrage);
+	}
+	public int getMotion(){
+		return getInt("motion");
+	}
+	public void setMotion(int motion){
+		put("motion",motion);
+	}
+	public double getPivotLatitude(){
+		return getDouble("pivotlatitude");
+	}
+	public void setPivotLatitude(double pivotLatitude){
+		put("pivotlatitude",pivotLatitude);
+	}
+	
+	public double getPivotLongitude(){
+		return getDouble("pivotlongitude");
+	}
+	public void setPivotLongitude(double pivotLongitude){
+		put("pivotlongitude",pivotLongitude);
+	}
+	public double getPivotAccuracy(){
+		return getDouble("pivotaccuracy");
+	}
+	public void setPivotAccuracy(double pivotAccuracy){
+		put("pivotaccuracy",pivotAccuracy);
+	}
+	
 }

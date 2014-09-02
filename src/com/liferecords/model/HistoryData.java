@@ -1,17 +1,81 @@
 package com.liferecords.model;
 
+import com.liferecords.network.Network;
+
 import android.content.Context;
 
 public class HistoryData {
+	private static final String TAG = HistoryData.class.getSimpleName();
 	private Double latitude;
 	private Double longitude;
-	private float accuracy;
+	private double accuracy;
 	private String address;
-	public Context content;
+	private Context content;
+	private int batteryPrecent;
+	private boolean batteryCharge;
+	private int motion;
+	private Network network;
+	private double pivotLatitude;
+	private double pivotLongitude;
+	private double pivotAccuracy;
 	
 	
 	
 	
+
+	public int getBatteryPrecent() {
+		return batteryPrecent;
+	}
+
+	public void setBatteryPrecent(int batteryPrecent) {
+		this.batteryPrecent = batteryPrecent;
+	}
+
+	public boolean isBatteryCharge() {
+		return batteryCharge;
+	}
+
+	public void setBatteryCharge(boolean batteryCharge) {
+		this.batteryCharge = batteryCharge;
+	}
+
+	public int getMotion() {
+		return motion;
+	}
+
+	public void setMotion(int motion) {
+		this.motion = motion;
+	}
+
+	public double getPivotLatitude() {
+		return pivotLatitude;
+	}
+
+	public void setPivotLatitude(double pivotLatitude) {
+		this.pivotLatitude = pivotLatitude;
+	}
+
+	public double getPivotLongitude() {
+		return pivotLongitude;
+	}
+
+	public void setPivotLongitude(double pivotLongitude) {
+		this.pivotLongitude = pivotLongitude;
+	}
+
+	public double getPivotAccuracy() {
+		return pivotAccuracy;
+	}
+
+	public void setPivotAccuracy(double pivotAccuracy) {
+		this.pivotAccuracy = pivotAccuracy;
+	}
+
+	public HistoryData(Context content, Network network) {
+		super();
+		this.content = content;
+		this.network = network;
+	}
 
 	public HistoryData(Context content) {
 		super();
@@ -26,7 +90,7 @@ public class HistoryData {
 		return longitude;
 	}
 	
-	public float getAccuracy() {
+	public double getAccuracy() {
 		return accuracy;
 	}
 
@@ -37,7 +101,7 @@ public class HistoryData {
 		this.address = address;
 	}
 
-	public void updateGeo(double latitude,double longitude,float accuracy){
+	public void updateGeo(double latitude,double longitude,double accuracy){
 		this.accuracy = accuracy;
 		this.latitude = latitude;
 		this.longitude = longitude;
