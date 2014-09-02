@@ -9,6 +9,8 @@ import java.net.URL;
 
 import com.google.android.gms.drive.internal.OpenContentsRequest;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class Network {
@@ -60,5 +62,22 @@ public class Network {
 		}
 		return get(url);
 		
+	}
+	public Bitmap getStreetView(double latitude,double longitude){
+		final String url = "http://maps.googleapis.com/maps/api/streetview?size=640x640"
+				+ "&location="
+				+ latitude
+				+ ","
+				+ longitude
+				+ "&sensor=false&key=AIzaSyDoPeXZWol6dnBfmY7gFK2LJCMbPqBb8dw";//need to put new api code for my applicaion
+		Bitmap bitmap = null;
+		try{
+			InputStream in = new java.net.URL(url).openStream();
+			bitmap = BitmapFactory.decodeStream(in);
+		} catch (Exception e){
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		}
+		return bitmap;
 	}
 }
