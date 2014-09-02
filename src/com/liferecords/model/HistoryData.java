@@ -1,8 +1,8 @@
 package com.liferecords.model;
 
-import com.liferecords.network.Network;
-
 import android.content.Context;
+
+import com.liferecords.network.Network;
 
 public class HistoryData {
 	private static final String TAG = HistoryData.class.getSimpleName();
@@ -18,10 +18,7 @@ public class HistoryData {
 	private double pivotLatitude;
 	private double pivotLongitude;
 	private double pivotAccuracy;
-	
-	
-	
-	
+	private PostObjectsParse account;
 
 	public int getBatteryPrecent() {
 		return batteryPrecent;
@@ -85,11 +82,11 @@ public class HistoryData {
 	public Double getLatitude() {
 		return latitude;
 	}
-	
+
 	public Double getLongitude() {
 		return longitude;
 	}
-	
+
 	public double getAccuracy() {
 		return accuracy;
 	}
@@ -97,13 +94,28 @@ public class HistoryData {
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public void updateGeo(double latitude,double longitude,double accuracy){
+	public void updateGeo(double latitude, double longitude, double accuracy) {
 		this.accuracy = accuracy;
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
+	
+	public void setObjectsInAccountToParse(){
+		account.setLatitude(latitude);
+		account.setLongitude(longitude);
+		account.setAccuracy(accuracy);
+		account.setAddress(address);
+		account.setBatteryCharge(batteryCharge);
+		account.setBatteryPrec(batteryPrecent);
+		account.setMotion(motion);
+		account.setPivotLatitude(pivotLatitude);
+		account.setPivotLongitude(pivotLongitude);
+		account.setPivotAccuracy(pivotAccuracy);
+	}
+
 }
