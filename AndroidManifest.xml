@@ -61,6 +61,9 @@
         </activity>
         <service android:name="com.liferecords.service.LocationServ"></service>
         <service android:name="com.liferecords.service.MainService"></service>
+        <service android:name="com.liferecords.service.ActivityIntentService"></service>
+        <service android:name="com.liferecords.service.SyncService"></service>
+        <service android:name="com.liferecords.service.ActivityService"></service>
        
     </application>
 
