@@ -1,14 +1,12 @@
 package com.liferecords.service;
 
-import java.util.Date;
-
-import com.liferecords.model.HistoryData;
-
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+
+import com.liferecords.model.HistoryData;
 
 public class SyncService extends IntentService {
 	static final String TAG = SyncService.class.getSimpleName();
@@ -24,6 +22,7 @@ public class SyncService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		updateBatteryLevel();
+		updateAddress();
 
 	}
 
@@ -55,6 +54,6 @@ public class SyncService extends IntentService {
 		if(stop){
 			return;
 		}
-		
+		model.sendGetAddress();
 	}
 }
