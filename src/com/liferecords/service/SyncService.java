@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Binder;
+import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.liferecords.model.HistoryData;
@@ -15,6 +17,18 @@ public class SyncService extends IntentService {
 			+ SyncService.class.getSimpleName() + ".BROADCAST";
 	public boolean stop;
 	private HistoryData model;
+	private final IBinder binder = new LocalBinder();
+
+	public class LocalBinder extends Binder {
+		public SyncService getService() {
+			return SyncService.this;
+		}
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		return binder;
+	}
 
 	public SyncService() {
 		super(SyncService.class.getSimpleName());

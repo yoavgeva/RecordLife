@@ -21,7 +21,8 @@ public class LocationServ extends Service implements LocationListener,
 		GooglePlayServicesClient.OnConnectionFailedListener {
 
 	static final String TAG = LocationServ.class.getSimpleName();
-	public static final String BROADCASTACTION = "Location";
+	public static final String BROADCASTACTION =  "com.liferecords.service."
+			+ LocationServ.class.getSimpleName() + ".BROADCAST";;
 	private static final int TIME = 1000 * 60 / 6; // type the minutes last
 	LocationRequest locationRequest;
 	LocationClient locationClient;
