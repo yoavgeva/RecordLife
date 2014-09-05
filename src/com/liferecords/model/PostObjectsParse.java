@@ -46,12 +46,12 @@ public class PostObjectsParse extends ParseObject {
 		put("accuracy", d);
 	}
 
-	public Date getDateInstance() {
-		return getDate("date");
+	public long getDateInstance() {
+		return getLong("date");
 	}
 
-	public void setDate(Date dateInstance) {
-		put("date", dateInstance);
+	public void setDate(long refreshTime) {
+		put("date", refreshTime);
 	}
 
 	public String getAddress(){

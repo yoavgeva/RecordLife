@@ -10,14 +10,14 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.liferecords.model.HistoryData;
+import com.liferecords.model.Model;
 
 public class SyncService extends IntentService {
 	static final String TAG = SyncService.class.getSimpleName();
 	public static final String ACTION = "com.liferecords.service."
 			+ SyncService.class.getSimpleName() + ".BROADCAST";
 	public boolean stop;
-	private HistoryData model;
+	private Model model;
 	private final IBinder binder = new LocalBinder();
 
 	public class LocalBinder extends Binder {
@@ -39,6 +39,7 @@ public class SyncService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		updateBatteryLevel();
 		updateAddress();
+		sendStatus();
 		broadcast();
 
 	}
@@ -55,7 +56,7 @@ public class SyncService extends IntentService {
 	@Override
 	public void onCreate() {
 		Context content = this;
-		model = new HistoryData(content);
+		model = new Model(content);
 		super.onCreate();
 	}
 
@@ -73,16 +74,24 @@ public class SyncService extends IntentService {
 			isCharging = true;
 		}
 		int batteryLevel = (int) (((float) level * (float) scale) * 100.0f);
-		Log.d(TAG, "battery prec: " + batteryLevel + ". is charging : " + isCharging);
-		model.setBatteryPrecent(batteryLevel);
-		model.setBatteryCharge(isCharging);
+		Log.d(TAG, "battery prec: " + batteryLevel + ". is charging : "
+				+ isCharging);
+		model.account.data.setBatteryPrecent(batteryLevel);
+		model.account.data.setBatteryCharge(isCharging);
 	}
 
 	private void updateAddress() {
 		if (stop) {
 			return;
 		}
-		model.sendGetAddress();
+		model.account.data.sendGetAddress();
+	}
+	
+	private void sendStatus(){
+		if(stop){
+			return;
+		}
+		model.account.data.postDataToParse();
 	}
 
 }

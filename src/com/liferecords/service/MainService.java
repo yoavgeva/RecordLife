@@ -1,12 +1,5 @@
 package com.liferecords.service;
 
-import com.liferecords.model.HistoryData;
-import com.liferecords.model.PostObjectsParse;
-import com.parse.ParseACL;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Service;
@@ -16,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.net.wifi.p2p.WifiP2pManager.ServiceResponseListener;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -24,8 +16,7 @@ import android.util.Log;
 
 public class MainService extends Service {
 	static final String TAG = MainService.class.getSimpleName();
-	private PostObjectsParse postObjects;
-	private HistoryData account;
+	
 
 	private static final int TIME = 1000 * 60 / 6; // type the minutes last
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -169,22 +160,5 @@ public class MainService extends Service {
 		return false;
 	}
 
-	private void postDataToParse() {
-		postObjects.setLatitude(account.getLatitude());
-		postObjects.setLongitude(account.getLongitude());
-		postObjects.setAccuracy(account.getAccuracy());
-
-		ParseACL acl = new ParseACL();
-		acl.setReadAccess(ParseUser.getCurrentUser(), true);
-		acl.setWriteAccess(ParseUser.getCurrentUser(), true);
-		postObjects.setACL(acl);
-		postObjects.saveInBackground(new SaveCallback() {
-
-			@Override
-			public void done(ParseException e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-	}
+	
 }

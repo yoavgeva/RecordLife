@@ -14,7 +14,7 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.liferecords.model.HistoryData;
+import com.liferecords.model.Model;
 
 public class LocationServ extends Service implements LocationListener,
 		GooglePlayServicesClient.ConnectionCallbacks,
@@ -22,19 +22,19 @@ public class LocationServ extends Service implements LocationListener,
 
 	static final String TAG = LocationServ.class.getSimpleName();
 	public static final String BROADCASTACTION =  "com.liferecords.service."
-			+ LocationServ.class.getSimpleName() + ".BROADCAST";;
+			+ LocationServ.class.getSimpleName() + ".BROADCAST";
 	private static final int TIME = 1000 * 60 / 6; // type the minutes last
 	LocationRequest locationRequest;
 	LocationClient locationClient;
 	Intent intent;
-	HistoryData account;
+	Model model;
 	int counter = 0;
 
 	@Override
 	public void onCreate() {
 
 		Context content = this;
-		account = new HistoryData(content);
+		model = new Model(content);
 		locationRequest = LocationRequest.create();
 		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 		locationRequest.setInterval(TIME);
@@ -85,7 +85,8 @@ public class LocationServ extends Service implements LocationListener,
 			double latitude = location.getLatitude();
 			double longitude = location.getLongitude();
 			float accuracy = location.getAccuracy();
-			account.updateGeo(latitude, longitude, accuracy);
+			model.account.data.updateGeo(latitude, longitude, accuracy);
+			Log.d(TAG, "latitude: " + model.account.data.getLatitude() + " longitude: " + model.account.data.getLongitude());
 			intent = new Intent(BROADCASTACTION);
 			LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 		}
