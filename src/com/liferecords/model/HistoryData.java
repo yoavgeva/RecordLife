@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 import com.liferecords.network.Network;
 import com.liferecords.network.Respone;
@@ -138,6 +139,7 @@ public class HistoryData {
 			JSONObject result = new JSONObject(respone.body);
 			JSONObject results = result.getJSONArray("results").getJSONObject(0);
 			this.address = results.getString("formatted_address");
+			Log.d(TAG, "address is : " + address);
 		} catch (JSONException e){
 			e.printStackTrace();
 		}

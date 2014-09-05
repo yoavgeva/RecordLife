@@ -8,6 +8,7 @@ import android.os.BatteryManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.liferecords.model.HistoryData;
 
@@ -72,6 +73,7 @@ public class SyncService extends IntentService {
 			isCharging = true;
 		}
 		int batteryLevel = (int) (((float) level * (float) scale) * 100.0f);
+		Log.d(TAG, "battery prec: " + batteryLevel + ". is charging : " + isCharging);
 		model.setBatteryPrecent(batteryLevel);
 		model.setBatteryCharge(isCharging);
 	}
