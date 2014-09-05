@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.liferecords.model.HistoryData;
 
@@ -23,6 +24,16 @@ public class SyncService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		updateBatteryLevel();
 		updateAddress();
+		broadcast();
+
+	}
+
+	private void broadcast() {
+		if (stop) {
+			return;
+		}
+		Intent intent = new Intent(ACTION);
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
 	}
 
@@ -43,17 +54,19 @@ public class SyncService extends IntentService {
 		int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 		int status = batteryIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 		boolean isCharging = false;
-		if(status == BatteryManager.BATTERY_STATUS_CHARGING){
+		if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
 			isCharging = true;
 		}
-		int batteryLevel = (int)(((float)level * (float)scale) * 100.0f);
+		int batteryLevel = (int) (((float) level * (float) scale) * 100.0f);
 		model.setBatteryPrecent(batteryLevel);
 		model.setBatteryCharge(isCharging);
 	}
-	private void updateAddress(){
-		if(stop){
+
+	private void updateAddress() {
+		if (stop) {
 			return;
 		}
 		model.sendGetAddress();
 	}
+
 }
