@@ -4,7 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.liferecords.network.Network;
@@ -125,27 +127,28 @@ public class HistoryData {
 	}
 
 	public void sendGetAddress(){
+		HistoryData model = new HistoryData(content);
 		if(pivotLongitude != null && pivotLatitude != null){
-			float distance = distanceBetween(latitude, longitude, pivotLatitude, pivotLongitude);
+			float distance = distanceBetween(model.latitude, model.longitude, model.pivotLatitude, model.pivotLongitude);
 			if(distance < 100) {
 				return;
 			}
 		}
-		Respone respone = network.getAddress(latitude, longitude);
+		Respone respone = network.getAddress(model.latitude, model.longitude);
 		if(respone == null || !respone.isOK()){
 			return;
 		}
 		try{
 			JSONObject result = new JSONObject(respone.body);
 			JSONObject results = result.getJSONArray("results").getJSONObject(0);
-			this.address = results.getString("formatted_address");
+			model.address = results.getString("formatted_address");
 			Log.d(TAG, "address is : " + address);
 		} catch (JSONException e){
 			e.printStackTrace();
 		}
-		this.pivotLatitude = this.latitude;
-		this.pivotLongitude = this.longitude;
-		this.pivotAccuracy = this.accuracy;
+		model.pivotLatitude = model.latitude;
+		model.pivotLongitude = model.longitude;
+		model.pivotAccuracy = model.accuracy;
 		
 	}
 
@@ -156,5 +159,11 @@ public class HistoryData {
 				endlongitude, results);
 		float distance = results[0];
 		return distance;
+	}
+	
+	public void loadAccount(){
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(content);
+		//String value = sharedPref.getString("status", null);
+		
 	}
 }
