@@ -126,30 +126,40 @@ public class HistoryData {
 		account.setPivotAccuracy(pivotAccuracy);
 	}
 
-	public void sendGetAddress(){
+	public void sendGetAddress() {
 		HistoryData model = new HistoryData(content);
-		if(pivotLongitude != null && pivotLatitude != null){
-			float distance = distanceBetween(model.latitude, model.longitude, model.pivotLatitude, model.pivotLongitude);
-			if(distance < 100) {
+		if (pivotLongitude != null && pivotLatitude != null) {
+			float distance = distanceBetween(model.latitude, model.longitude,
+					model.pivotLatitude, model.pivotLongitude);
+			if (distance < 100) {
 				return;
 			}
 		}
-		Respone respone = network.getAddress(model.latitude, model.longitude);
-		if(respone == null || !respone.isOK()){
+		Log.d(TAG, "lattitude: " + model.latitude + " longitude: "
+				+ model.longitude);
+		if(model.latitude == null && model.longitude == null ){
 			return;
 		}
-		try{
-			JSONObject result = new JSONObject(respone.body);
-			JSONObject results = result.getJSONArray("results").getJSONObject(0);
-			model.address = results.getString("formatted_address");
-			Log.d(TAG, "address is : " + address);
-		} catch (JSONException e){
-			e.printStackTrace();
-		}
+			Respone respone = network.getAddress(model.latitude,
+					model.longitude);
+			if (respone == null || !respone.isOK()) {
+				return;
+			}
+			try {
+				JSONObject result = new JSONObject(respone.body);
+				JSONObject results = result.getJSONArray("results")
+						.getJSONObject(0);
+				model.address = results.getString("formatted_address");
+				Log.d(TAG, "address is : " + address);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		
 		model.pivotLatitude = model.latitude;
 		model.pivotLongitude = model.longitude;
 		model.pivotAccuracy = model.accuracy;
 		
+
 	}
 
 	public float distanceBetween(double startlangtitude, double startlongitude,
@@ -160,10 +170,11 @@ public class HistoryData {
 		float distance = results[0];
 		return distance;
 	}
-	
-	public void loadAccount(){
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(content);
-		//String value = sharedPref.getString("status", null);
-		
+
+	public void loadAccount() {
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(content);
+		// String value = sharedPref.getString("status", null);
+
 	}
 }
