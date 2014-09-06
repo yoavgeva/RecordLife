@@ -34,6 +34,8 @@ public class HistoryData {
 	private double pivotAccuracy;
 	private PostObjectsParse account;
 	private long refreshTime;
+	SharedPreferences sharedPref;
+	SharedPreferences.Editor editor;
 
 	public int getBatteryPrecent() {
 		toLoadPref();
@@ -42,9 +44,10 @@ public class HistoryData {
 
 	public void setBatteryPrecent(int batteryPrecent) {
 		this.batteryPrecent = batteryPrecent;
-		account.setBatteryPrec(this.batteryPrecent);
+		// account.setBatteryPrec(this.batteryPrecent);
 		Log.d(TAG, "batteryprec: " + this.batteryPrecent);
-		toSavePref();
+		editor.putInt("batteryPrec", batteryPrecent);
+		editor.commit();
 	}
 
 	public boolean isBatteryCharge() {
@@ -54,9 +57,10 @@ public class HistoryData {
 
 	public void setBatteryCharge(boolean batteryCharge) {
 		this.batteryCharge = batteryCharge;
-		account.setBatteryCharge(this.batteryCharge);
+		// account.setBatteryCharge(this.batteryCharge);
 		Log.d(TAG, "charge: " + this.batteryCharge);
-		toSavePref();
+		editor.putBoolean("charge", batteryCharge);
+		editor.commit();
 	}
 
 	public int getMotion() {
@@ -66,9 +70,10 @@ public class HistoryData {
 
 	public void setMotion(int motion) {
 		this.motion = motion;
-		account.setMotion(this.motion);
+		// account.setMotion(this.motion);
 		Log.d(TAG, "motion: " + this.motion);
-		toSavePref();
+		editor.putInt("motion", motion);
+		editor.commit();
 	}
 
 	public double getPivotLatitude() {
@@ -100,12 +105,16 @@ public class HistoryData {
 		this.content = content;
 		this.network = network;
 		account = new PostObjectsParse();
+		sharedPref = PreferenceManager.getDefaultSharedPreferences(content);
+		editor = sharedPref.edit();
 	}
 
 	public HistoryData(Context content) {
 		super();
 		this.content = content;
 		account = new PostObjectsParse();
+		sharedPref = PreferenceManager.getDefaultSharedPreferences(content);
+		editor = sharedPref.edit();
 	}
 
 	public Double getLatitude() {
@@ -128,23 +137,20 @@ public class HistoryData {
 		return address;
 	}
 
-	public void setAddress(String address) {
-
-		this.address = address;
-		toSavePref();
-	}
-
 	public void updateGeo(double latitude, double longitude, double accuracy) {
 		this.accuracy = accuracy;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		account.setLatitude(this.latitude);
+		// account.setLatitude(this.latitude);
 		Log.d(TAG, "latitude: " + this.latitude);
-		account.setLongitude(this.longitude);
+		// account.setLongitude(this.longitude);
 		Log.d(TAG, "longitude: " + this.longitude);
-		account.setAccuracy(this.accuracy);
+		// account.setAccuracy(this.accuracy);
 		Log.d(TAG, "accuracy: " + this.accuracy);
-		toSavePref();
+		editor.putLong("latitude", Double.doubleToRawLongBits(latitude));
+		editor.putLong("longitude", Double.doubleToRawLongBits(longitude));
+		editor.putLong("accuracy", Double.doubleToRawLongBits(accuracy));
+		editor.commit();
 	}
 
 	/*
@@ -168,9 +174,9 @@ public class HistoryData {
 			}
 		}
 		Log.d(TAG, "lattitude: " + latitude + " longitude: " + longitude);
-		if (latitude == null && longitude == null) {
+		/*if (latitude == null && longitude == null) {
 			return;
-		}
+		}*/
 		Respone respone = network.getAddress(latitude, longitude);
 		if (respone == null || !respone.isOK()) {
 			return;
@@ -188,7 +194,11 @@ public class HistoryData {
 		this.pivotLatitude = this.latitude;
 		this.pivotLongitude = this.longitude;
 		this.pivotAccuracy = this.accuracy;
-		toSavePref();
+		editor.putString("address", address);
+		editor.putLong("pivotlatitude", Double.doubleToRawLongBits(pivotLatitude));
+		editor.putLong("pivotlongitude", Double.doubleToRawLongBits(pivotLongitude));
+		editor.putLong("pivotaccuracy", Double.doubleToRawLongBits(pivotAccuracy));
+		editor.commit();
 	}
 
 	public float distanceBetween(double startlangtitude, double startlongitude,
@@ -203,16 +213,16 @@ public class HistoryData {
 	public void postDataToParse() {
 		toLoadPref();
 
-		account.setLatitude(this.getLatitude());
-		account.setLongitude(this.getLongitude());
-		account.setAccuracy(this.getAccuracy());
-		account.setAddress(this.getAddress());
-		account.setBatteryCharge(this.isBatteryCharge());
-		account.setBatteryPrec(this.getBatteryPrecent());
-		account.setMotion(this.getMotion());
-		account.setPivotLatitude(this.getPivotLatitude());
-		account.setPivotLongitude(this.getPivotLongitude());
-		account.setPivotAccuracy(this.getPivotAccuracy());
+		account.setLatitude(latitude);
+		account.setLongitude(longitude);
+		account.setAccuracy(accuracy);
+		account.setAddress(address);
+		account.setBatteryCharge(batteryCharge);
+		account.setBatteryPrec(batteryPrecent);
+		account.setMotion(motion);
+		// account.setPivotLatitude(this.getPivotLatitude());
+		// account.setPivotLongitude(this.getPivotLongitude());
+		// account.setPivotAccuracy(this.getPivotAccuracy());
 
 		account.setUser(ParseUser.getCurrentUser());
 		refreshTime = new Date().getTime();
@@ -226,43 +236,32 @@ public class HistoryData {
 
 			@Override
 			public void done(ParseException e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 	}
 
-	private void toSavePref() {
-		SharedPreferences sharedPref = PreferenceManager
-				.getDefaultSharedPreferences(content);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		int latitudeInt = latitude.intValue();
-		editor.putInt("latitude", latitudeInt);
-		int longitudeInt = longitude.intValue();
-		editor.putInt("longitude", longitudeInt);
-		editor.putInt("accuracy", (int) accuracy);
-		editor.putString("address", address);
-		editor.putBoolean("charge", batteryCharge);
-		editor.putInt("batteryPrec", batteryPrecent);
-		editor.putInt("motion", motion);
-		// might have to add for pivot if work
-		editor.commit();
-	}
-
+	
 	private void toLoadPref() {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(content);
-		int prefLatitude = sharedPref.getInt("latitude", 0);
-		double latitudeDou = (double) prefLatitude;
-		latitude = (Double) latitudeDou;
-		int prefLongitude = sharedPref.getInt("longitude", 0);
-		double longitudeDou = (double) prefLongitude;
-		longitude = (Double) longitudeDou;
-		accuracy = (double) sharedPref.getInt("accuracy", 0);
+
+		latitude = Double.longBitsToDouble(sharedPref.getLong("latitude",
+				Double.doubleToLongBits(0)));
+		longitude = Double.longBitsToDouble(sharedPref.getLong("longitude",
+				Double.doubleToLongBits(0)));
+		accuracy = Double.longBitsToDouble(sharedPref.getLong("accuracy",
+				Double.doubleToLongBits(0)));
 		address = sharedPref.getString("address", "");
 		batteryCharge = sharedPref.getBoolean("charge", false);
 		batteryPrecent = sharedPref.getInt("batteryPrec", -1);
 		motion = sharedPref.getInt("motion", -1);
+		pivotLatitude = Double.longBitsToDouble(sharedPref.getLong("pivotlatitude",
+				Double.doubleToLongBits(0)));
+		pivotLongitude = Double.longBitsToDouble(sharedPref.getLong("pivotlongitude",
+				Double.doubleToLongBits(0)));
+		pivotAccuracy = Double.longBitsToDouble(sharedPref.getLong("pivotaccuracy",
+				Double.doubleToLongBits(0)));
 	}
 
 }
