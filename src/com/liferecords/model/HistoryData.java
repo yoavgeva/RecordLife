@@ -256,12 +256,12 @@ public class HistoryData {
 		batteryCharge = sharedPref.getBoolean("charge", false);
 		batteryPrecent = sharedPref.getInt("batteryPrec", -1);
 		motion = sharedPref.getInt("motion", -1);
-		pivotLatitude = Double.longBitsToDouble(sharedPref.getLong("pivotlatitude",
+		/*pivotLatitude = Double.longBitsToDouble(sharedPref.getLong("pivotlatitude",
 				Double.doubleToLongBits(0)));
 		pivotLongitude = Double.longBitsToDouble(sharedPref.getLong("pivotlongitude",
 				Double.doubleToLongBits(0)));
 		pivotAccuracy = Double.longBitsToDouble(sharedPref.getLong("pivotaccuracy",
-				Double.doubleToLongBits(0)));
+				Double.doubleToLongBits(0)));*/
 	}
 
 }
