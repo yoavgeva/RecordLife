@@ -1,7 +1,5 @@
 package com.liferecords.model;
 
-import java.util.Date;
-
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;

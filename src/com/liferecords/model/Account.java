@@ -1,11 +1,8 @@
 package com.liferecords.model;
 
-import com.liferecords.network.Network;
-import com.parse.ParseUser;
-
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+
+import com.liferecords.network.Network;
 
 public class Account {
 
@@ -23,14 +20,5 @@ public class Account {
 		this.data = new HistoryData(content, network);
 	}
 	
-	public void saveAccount(){
-		SharedPreferences sharePred = PreferenceManager.getDefaultSharedPreferences(content);
-		SharedPreferences.Editor editor = sharePred.edit();
-		editor.putString("account","" + ParseUser.getCurrentUser()).commit();
-	}
 	
-	public void loadAccount(){
-		SharedPreferences sharePref = PreferenceManager.getDefaultSharedPreferences(content);
-		String value = sharePref.getString("account", null);
-	}
 }

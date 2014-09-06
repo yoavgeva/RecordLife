@@ -1,10 +1,9 @@
 package com.liferecords.model;
 
-import com.liferecords.network.Network;
-import com.parse.ParseObject;
-
 import android.content.Context;
 import android.graphics.Bitmap;
+
+import com.liferecords.network.Network;
 
 public class Model {
 
