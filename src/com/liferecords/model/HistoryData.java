@@ -207,8 +207,9 @@ public class HistoryData {
 		account.setPivotLongitude(pivotLongitude);
 		account.setPivotAccuracy(pivotAccuracy);
 		account.setUser(ParseUser.getCurrentUser());
-		refreshTime = new Date().getTime();
+		refreshTime = new Date().getTime(); // need to add timeformat
 		account.setDate(refreshTime);
+		account.increment("count");
 		ParseACL acl = new ParseACL();
 		acl.setReadAccess(ParseUser.getCurrentUser(), true);
 		acl.setWriteAccess(ParseUser.getCurrentUser(), true);
