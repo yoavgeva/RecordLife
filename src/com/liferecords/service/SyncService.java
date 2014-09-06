@@ -38,7 +38,7 @@ public class SyncService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		updateBatteryLevel();
-		//updateAddress();
+		updateAddress();
 		sendStatus();
 		broadcast();
 
