@@ -1,5 +1,7 @@
 package com.liferecords.model;
 
+import android.text.format.Time;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;

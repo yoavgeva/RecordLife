@@ -1,7 +1,5 @@
 package com.liferecords.model;
 
-import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.preference.PreferenceManager;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.liferecords.network.Network;
@@ -33,7 +32,7 @@ public class HistoryData {
 	private Double pivotLongitude;
 	private double pivotAccuracy;
 	private PostObjectsParse account;
-	private long refreshTime;
+	private Time refreshTime;
 	SharedPreferences sharedPref;
 	SharedPreferences.Editor editor;
 
@@ -207,8 +206,10 @@ public class HistoryData {
 		account.setPivotLongitude(pivotLongitude);
 		account.setPivotAccuracy(pivotAccuracy);
 		account.setUser(ParseUser.getCurrentUser());
-		refreshTime = new Date().getTime(); // need to add timeformat
-		account.setDate(refreshTime);
+		refreshTime = new Time(Time.getCurrentTimezone());
+		refreshTime.setToNow();
+
+		account.setDate(refreshTime.toMillis(false));
 		account.increment("count");
 		ParseACL acl = new ParseACL();
 		acl.setReadAccess(ParseUser.getCurrentUser(), true);

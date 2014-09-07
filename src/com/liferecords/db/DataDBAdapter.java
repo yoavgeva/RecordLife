@@ -1,4 +1,4 @@
-package com.liferecords.db;
+/*package com.liferecords.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -55,3 +55,4 @@ public class DataDBAdapter {
 	}
 
 }
+*/
