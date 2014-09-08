@@ -32,7 +32,7 @@ public class DataDBAdapter {
 		contentValues.put(HistoryDB.PIVOTACCURACY, pivotAccuracy);
 		contentValues.put(HistoryDB.COUNTID, countId);
 		contentValues.put(HistoryDB.TIMECREATED, timeCreated);
-		long id = db.insert(HistoryDB.TABLE_NAME, null, contentValues);
+		long id = db.insert(HistoryDB.TABLE_HISTORY, null, contentValues);
 		return id;
 	}
 
@@ -41,7 +41,7 @@ public class DataDBAdapter {
 		private final String TAG = HistoryDB.class.getSimpleName();
 		private static final String DATABASE_NAME = "liferecordsdb";
 		private static final int DATABASE_VERSION = 1;
-		private static final String TABLE_NAME = "datausertable";
+		private static final String TABLE_HISTORY = "datausertable";
 		private static final String UID = "_id";
 		private static final String LATITUDE = "latitude";
 		private static final String LONGITUDE = "longitude";
@@ -56,7 +56,7 @@ public class DataDBAdapter {
 		private static final String COUNTID = "countid";
 		private static final String USERID = "userid";
 		private static final String TIMECREATED = "timecreated";
-		private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME
+		private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_HISTORY
 				+ " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ LATITUDE + " DOUBLE NOT NULL, " + LONGITUDE
 				+ " DOUBLE NOT NULL, " + ACCURACY + " DOUBLE NOT NULL, "
@@ -68,7 +68,7 @@ public class DataDBAdapter {
 				+ USERID + " VARCHAR(255) NOT NULL, " + TIMECREATED
 				+ " BIGINT NOT NULL);";
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS "
-				+ TABLE_NAME;
+				+ TABLE_HISTORY;
 
 		public HistoryDB(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -96,6 +96,8 @@ public class DataDBAdapter {
 			}
 
 		}
+		
+		
 
 	}
 

@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import com.liferecords.service.MainService;
-import com.parse.Parse;
-import com.parse.ParseUser;
-
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.liferecords.service.MainService;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 public class MainActivity extends Activity {
 
@@ -27,6 +26,7 @@ public class MainActivity extends Activity {
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
+		
 
 	}
 
