@@ -2,6 +2,7 @@ package com.liferecords.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -17,7 +18,7 @@ public class DataDBAdapter {
 	public long insertData(double latitude, double longitude, double accuracy,
 			String address, boolean batteryCharged, int batteryPrec,
 			int motion, double pivotLatitude, double pivotLongitude,
-			double pivotAccuracy, int countId, long timeCreated) {
+			double pivotAccuracy, int countId, long timeCreated,String parseUser) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(HistoryDB.LATITUDE, latitude);
@@ -31,16 +32,32 @@ public class DataDBAdapter {
 		contentValues.put(HistoryDB.PIVOTLONGITUDE, pivotLongitude);
 		contentValues.put(HistoryDB.PIVOTACCURACY, pivotAccuracy);
 		contentValues.put(HistoryDB.COUNTID, countId);
+		contentValues.put(HistoryDB.USERID, parseUser);
 		contentValues.put(HistoryDB.TIMECREATED, timeCreated);
 		long id = db.insert(HistoryDB.TABLE_HISTORY, null, contentValues);
+		db.close();
 		return id;
+	}
+	
+	public int getUserIdData(String userId){
+		SQLiteDatabase db = helper.getWritableDatabase();
+		String[] columns = {HistoryDB.COUNTID};
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + " = '"+userId + "'" , null, null, null, HistoryDB.COUNTID + " DESC");
+		int countIndex = 0;
+		while(cursor.moveToNext()){
+		int index = cursor.getColumnIndex(HistoryDB.COUNTID);
+		countIndex = cursor.getInt(index);
+		break;
+		}
+		db.close();
+		return countIndex;
 	}
 
 	static class HistoryDB extends SQLiteOpenHelper {
 
 		private final String TAG = HistoryDB.class.getSimpleName();
 		private static final String DATABASE_NAME = "liferecordsdb";
-		private static final int DATABASE_VERSION = 1;
+		private static final int DATABASE_VERSION = 2;
 		private static final String TABLE_HISTORY = "datausertable";
 		private static final String UID = "_id";
 		private static final String LATITUDE = "latitude";

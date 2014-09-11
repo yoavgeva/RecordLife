@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
 
+import com.liferecords.db.DataDBAdapter;
 import com.liferecords.network.Network;
 import com.liferecords.network.Respone;
 import com.parse.ParseACL;
@@ -35,6 +36,8 @@ public class HistoryData {
 	private Time refreshTime;
 	SharedPreferences sharedPref;
 	SharedPreferences.Editor editor;
+	DataDBAdapter helper;
+	private int countId = 1;
 
 	public int getBatteryPrecent() {
 		toLoadPref();
@@ -103,6 +106,7 @@ public class HistoryData {
 		account = new PostObjectsParse();
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(content);
 		editor = sharedPref.edit();
+		helper = new DataDBAdapter(content);
 	}
 
 	public HistoryData(Context content) {
@@ -111,6 +115,8 @@ public class HistoryData {
 		account = new PostObjectsParse();
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(content);
 		editor = sharedPref.edit();
+		helper = new DataDBAdapter(content);
+
 	}
 
 	public Double getLatitude() {
@@ -194,34 +200,11 @@ public class HistoryData {
 	}
 
 	public void postDataToParse() {
+
 		toLoadPref();
-		account.setLatitude(latitude);
-		account.setLongitude(longitude);
-		account.setAccuracy(accuracy);
-		account.setAddress(address);
-		account.setBatteryCharge(batteryCharge);
-		account.setBatteryPrec(batteryPrecent);
-		account.setMotion(motion);
-		account.setPivotLatitude(pivotLatitude);
-		account.setPivotLongitude(pivotLongitude);
-		account.setPivotAccuracy(pivotAccuracy);
-		account.setUser(ParseUser.getCurrentUser());
-		refreshTime = new Time(Time.getCurrentTimezone());
-		refreshTime.setToNow();
-
-		account.setDate(refreshTime.toMillis(false));
-		account.increment("count");
-		ParseACL acl = new ParseACL();
-		acl.setReadAccess(ParseUser.getCurrentUser(), true);
-		acl.setWriteAccess(ParseUser.getCurrentUser(), true);
-		account.setACL(acl);
-		account.saveInBackground(new SaveCallback() {
-
-			@Override
-			public void done(ParseException e) {
-
-			}
-		});
+		loadToDB();
+		loadToParse();
+		saveCountID();
 	}
 
 	private void toLoadPref() {
@@ -243,6 +226,63 @@ public class HistoryData {
 				"pivotlongitude", Double.doubleToLongBits(0)));
 		pivotAccuracy = Double.longBitsToDouble(sharedPref.getLong(
 				"pivotaccuracy", Double.doubleToLongBits(0)));
+		saveTimeRefresh();
+		countId = sharedPref.getInt("countid", countId);
+	}
+
+	private void saveTimeRefresh() {
+		refreshTime = new Time(Time.getCurrentTimezone());
+		refreshTime.setToNow();
+	}
+
+	private void saveCountID() {
+		countId++;
+		editor.putInt("countid", countId);
+		editor.commit();
+	}
+
+	private void loadToDB() {
+		toLoadPref();
+		long id = helper
+				.insertData(latitude, longitude, accuracy, address,
+						batteryCharge, batteryPrecent, motion, pivotLatitude,
+						pivotLongitude, pivotAccuracy, countId, refreshTime
+								.toMillis(false), ParseUser.getCurrentUser()
+								.toString());
+		if (id < 0) {
+			Log.d(TAG, "insertData Failed!!!!");
+		} else {
+			Log.d(TAG, "id: " + id);
+		}
+
+	}
+
+	private void loadToParse() {
+		account.setLatitude(latitude);
+		account.setLongitude(longitude);
+		account.setAccuracy(accuracy);
+		account.setAddress(address);
+		account.setBatteryCharge(batteryCharge);
+		account.setBatteryPrec(batteryPrecent);
+		account.setMotion(motion);
+		account.setPivotLatitude(pivotLatitude);
+		account.setPivotLongitude(pivotLongitude);
+		account.setPivotAccuracy(pivotAccuracy);
+		account.setUser(ParseUser.getCurrentUser());
+		account.setDate(refreshTime.toMillis(false));
+		account.setCountId(countId);
+
+		ParseACL acl = new ParseACL();
+		acl.setReadAccess(ParseUser.getCurrentUser(), true);
+		acl.setWriteAccess(ParseUser.getCurrentUser(), true);
+		account.setACL(acl);
+		account.saveInBackground(new SaveCallback() {
+
+			@Override
+			public void done(ParseException e) {
+
+			}
+		});
 	}
 
 }

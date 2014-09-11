@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.liferecords.model.Account;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -18,12 +19,14 @@ public class LoginActivity extends Activity {
 	EditText usernameText;
 	EditText passwordText;
 	Button signinButton;
+	Account account;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		setScreenDesign();
+		account = new Account(this);
 		usernameText = (EditText) findViewById(R.id.editText_username_login);
 		passwordText = (EditText) findViewById(R.id.editText_password_login);
 		signinButton = (Button) findViewById(R.id.button_loginscreen);
@@ -95,6 +98,8 @@ public class LoginActivity extends Activity {
 							Toast.makeText(LoginActivity.this, e.getMessage(),
 									Toast.LENGTH_LONG).show();
 						} else {
+						/*	int countNum = checkUserExistInDB(user);
+							Toast.makeText(getApplicationContext(), " " + countNum, Toast.LENGTH_SHORT).show();*/
 							Intent intent = new Intent(LoginActivity.this,
 									DispatchActivity.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -105,5 +110,10 @@ public class LoginActivity extends Activity {
 
 					}
 				});
+	}
+	
+	private int checkUserExistInDB(ParseUser user){
+		int countId = account.getCountIdOfUser(user);
+		return countId;
 	}
 }

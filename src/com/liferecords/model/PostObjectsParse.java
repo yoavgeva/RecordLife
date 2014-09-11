@@ -95,5 +95,10 @@ public class PostObjectsParse extends ParseObject {
 	public void setPivotAccuracy(double pivotAccuracy){
 		put("pivotaccuracy",pivotAccuracy);
 	}
-	
+	public int getCountId(){
+		return getInt("countid");
+	}
+	public void setCountId(int countId){
+		put("countid",countId);
+	}
 }
