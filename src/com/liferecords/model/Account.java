@@ -1,6 +1,7 @@
 package com.liferecords.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.liferecords.db.DataDBAdapter;
 import com.liferecords.network.Network;
@@ -29,7 +30,8 @@ public class Account {
 	}
 	
 	public int getCountIdOfUser(ParseUser user){
-		int count = helper.getUserIdData(user.toString());
+		int count = helper.getUserIdData(user.getUsername());
+		Log.d(TAG, "count: " + count);
 		return count;
 	}
 }

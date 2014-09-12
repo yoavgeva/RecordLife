@@ -18,7 +18,8 @@ public class DataDBAdapter {
 	public long insertData(double latitude, double longitude, double accuracy,
 			String address, boolean batteryCharged, int batteryPrec,
 			int motion, double pivotLatitude, double pivotLongitude,
-			double pivotAccuracy, int countId, long timeCreated,String parseUser) {
+			double pivotAccuracy, int countId, long timeCreated,
+			String parseUser) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(HistoryDB.LATITUDE, latitude);
@@ -38,18 +39,22 @@ public class DataDBAdapter {
 		db.close();
 		return id;
 	}
-	
-	public int getUserIdData(String userId){
-		SQLiteDatabase db = helper.getWritableDatabase();
-		String[] columns = {HistoryDB.COUNTID};
-		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + " = '"+userId + "'" , null, null, null, HistoryDB.COUNTID + " DESC");
-		int countIndex = 0;
-		while(cursor.moveToNext()){
-		int index = cursor.getColumnIndex(HistoryDB.COUNTID);
-		countIndex = cursor.getInt(index);
-		break;
+
+	public int getUserIdData(String userId) {
+		SQLiteDatabase db = helper.getReadableDatabase();
+		String[] columns = { HistoryDB.COUNTID };
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns,
+				HistoryDB.USERID + " = '" + userId + "'", null, null, null,
+				null);
+		int countIndex;
+		if (cursor != null) {
+			cursor.moveToFirst();
+			int indexCursor = cursor.getColumnIndex(HistoryDB.USERID);
+			countIndex = cursor.getInt(indexCursor);
+		} else {
+			countIndex = -1;
 		}
-		db.close();
+
 		return countIndex;
 	}
 
@@ -73,16 +78,17 @@ public class DataDBAdapter {
 		private static final String COUNTID = "countid";
 		private static final String USERID = "userid";
 		private static final String TIMECREATED = "timecreated";
-		private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_HISTORY
-				+ " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ LATITUDE + " DOUBLE NOT NULL, " + LONGITUDE
-				+ " DOUBLE NOT NULL, " + ACCURACY + " DOUBLE NOT NULL, "
-				+ ADDRESS + " TEXT, " + BATTERYCHARGED + " BOOLEAN, "
-				+ BATTERYPREC + " INTEGER NOT NULL, " + MOTION
-				+ " INTEGER NOT NULL, " + PIVOTLATITUDE + " DOUBLE NOT NULL, "
-				+ PIVOTLONGITUDE + " DOUBLE NOT NULL, " + PIVOTACCURACY
-				+ " DOUBLE NOT NULL, " + COUNTID + " INTEGER NOT NULL, "
-				+ USERID + " VARCHAR(255) NOT NULL, " + TIMECREATED
+		private static final String CREATE_TABLE = "CREATE TABLE "
+				+ TABLE_HISTORY + " (" + UID
+				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + LATITUDE
+				+ " DOUBLE NOT NULL, " + LONGITUDE + " DOUBLE NOT NULL, "
+				+ ACCURACY + " DOUBLE NOT NULL, " + ADDRESS + " TEXT, "
+				+ BATTERYCHARGED + " BOOLEAN, " + BATTERYPREC
+				+ " INTEGER NOT NULL, " + MOTION + " INTEGER NOT NULL, "
+				+ PIVOTLATITUDE + " DOUBLE NOT NULL, " + PIVOTLONGITUDE
+				+ " DOUBLE NOT NULL, " + PIVOTACCURACY + " DOUBLE NOT NULL, "
+				+ COUNTID + " INTEGER NOT NULL, " + USERID
+				+ " VARCHAR(255) NOT NULL, " + TIMECREATED
 				+ " BIGINT NOT NULL);";
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS "
 				+ TABLE_HISTORY;
@@ -113,8 +119,6 @@ public class DataDBAdapter {
 			}
 
 		}
-		
-		
 
 	}
 

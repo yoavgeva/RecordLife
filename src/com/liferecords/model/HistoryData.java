@@ -247,8 +247,7 @@ public class HistoryData {
 				.insertData(latitude, longitude, accuracy, address,
 						batteryCharge, batteryPrecent, motion, pivotLatitude,
 						pivotLongitude, pivotAccuracy, countId, refreshTime
-								.toMillis(false), ParseUser.getCurrentUser()
-								.toString());
+								.toMillis(false), ParseUser.getCurrentUser().getUsername());
 		if (id < 0) {
 			Log.d(TAG, "insertData Failed!!!!");
 		} else {

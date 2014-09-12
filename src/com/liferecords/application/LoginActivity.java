@@ -98,8 +98,8 @@ public class LoginActivity extends Activity {
 							Toast.makeText(LoginActivity.this, e.getMessage(),
 									Toast.LENGTH_LONG).show();
 						} else {
-						/*	int countNum = checkUserExistInDB(user);
-							Toast.makeText(getApplicationContext(), " " + countNum, Toast.LENGTH_SHORT).show();*/
+							int countNum = checkUserExistInDB(user);
+							Toast.makeText(getApplicationContext(), " " + countNum, Toast.LENGTH_SHORT).show();
 							Intent intent = new Intent(LoginActivity.this,
 									DispatchActivity.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
