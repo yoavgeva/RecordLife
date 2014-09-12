@@ -1,5 +1,5 @@
 package com.liferecords.application;
-
+//Must!!!! check for problem if get countid = 1 if old user enter new device can happen in db and we don't want to see it
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;

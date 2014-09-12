@@ -3,7 +3,9 @@ package com.liferecords.application;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,6 +20,8 @@ public class SignUpActivity extends Activity {
 
 	EditText userNameView, passwordView, passwordAgainView;
 	Button signUpButton;
+	SharedPreferences sharedpref;
+	SharedPreferences.Editor editor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +120,7 @@ public class SignUpActivity extends Activity {
 					Toast.makeText(SignUpActivity.this, e.getMessage(),
 							Toast.LENGTH_LONG).show();
 				} else {
+					saveCountIdPref();
 					Intent intent = new Intent(SignUpActivity.this,
 							DispatchActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -127,5 +132,12 @@ public class SignUpActivity extends Activity {
 			}
 		});
 
+	}
+	private void saveCountIdPref() {
+		int countid = 1;
+		sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = sharedpref.edit();
+		editor.putInt("countid", countid);
+		editor.commit();
 	}
 }
