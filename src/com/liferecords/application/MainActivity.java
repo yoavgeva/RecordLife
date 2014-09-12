@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.liferecords.service.MainService;
 import com.parse.Parse;
@@ -16,6 +19,7 @@ import com.parse.ParseUser;
 
 public class MainActivity extends Activity {
 
+	TextView textV;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,6 +30,16 @@ public class MainActivity extends Activity {
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
+		textV = (TextView) findViewById(R.id.textview_database);
+		textV.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent dbmman = new Intent(MainActivity.this, AndroidDatabaseManager.class);
+				startActivity(dbmman);
+				
+			}
+		});
 		
 
 	}

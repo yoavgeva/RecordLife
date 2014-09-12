@@ -60,6 +60,7 @@
             android:name=".SignUpOrLoginActivity"
             android:label="@string/title_activity_sign_up_or_login" >
         </activity>
+        <activity android:name="com.liferecords.application.AndroidDatabaseManager"  />
 
         <service android:name="com.liferecords.service.LocationServ" >
         </service>

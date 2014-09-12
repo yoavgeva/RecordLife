@@ -1,18 +1,31 @@
 package com.liferecords.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.liferecords.db.DataDBAdapter;
 import com.liferecords.model.Account;
+import com.liferecords.model.PostObjectsParse;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class LoginActivity extends Activity {
@@ -20,6 +33,10 @@ public class LoginActivity extends Activity {
 	EditText passwordText;
 	Button signinButton;
 	Account account;
+	SharedPreferences sharedpref;
+	SharedPreferences.Editor editor;
+	private static ArrayList<ParseObject> allObjects;
+	DataDBAdapter helper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +44,8 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		setScreenDesign();
 		account = new Account(this);
+		helper = new DataDBAdapter(this);
+
 		usernameText = (EditText) findViewById(R.id.editText_username_login);
 		passwordText = (EditText) findViewById(R.id.editText_password_login);
 		signinButton = (Button) findViewById(R.id.button_loginscreen);
@@ -98,22 +117,131 @@ public class LoginActivity extends Activity {
 							Toast.makeText(LoginActivity.this, e.getMessage(),
 									Toast.LENGTH_LONG).show();
 						} else {
-							int countNum = checkUserExistInDB(user);
-							Toast.makeText(getApplicationContext(), " " + countNum, Toast.LENGTH_SHORT).show();
-							Intent intent = new Intent(LoginActivity.this,
-									DispatchActivity.class);
-							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-									| Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
-							finish();
+
+							final int countNum = checkUserExistInDB(user);
+							ParseQuery<ParseObject> query = ParseQuery
+									.getQuery("HistoryParse");
+							query.whereEqualTo("user",
+									ParseUser.getCurrentUser());
+							query.whereGreaterThan("countid", countNum);
+							query.orderByDescending("countid");
+							query.getFirstInBackground(new GetCallback<ParseObject>() {
+
+								@Override
+								public void done(ParseObject object,
+										ParseException e) {
+									if (object == null) {
+										Log.d("error in getfirstinbackground",
+												e.getMessage());
+										saveCountIdPref(countNum);
+									} else {
+										int countParse = object
+												.getInt("countid");
+										Log.d("countParse", "countparse: "
+												+ countParse);
+										saveCountIdPref(countParse);
+										queryAllObjects(countParse, countNum);
+
+									}
+
+								}
+							});
+							goToDispatchActivity();
+
 						}
 
 					}
 				});
 	}
-	
-	private int checkUserExistInDB(ParseUser user){
+
+	private int checkUserExistInDB(ParseUser user) {
 		int countId = account.getCountIdOfUser(user);
 		return countId;
 	}
+
+	private void goToDispatchActivity() {
+		Intent intent = new Intent(LoginActivity.this, DispatchActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+				| Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+		finish();
+	}
+
+	private void saveCountIdPref(int countNum) {
+		int countid = countNum + 1;
+		sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = sharedpref.edit();
+		editor.putInt("countid", countid);
+		editor.commit();
+	}
+
+	private int caculateNumberOfObjects(int countParse, int countNum) {
+		return countParse - countNum;
+	}
+
+	private void queryAllObjects(int countParse, int countNum) {
+		allObjects = new ArrayList<>(caculateNumberOfObjects(countParse,
+				countNum));
+		int numOfQueries = (int) Math.ceil(caculateNumberOfObjects(countParse,
+				countNum) / 1000.0);
+
+		for (int i = 0; i < numOfQueries; i++) {
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("HistoryParse");
+			query.whereEqualTo("user", ParseUser.getCurrentUser());
+			query.whereGreaterThan("countid", countNum);
+			query.orderByDescending("countid");
+			query.setLimit(1000);
+			query.setSkip(i * 1000);
+			query.findInBackground(new FindCallback<ParseObject>() {
+
+				@Override
+				public void done(List<ParseObject> objects, ParseException e) {
+					if (e != null) {
+						Log.d("queryNot", e.getMessage());
+					} else {
+						Log.d("queryworking", "size: " + objects.size());
+						allObjects.addAll(objects);
+						Log.d("queryworking",
+								"size all objects: " + allObjects.size());
+						
+						Thread myThread = new Thread(new MyThread());
+						myThread.start();
+						
+
+					}
+
+				}
+			});
+		}
+		
+
+	}
+
+	private void addObjectsToDb(ArrayList<ParseObject> allObjects) {
+
+		for (int i = 0; i < allObjects.size(); i++) {
+			
+			PostObjectsParse object = (PostObjectsParse) allObjects.get(i);
+			
+			
+			  helper.insertData(object.getLatitude(), object.getLongitude(),
+			  object.getAccuracy(), object.getAddress(), object
+			  .getBatteryCharge(), object.getBatteryPrec(), object.getMotion(),
+			  object.getPivotLatitude(), object .getPivotLongitude(),
+			  object.getPivotAccuracy(), object.getCountId(),
+			  object.getDateInstance(), ParseUser.getCurrentUser().getUsername());
+			 
+
+		}
+	}
+	private  class MyThread implements Runnable {
+
+		@Override
+		public void run() {
+			addObjectsToDb(allObjects);
+			
+		}
+		
+	}
+
 }

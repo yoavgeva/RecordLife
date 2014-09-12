@@ -407,22 +407,22 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int action_logout=0x7f06001e;
-        public static final int action_settings=0x7f06001d;
+        public static final int action_logout=0x7f06001f;
+        public static final int action_settings=0x7f06001e;
         public static final int book_now=0x7f060010;
-        public static final int button_login=0x7f06001b;
+        public static final int button_login=0x7f06001c;
         public static final int button_loginscreen=0x7f060016;
-        public static final int button_signup=0x7f06001a;
-        public static final int button_signup_login=0x7f06001c;
+        public static final int button_signup=0x7f06001b;
+        public static final int button_signup_login=0x7f06001d;
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
         public static final int classic=0x7f060011;
         public static final int editText_password_login=0x7f060015;
         public static final int editText_username_login=0x7f060014;
-        public static final int edittext_signup_name=0x7f060017;
-        public static final int edittext_signup_pw=0x7f060018;
-        public static final int edittext_signup_pw_repeat=0x7f060019;
+        public static final int edittext_signup_name=0x7f060018;
+        public static final int edittext_signup_pw=0x7f060019;
+        public static final int edittext_signup_pw_repeat=0x7f06001a;
         public static final int grayscale=0x7f060012;
         public static final int holo_dark=0x7f060005;
         public static final int holo_light=0x7f060006;
@@ -437,6 +437,7 @@ containing a value of this type.
         public static final int selectionDetails=0x7f06000b;
         public static final int strict_sandbox=0x7f060009;
         public static final int terrain=0x7f060003;
+        public static final int textview_database=0x7f060017;
         public static final int wrap_content=0x7f06000d;
     }
     public static final class integer {
