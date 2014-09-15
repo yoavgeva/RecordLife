@@ -183,5 +183,6 @@ public class MainActivity extends Activity  {
 	
 	private void designActionBar(){
 		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setIcon(R.color.transparent);
 	}
 }
