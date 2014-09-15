@@ -41,6 +41,7 @@ public class HistoryData {
 	DataDBAdapter helper;
 	private int countId = 1;
 	private JSONArray typeArray;
+	private int dateWithoutTime;
 
 	public int getBatteryPrecent() {
 		toLoadPref();
@@ -251,11 +252,12 @@ public class HistoryData {
 
 	private void loadToDB() {
 		toLoadPref();
+		dateWithoutTime = Time.getJulianDay(refreshTime.toMillis(false), 0);
 		long id = helper.insertData(latitude, longitude, accuracy, address,
 				batteryCharge, batteryPrecent, motion, pivotLatitude,
 				pivotLongitude, pivotAccuracy, countId, refreshTime
 						.format2445(),
-				ParseUser.getCurrentUser().getUsername(), typeAddress);
+				ParseUser.getCurrentUser().getUsername(), typeAddress,dateWithoutTime);
 		if (id < 0) {
 			Log.d(TAG, "insertData Failed!!!!");
 		} else {
@@ -278,6 +280,8 @@ public class HistoryData {
 		account.setUser(ParseUser.getCurrentUser());
 		account.setDate(refreshTime.toMillis(false));
 		account.setDateString(refreshTime.format2445());
+		dateWithoutTime = Time.getJulianDay(refreshTime.toMillis(false), 0);
+		account.setDateWithoutTime(dateWithoutTime);
 		account.setCountId(countId);
 		account.setType(typeAddress);
 

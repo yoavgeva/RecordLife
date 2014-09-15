@@ -43,6 +43,7 @@
     <string name="location_alert_dialog_message">would you change location to on ? </string>
     <string name="location_alert_dialog_positive">OK</string>
     <string name="location_alert_dialog_negative">Cancel</string>
+    <string name="menu_day_or_week_text">Day</string>
+    <string name="menu_dates_text">Dates</string>
 
-   
 </resources>

@@ -1,7 +1,11 @@
 package com.liferecords.db;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.liferecords.model.DateAdapterItem;
+
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +13,7 @@ import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 
 public class DataDBAdapter {
@@ -22,7 +27,7 @@ public class DataDBAdapter {
 			String address, boolean batteryCharged, int batteryPrec,
 			int motion, double pivotLatitude, double pivotLongitude,
 			double pivotAccuracy, int countId, String timeCreated,
-			String parseUser, String typeAddress) {
+			String parseUser, String typeAddress, int datewithouttime) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(HistoryDB.LATITUDE, latitude);
@@ -39,6 +44,7 @@ public class DataDBAdapter {
 		contentValues.put(HistoryDB.USERID, parseUser);
 		contentValues.put(HistoryDB.TIMECREATED, timeCreated);
 		contentValues.put(HistoryDB.TYPEADDRESS, typeAddress);
+		contentValues.put(HistoryDB.DATEWITHOUTTIME, datewithouttime);
 		long id = db.insert(HistoryDB.TABLE_HISTORY, null, contentValues);
 		db.close();
 		return id;
@@ -61,14 +67,40 @@ public class DataDBAdapter {
 		return countIndex;
 	}
 
-	public void getUserDataBasedOnDate(String time1, String time2) {
+	public void getUserDataBasedOnDate(String day1, String day2) {
 		SQLiteDatabase db = helper.getWritableDatabase();
+
 		String[] columns = {};
 		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns,
-				HistoryDB.TIMECREATED + " BETWEEN '" + time1 + "' AND '"
-						+ time2 + "'", null, null, null, HistoryDB.TIMECREATED
+				HistoryDB.TIMECREATED + " BETWEEN '" + day1 + "' AND '" + day2
+						+ "'", null, null, null, HistoryDB.TIMECREATED
 						+ " DESC");
 
+	}
+
+	
+	public void getUserDates(List<DateAdapterItem> dates) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		
+		
+		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.DATEWITHOUTTIME,HistoryDB.COUNTID};
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, null, null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+		if(cursor == null){
+			return;
+		}
+		if(!cursor.moveToFirst()){
+			cursor.close();
+			return;
+		}
+		
+		do{
+			DateAdapterItem date = new DateAdapterItem();
+			dates.add(date);
+			date.dateWithoutTime = cursor.getInt(1);
+			date.dateString = cursor.getString(0);
+			
+		} while(cursor.moveToNext());
+		cursor.close();
 	}
 
 	public ArrayList<Cursor> getData(String Query) {
@@ -124,7 +156,7 @@ public class DataDBAdapter {
 
 		private final String TAG = HistoryDB.class.getSimpleName();
 		private static final String DATABASE_NAME = "liferecordsdb";
-		private static final int DATABASE_VERSION = 4;
+		private static final int DATABASE_VERSION = 5;
 		private static final String TABLE_HISTORY = "datausertable";
 		private static final String UID = "_id";
 		private static final String LATITUDE = "latitude";
@@ -141,6 +173,7 @@ public class DataDBAdapter {
 		private static final String USERID = "userid";
 		private static final String TIMECREATED = "timecreated";
 		private static final String TYPEADDRESS = "type";
+		private static final String DATEWITHOUTTIME = "datewithouttime";
 		private static final String CREATE_TABLE = "CREATE TABLE "
 				+ TABLE_HISTORY + " (" + UID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + LATITUDE
@@ -151,8 +184,8 @@ public class DataDBAdapter {
 				+ " INTEGER NOT NULL, " + PIVOTLATITUDE + " DOUBLE NOT NULL, "
 				+ PIVOTLONGITUDE + " DOUBLE NOT NULL, " + PIVOTACCURACY
 				+ " DOUBLE NOT NULL, " + COUNTID + " INTEGER NOT NULL, "
-				+ USERID + " VARCHAR(255) NOT NULL, " + TIMECREATED
-				+ " TEXT);";
+				+ DATEWITHOUTTIME + " INTEGER NOT NULL, " + USERID
+				+ " VARCHAR(255) NOT NULL, " + TIMECREATED + " TEXT);";
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS "
 				+ TABLE_HISTORY;
 

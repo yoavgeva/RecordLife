@@ -116,4 +116,12 @@ public class PostObjectsParse extends ParseObject {
 	public String getDateString(){
 		return getString("dateString");
 	}
+
+	public void setDateWithoutTime(int julianDay) {
+		put("datewithouttime",julianDay);
+		
+	}
+	public int getDateWithoutTime(){
+		return getInt("datewithouttime");
+	}
 }

@@ -1,6 +1,7 @@
 package com.liferecords.application;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,6 +21,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.liferecords.model.DateAdapterItem;
+import com.liferecords.model.Model;
 import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
@@ -28,6 +31,8 @@ public class MainActivity extends Activity  {
 
 	TextView textV;
 	ActionBar actionBar;
+	private List<DateAdapterItem> dateItems;
+	private Model model;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,8 +42,9 @@ public class MainActivity extends Activity  {
 		startMainService();
 		actionBar = getActionBar();
 		designActionBar();
+		populate();
 		
-		//addDropDown();
+		
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
@@ -184,5 +190,9 @@ public class MainActivity extends Activity  {
 	private void designActionBar(){
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setIcon(R.color.transparent);
+	}
+	
+	private void populate(){
+		this.dateItems = this.model.getDateAdapterItems();
 	}
 }

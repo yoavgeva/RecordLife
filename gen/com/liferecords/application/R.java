@@ -581,6 +581,8 @@ containing a value of this type.
         public static final int login_button=0x7f04003b;
         public static final int login_progress_signing_in=0x7f04002b;
         public static final int logout_menu=0x7f04003c;
+        public static final int menu_dates_text=0x7f040045;
+        public static final int menu_day_or_week_text=0x7f040044;
         public static final int password_signup=0x7f04003a;
         public static final int progress_message=0x7f040037;
         public static final int progress_title=0x7f040036;
