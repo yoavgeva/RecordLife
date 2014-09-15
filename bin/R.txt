@@ -1,3 +1,4 @@
+int array spinner_time_arrangement 0x7f090000
 int attr adSize 0x7f010000
 int attr adSizes 0x7f010001
 int attr adUnitId 0x7f010002
@@ -57,8 +58,8 @@ int color wallet_holo_blue_light 0x7f050015
 int color wallet_link_text_light 0x7f050016
 int color wallet_primary_text_holo_light 0x7f050019
 int color wallet_secondary_text_holo_dark 0x7f05001a
-int dimen activity_horizontal_margin 0x7f090000
-int dimen activity_vertical_margin 0x7f090001
+int dimen activity_horizontal_margin 0x7f0a0000
+int dimen activity_vertical_margin 0x7f0a0001
 int drawable common_signin_btn_icon_dark 0x7f020000
 int drawable common_signin_btn_icon_disabled_dark 0x7f020001
 int drawable common_signin_btn_icon_disabled_focus_dark 0x7f020002
@@ -90,8 +91,8 @@ int drawable ic_plusone_standard_off_client 0x7f02001b
 int drawable ic_plusone_tall_off_client 0x7f02001c
 int drawable powered_by_google_dark 0x7f02001d
 int drawable powered_by_google_light 0x7f02001e
-int id action_logout 0x7f06001f
-int id action_settings 0x7f06001e
+int id action_logout 0x7f060021
+int id action_settings 0x7f060020
 int id book_now 0x7f060010
 int id button_login 0x7f06001c
 int id button_loginscreen 0x7f060016
@@ -111,6 +112,8 @@ int id holo_dark 0x7f060005
 int id holo_light 0x7f060006
 int id hybrid 0x7f060004
 int id match_parent 0x7f06000c
+int id menu_main_spinner_dates 0x7f06001f
+int id menu_main_spinner_day_or_week 0x7f06001e
 int id monochrome 0x7f060013
 int id none 0x7f060000
 int id normal 0x7f060001
@@ -127,7 +130,7 @@ int layout activity_login 0x7f030000
 int layout activity_main 0x7f030001
 int layout activity_sign_up 0x7f030002
 int layout activity_sign_up_or_login 0x7f030003
-int menu main 0x7f0a0000
+int menu main 0x7f0b0000
 int string action_forgot_password 0x7f04002a
 int string action_settings 0x7f040022
 int string action_sign_in_register 0x7f040028

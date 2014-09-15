@@ -8,6 +8,11 @@
 package com.liferecords.application;
 
 public final class R {
+    public static final class array {
+        /**  Day/Week Spinner 
+         */
+        public static final int spinner_time_arrangement=0x7f090000;
+    }
     public static final class attr {
         /** 
     The size of the ad. It must be one of BANNER, FULL_BANNER, LEADERBOARD,
@@ -370,8 +375,8 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f090000;
-        public static final int activity_vertical_margin=0x7f090001;
+        public static final int activity_horizontal_margin=0x7f0a0000;
+        public static final int activity_vertical_margin=0x7f0a0001;
     }
     public static final class drawable {
         public static final int common_signin_btn_icon_dark=0x7f020000;
@@ -407,8 +412,8 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int action_logout=0x7f06001f;
-        public static final int action_settings=0x7f06001e;
+        public static final int action_logout=0x7f060021;
+        public static final int action_settings=0x7f060020;
         public static final int book_now=0x7f060010;
         public static final int button_login=0x7f06001c;
         public static final int button_loginscreen=0x7f060016;
@@ -428,6 +433,8 @@ containing a value of this type.
         public static final int holo_light=0x7f060006;
         public static final int hybrid=0x7f060004;
         public static final int match_parent=0x7f06000c;
+        public static final int menu_main_spinner_dates=0x7f06001f;
+        public static final int menu_main_spinner_day_or_week=0x7f06001e;
         public static final int monochrome=0x7f060013;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
@@ -450,7 +457,7 @@ containing a value of this type.
         public static final int activity_sign_up_or_login=0x7f030003;
     }
     public static final class menu {
-        public static final int main=0x7f0a0000;
+        public static final int main=0x7f0b0000;
     }
     public static final class string {
         public static final int action_forgot_password=0x7f04002a;

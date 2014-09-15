@@ -21,8 +21,8 @@ public class DataDBAdapter {
 	public long insertData(double latitude, double longitude, double accuracy,
 			String address, boolean batteryCharged, int batteryPrec,
 			int motion, double pivotLatitude, double pivotLongitude,
-			double pivotAccuracy, int countId, long timeCreated,
-			String parseUser,String typeAddress) {
+			double pivotAccuracy, int countId, String timeCreated,
+			String parseUser, String typeAddress) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(HistoryDB.LATITUDE, latitude);
@@ -61,7 +61,13 @@ public class DataDBAdapter {
 		return countIndex;
 	}
 
-	public void getUserDataBasedOnDate(long time1, long time2) {
+	public void getUserDataBasedOnDate(String time1, String time2) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		String[] columns = {};
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns,
+				HistoryDB.TIMECREATED + " BETWEEN '" + time1 + "' AND '"
+						+ time2 + "'", null, null, null, HistoryDB.TIMECREATED
+						+ " DESC");
 
 	}
 
@@ -118,7 +124,7 @@ public class DataDBAdapter {
 
 		private final String TAG = HistoryDB.class.getSimpleName();
 		private static final String DATABASE_NAME = "liferecordsdb";
-		private static final int DATABASE_VERSION = 3;
+		private static final int DATABASE_VERSION = 4;
 		private static final String TABLE_HISTORY = "datausertable";
 		private static final String UID = "_id";
 		private static final String LATITUDE = "latitude";
@@ -146,7 +152,7 @@ public class DataDBAdapter {
 				+ PIVOTLONGITUDE + " DOUBLE NOT NULL, " + PIVOTACCURACY
 				+ " DOUBLE NOT NULL, " + COUNTID + " INTEGER NOT NULL, "
 				+ USERID + " VARCHAR(255) NOT NULL, " + TIMECREATED
-				+ " BIGINT NOT NULL);";
+				+ " TEXT);";
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS "
 				+ TABLE_HISTORY;
 

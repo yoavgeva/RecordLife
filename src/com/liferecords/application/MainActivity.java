@@ -1,5 +1,8 @@
 package com.liferecords.application;
 
+import java.util.ArrayList;
+
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,15 +14,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity  {
 
 	TextView textV;
+	ActionBar actionBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,6 +35,10 @@ public class MainActivity extends Activity {
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
 		startMainService();
+		actionBar = getActionBar();
+		designActionBar();
+		
+		//addDropDown();
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
@@ -60,7 +72,12 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+		MenuItem mainMenuSpinnerDayOrWeek = menu.findItem(R.id.menu_main_spinner_day_or_week);
+		setDropDownDayOrWeek(mainMenuSpinnerDayOrWeek);
+		
+		MenuItem datesSpinner = menu.findItem(R.id.menu_main_spinner_dates);
+		setDropDownDates(datesSpinner);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -124,5 +141,47 @@ public class MainActivity extends Activity {
 	private void stopMainService(){
 		Intent inte = new Intent(this, MainService.class);
 		stopService(inte);
+	}
+	
+	private void setDropDownDayOrWeek(MenuItem item){
+		View view = item.getActionView();
+		if(view instanceof Spinner){
+			Spinner spinner = (Spinner) view;
+			ArrayList<String> itemList = new ArrayList<String>();
+			itemList.add("Day");
+			itemList.add("Week");
+			ArrayAdapter<String> dayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1,itemList);
+			spinner.setAdapter(dayAdapter);
+			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					if(position == 0){
+						
+					} else {
+						
+					}
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		}
+		
+		
+	}
+	
+	private void setDropDownDates(MenuItem item){
+	
+	}
+
+	
+	private void designActionBar(){
+		actionBar.setDisplayShowTitleEnabled(false);
 	}
 }

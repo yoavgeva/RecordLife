@@ -177,11 +177,11 @@ public class HistoryData {
 			this.address = results.getString("formatted_address");
 			this.typeArray = results.getJSONArray("types");
 			this.typeAddress = typeArray.getString(0);
-			Log.d(TAG, "address is : " + this.address + " types: " + this.typeArray + "type: " + this.typeAddress);
+			Log.d(TAG, "address is : " + this.address + " types: "
+					+ this.typeArray + "type: " + this.typeAddress);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
 
 		this.pivotLatitude = this.latitude;
 		this.pivotLongitude = this.longitude;
@@ -251,11 +251,11 @@ public class HistoryData {
 
 	private void loadToDB() {
 		toLoadPref();
-		long id = helper
-				.insertData(latitude, longitude, accuracy, address,
-						batteryCharge, batteryPrecent, motion, pivotLatitude,
-						pivotLongitude, pivotAccuracy, countId, refreshTime
-								.toMillis(false), ParseUser.getCurrentUser().getUsername(),typeAddress);
+		long id = helper.insertData(latitude, longitude, accuracy, address,
+				batteryCharge, batteryPrecent, motion, pivotLatitude,
+				pivotLongitude, pivotAccuracy, countId, refreshTime
+						.format2445(),
+				ParseUser.getCurrentUser().getUsername(), typeAddress);
 		if (id < 0) {
 			Log.d(TAG, "insertData Failed!!!!");
 		} else {
@@ -277,6 +277,7 @@ public class HistoryData {
 		account.setPivotAccuracy(pivotAccuracy);
 		account.setUser(ParseUser.getCurrentUser());
 		account.setDate(refreshTime.toMillis(false));
+		account.setDateString(refreshTime.format2445());
 		account.setCountId(countId);
 		account.setType(typeAddress);
 

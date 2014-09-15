@@ -8,6 +8,7 @@ public class ModelAdapterItem {
 	public Double longitude;
 	public double accuracy;
 	public String address;
+	public String type;
 	public int batteryPrecent;
 	public boolean batteryCharge;
 	public int motion;
@@ -39,6 +40,7 @@ public class ModelAdapterItem {
 			recordTime = item.recordTime;
 			userName = item.userName;
 			countId = item.countId;
+			type = item.type;
 			streetViewImage = item.streetViewImage;
 		}
 	}
@@ -47,13 +49,16 @@ public class ModelAdapterItem {
 	public String toString() {
 		return "ModelAdapterItem [latitude=" + latitude + ", longitude="
 				+ longitude + ", accuracy=" + accuracy + ", address=" + address
-				+ ", batteryPrecent=" + batteryPrecent + ", batteryCharge="
-				+ batteryCharge + ", motion=" + motion + ", pivotLatitude="
-				+ pivotLatitude + ", pivotLongitude=" + pivotLongitude
-				+ ", pivotAccuracy=" + pivotAccuracy + ", recordTime="
-				+ recordTime + ", userName=" + userName + ", countId="
-				+ countId + ", streetViewImage=" + streetViewImage + "]";
+				+ ", type=" + type + ", batteryPrecent=" + batteryPrecent
+				+ ", batteryCharge=" + batteryCharge + ", motion=" + motion
+				+ ", pivotLatitude=" + pivotLatitude + ", pivotLongitude="
+				+ pivotLongitude + ", pivotAccuracy=" + pivotAccuracy
+				+ ", recordTime=" + recordTime + ", userName=" + userName
+				+ ", countId=" + countId + ", streetViewImage="
+				+ streetViewImage + "]";
 	}
+
+	
 
 	
 }

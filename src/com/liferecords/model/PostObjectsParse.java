@@ -44,8 +44,8 @@ public class PostObjectsParse extends ParseObject {
 		put("accuracy", d);
 	}
 
-	public long getDateInstance() {
-		return getLong("date");
+	public String getDateInstance() {
+		return getString("date");
 	}
 
 	public void setDate(long refreshTime) {
@@ -107,5 +107,13 @@ public class PostObjectsParse extends ParseObject {
 	}
 	public void setType(String type){
 		put("type",type);
+	}
+
+	public void setDateString(String format2445) {
+		put("dateString",format2445);
+		
+	}
+	public String getDateString(){
+		return getString("dateString");
 	}
 }
