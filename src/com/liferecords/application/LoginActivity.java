@@ -228,7 +228,7 @@ public class LoginActivity extends Activity {
 			  .getBatteryCharge(), object.getBatteryPrec(), object.getMotion(),
 			  object.getPivotLatitude(), object .getPivotLongitude(),
 			  object.getPivotAccuracy(), object.getCountId(),
-			  object.getDateInstance(), ParseUser.getCurrentUser().getUsername());
+			  object.getDateInstance(), ParseUser.getCurrentUser().getUsername(),object.getType());
 			 
 
 		}

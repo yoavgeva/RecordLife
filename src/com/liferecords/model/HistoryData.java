@@ -1,5 +1,6 @@
 package com.liferecords.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +25,7 @@ public class HistoryData {
 	private Double longitude;
 	private double accuracy;
 	private String address;
+	private String typeAddress;
 	private final Context content;
 	private int batteryPrecent;
 	private boolean batteryCharge;
@@ -38,6 +40,7 @@ public class HistoryData {
 	SharedPreferences.Editor editor;
 	DataDBAdapter helper;
 	private int countId = 1;
+	private JSONArray typeArray;
 
 	public int getBatteryPrecent() {
 		toLoadPref();
@@ -172,14 +175,18 @@ public class HistoryData {
 			JSONObject results = result.getJSONArray("results")
 					.getJSONObject(0);
 			this.address = results.getString("formatted_address");
-			Log.d(TAG, "address is : " + this.address);
+			this.typeArray = results.getJSONArray("types");
+			this.typeAddress = typeArray.getString(0);
+			Log.d(TAG, "address is : " + this.address + " types: " + this.typeArray + "type: " + this.typeAddress);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
 
 		this.pivotLatitude = this.latitude;
 		this.pivotLongitude = this.longitude;
 		this.pivotAccuracy = this.accuracy;
+		editor.putString("type", typeAddress);
 		editor.putString("address", address);
 		editor.putLong("pivotlatitude",
 				Double.doubleToRawLongBits(pivotLatitude));
@@ -227,7 +234,8 @@ public class HistoryData {
 		pivotAccuracy = Double.longBitsToDouble(sharedPref.getLong(
 				"pivotaccuracy", Double.doubleToLongBits(0)));
 		saveTimeRefresh();
-		countId = sharedPref.getInt("countid", countId);
+		countId = sharedPref.getInt("countid", -1);
+		typeAddress = sharedPref.getString("type", "");
 	}
 
 	private void saveTimeRefresh() {
@@ -247,7 +255,7 @@ public class HistoryData {
 				.insertData(latitude, longitude, accuracy, address,
 						batteryCharge, batteryPrecent, motion, pivotLatitude,
 						pivotLongitude, pivotAccuracy, countId, refreshTime
-								.toMillis(false), ParseUser.getCurrentUser().getUsername());
+								.toMillis(false), ParseUser.getCurrentUser().getUsername(),typeAddress);
 		if (id < 0) {
 			Log.d(TAG, "insertData Failed!!!!");
 		} else {
@@ -270,6 +278,7 @@ public class HistoryData {
 		account.setUser(ParseUser.getCurrentUser());
 		account.setDate(refreshTime.toMillis(false));
 		account.setCountId(countId);
+		account.setType(typeAddress);
 
 		ParseACL acl = new ParseACL();
 		acl.setReadAccess(ParseUser.getCurrentUser(), true);

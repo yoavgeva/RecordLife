@@ -101,4 +101,11 @@ public class PostObjectsParse extends ParseObject {
 	public void setCountId(int countId){
 		put("countid",countId);
 	}
+	
+	public String getType(){
+		return getString("type");
+	}
+	public void setType(String type){
+		put("type",type);
+	}
 }

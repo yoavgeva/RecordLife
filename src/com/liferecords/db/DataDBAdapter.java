@@ -22,7 +22,7 @@ public class DataDBAdapter {
 			String address, boolean batteryCharged, int batteryPrec,
 			int motion, double pivotLatitude, double pivotLongitude,
 			double pivotAccuracy, int countId, long timeCreated,
-			String parseUser) {
+			String parseUser,String typeAddress) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(HistoryDB.LATITUDE, latitude);
@@ -38,6 +38,7 @@ public class DataDBAdapter {
 		contentValues.put(HistoryDB.COUNTID, countId);
 		contentValues.put(HistoryDB.USERID, parseUser);
 		contentValues.put(HistoryDB.TIMECREATED, timeCreated);
+		contentValues.put(HistoryDB.TYPEADDRESS, typeAddress);
 		long id = db.insert(HistoryDB.TABLE_HISTORY, null, contentValues);
 		db.close();
 		return id;
@@ -59,62 +60,65 @@ public class DataDBAdapter {
 
 		return countIndex;
 	}
-	
-	public ArrayList<Cursor> getData(String Query){
-		//get writable database
+
+	public void getUserDataBasedOnDate(long time1, long time2) {
+
+	}
+
+	public ArrayList<Cursor> getData(String Query) {
+		// get writable database
 		SQLiteDatabase sqlDB = helper.getWritableDatabase();
 		String[] columns = new String[] { "mesage" };
-		//an array list of cursor to save two cursors one has results from the query 
-		//other cursor stores error message if any errors are triggered
+		// an array list of cursor to save two cursors one has results from the
+		// query
+		// other cursor stores error message if any errors are triggered
 		ArrayList<Cursor> alc = new ArrayList<Cursor>(2);
-		MatrixCursor Cursor2= new MatrixCursor(columns);
+		MatrixCursor Cursor2 = new MatrixCursor(columns);
 		alc.add(null);
 		alc.add(null);
-		
-		
-		try{
-			String maxQuery = Query ;
-			//execute the query results will be save in Cursor c
-			Cursor c = sqlDB.rawQuery(maxQuery, null);
-			
 
-			//add value to cursor2
+		try {
+			String maxQuery = Query;
+			// execute the query results will be save in Cursor c
+			Cursor c = sqlDB.rawQuery(maxQuery, null);
+
+			// add value to cursor2
 			Cursor2.addRow(new Object[] { "Success" });
-			
-			alc.set(1,Cursor2);
+
+			alc.set(1, Cursor2);
 			if (null != c && c.getCount() > 0) {
 
-				
-				alc.set(0,c);
+				alc.set(0, c);
 				c.moveToFirst();
-				
-				return alc ;
+
+				return alc;
 			}
 			return alc;
-		} catch(SQLException sqlEx){
+		} catch (SQLException sqlEx) {
 			Log.d("printing exception", sqlEx.getMessage());
-			//if any exceptions are triggered save the error message to cursor an return the arraylist
-			Cursor2.addRow(new Object[] { ""+sqlEx.getMessage() });
-			alc.set(1,Cursor2);
+			// if any exceptions are triggered save the error message to cursor
+			// an return the arraylist
+			Cursor2.addRow(new Object[] { "" + sqlEx.getMessage() });
+			alc.set(1, Cursor2);
 			return alc;
-		} catch(Exception ex){
+		} catch (Exception ex) {
 
 			Log.d("printing exception", ex.getMessage());
 
-			//if any exceptions are triggered save the error message to cursor an return the arraylist
-			Cursor2.addRow(new Object[] { ""+ex.getMessage() });
-			alc.set(1,Cursor2);
+			// if any exceptions are triggered save the error message to cursor
+			// an return the arraylist
+			Cursor2.addRow(new Object[] { "" + ex.getMessage() });
+			alc.set(1, Cursor2);
 			return alc;
 		}
 
-		
 	}
 
 	static class HistoryDB extends SQLiteOpenHelper {
 
 		private final String TAG = HistoryDB.class.getSimpleName();
 		private static final String DATABASE_NAME = "liferecordsdb";
-		private static final int DATABASE_VERSION = 2;
+		private static final int DATABASE_VERSION = 3;
 		private static final String TABLE_HISTORY = "datausertable";
 		private static final String UID = "_id";
 		private static final String LATITUDE = "latitude";
@@ -130,17 +134,18 @@ public class DataDBAdapter {
 		private static final String COUNTID = "countid";
 		private static final String USERID = "userid";
 		private static final String TIMECREATED = "timecreated";
+		private static final String TYPEADDRESS = "type";
 		private static final String CREATE_TABLE = "CREATE TABLE "
 				+ TABLE_HISTORY + " (" + UID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + LATITUDE
 				+ " DOUBLE NOT NULL, " + LONGITUDE + " DOUBLE NOT NULL, "
 				+ ACCURACY + " DOUBLE NOT NULL, " + ADDRESS + " TEXT, "
-				+ BATTERYCHARGED + " BOOLEAN, " + BATTERYPREC
-				+ " INTEGER NOT NULL, " + MOTION + " INTEGER NOT NULL, "
-				+ PIVOTLATITUDE + " DOUBLE NOT NULL, " + PIVOTLONGITUDE
-				+ " DOUBLE NOT NULL, " + PIVOTACCURACY + " DOUBLE NOT NULL, "
-				+ COUNTID + " INTEGER NOT NULL, " + USERID
-				+ " VARCHAR(255) NOT NULL, " + TIMECREATED
+				+ TYPEADDRESS + " TEXT, " + BATTERYCHARGED + " BOOLEAN, "
+				+ BATTERYPREC + " INTEGER NOT NULL, " + MOTION
+				+ " INTEGER NOT NULL, " + PIVOTLATITUDE + " DOUBLE NOT NULL, "
+				+ PIVOTLONGITUDE + " DOUBLE NOT NULL, " + PIVOTACCURACY
+				+ " DOUBLE NOT NULL, " + COUNTID + " INTEGER NOT NULL, "
+				+ USERID + " VARCHAR(255) NOT NULL, " + TIMECREATED
 				+ " BIGINT NOT NULL);";
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS "
 				+ TABLE_HISTORY;
