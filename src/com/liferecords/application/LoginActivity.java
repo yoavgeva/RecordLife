@@ -179,7 +179,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void queryAllObjects(int countParse, int countNum) {
-		allObjects = new ArrayList<>(caculateNumberOfObjects(countParse,
+		allObjects = new ArrayList<ParseObject>(caculateNumberOfObjects(countParse,
 				countNum));
 		int numOfQueries = (int) Math.ceil(caculateNumberOfObjects(countParse,
 				countNum) / 1000.0);

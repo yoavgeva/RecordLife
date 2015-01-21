@@ -42,7 +42,7 @@ public class MainActivity extends Activity  {
 		startMainService();
 		actionBar = getActionBar();
 		designActionBar();
-		populate();
+		//populate();
 		
 		
 		if (savedInstanceState == null) {
@@ -156,7 +156,7 @@ public class MainActivity extends Activity  {
 			ArrayList<String> itemList = new ArrayList<String>();
 			itemList.add("Day");
 			itemList.add("Week");
-			ArrayAdapter<String> dayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1,itemList);
+			ArrayAdapter<String> dayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1,itemList);
 			spinner.setAdapter(dayAdapter);
 			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -192,7 +192,7 @@ public class MainActivity extends Activity  {
 		actionBar.setIcon(R.color.transparent);
 	}
 	
-	private void populate(){
+/*	private void populate(){
 		this.dateItems = this.model.getDateAdapterItems();
-	}
+	}*/
 }
