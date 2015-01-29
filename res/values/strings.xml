@@ -8,8 +8,8 @@
 
     <!-- Sign Up screen Strings -->
     <string name="screen_signup_name_hint">Name</string>
-    <string name="screen_signup_password_hint">password</string>
-    <string name="screen_signup_password_repeat_hint">password again</string>
+    <string name="screen_signup_password_hint">Password</string>
+    <string name="screen_signup_password_repeat_hint">Password again</string>
     <string name="screen_signup_button_signup">Sign Up</string>
     <string name="action_sign_in_register"><b>Sign in</b> or register</string>
     <string name="action_sign_in_short">Sign in</string>

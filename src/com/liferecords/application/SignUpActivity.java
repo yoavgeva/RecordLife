@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -62,8 +64,16 @@ public class SignUpActivity extends Activity {
 
 	private void setScreenDesign() {
 		getActionBar().hide();
+		setUserNameSignupDesign();
+		setSignupButtonDesign();
+		setPasswordDesign();
+		setPasswordRepetDesign();
 	}
 	
+	
+
+
+
 	private void checkSignUpErrors(){
 		boolean validationError = false;
 		StringBuilder validationErrorMessage = new StringBuilder(
@@ -139,5 +149,34 @@ public class SignUpActivity extends Activity {
 		editor = sharedpref.edit();
 		editor.putInt("countid", countid);
 		editor.commit();
+	}
+	private Typeface setTypeFaceAspire(){
+		Typeface type = Typeface.createFromAsset(getAssets(),
+				"aspire-demibold.ttf");
+		return type;
+	}
+	private void setUserNameSignupDesign(){
+		EditText userNameText = (EditText) findViewById(R.id.edittext_signup_name);
+		userNameText.setTextSize(25f);
+		userNameText.setHintTextColor(Color.BLACK);
+		
+	}
+	private void setSignupButtonDesign(){
+		Button button = (Button) findViewById(R.id.button_signup);
+		button.setTypeface(setTypeFaceAspire(), Typeface.BOLD);
+		button.setTextSize(35f);
+
+	}
+	private void setPasswordDesign() {
+		EditText passwordText = (EditText) findViewById(R.id.edittext_signup_pw);
+		passwordText.setTextSize(25f);
+		passwordText.setHintTextColor(Color.BLACK);
+		
+	}
+	private void setPasswordRepetDesign() {
+		EditText passwordRepetText = (EditText) findViewById(R.id.edittext_signup_pw_repeat);
+		passwordRepetText.setTextSize(25f);
+		passwordRepetText.setHintTextColor(Color.BLACK);
+		
 	}
 }
