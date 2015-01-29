@@ -92,6 +92,7 @@ int drawable ic_plusone_standard_off_client 0x7f02001b
 int drawable ic_plusone_tall_off_client 0x7f02001c
 int drawable powered_by_google_dark 0x7f02001d
 int drawable powered_by_google_light 0x7f02001e
+int drawable regi_backgorund 0x7f02001f
 int id action_logout 0x7f060021
 int id action_settings 0x7f060020
 int id book_now 0x7f060010
