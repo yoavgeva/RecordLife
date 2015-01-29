@@ -2,28 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/regi_backgorund"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.liferecords.application.SignUpOrLoginActivity"
-    android:background="@drawable/regi_backgorund" >
+    tools:context="com.liferecords.application.SignUpOrLoginActivity" >
 
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_signup_login"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="94dp"
-        android:text="@string/login_button" />
-
-    <Button
-        android:id="@+id/button_signup_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button_login"
         android:layout_centerVertical="true"
-        android:text="@string/signup_button" />
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" >
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/register_button"
+            android:text="@string/login_button" />
+
+        <Button
+            android:id="@+id/button_signup_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/register_button"
+            android:text="@string/signup_button" />
+    </LinearLayout>
 
 </RelativeLayout>

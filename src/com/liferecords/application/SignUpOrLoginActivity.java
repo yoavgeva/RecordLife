@@ -2,6 +2,7 @@ package com.liferecords.application;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.view.View;
@@ -43,5 +44,23 @@ public class SignUpOrLoginActivity extends Activity {
 
 	private void setScreenDesign(){
 		getActionBar().hide();
+		setLoginButtonDesign();
+		setSignupButtonDesign();
+	}
+	private Typeface setTypeFaceAspire(){
+		Typeface type = Typeface.createFromAsset(getAssets(),
+				"aspire-demibold.ttf");
+		return type;
+	}
+	private void setLoginButtonDesign(){
+		loginButton = (Button) findViewById(R.id.button_login);
+		loginButton.setTypeface(setTypeFaceAspire(),Typeface.BOLD);
+		loginButton.setTextSize(35f);
+	}
+	private void setSignupButtonDesign(){
+		signupButton = (Button) findViewById(R.id.button_signup_login);
+		signupButton.setTypeface(setTypeFaceAspire(),Typeface.BOLD);
+		signupButton.setTextSize(35f);
+		
 	}
 }

@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -69,6 +71,9 @@ public class LoginActivity extends Activity {
 
 	private void setScreenDesign() {
 		getActionBar().hide();
+		setLoginButton();
+		setUserNameText();
+		setPasswordTtext();
 	}
 
 	private void checkLoginErrors() {
@@ -109,48 +114,48 @@ public class LoginActivity extends Activity {
 		ParseUser.logInInBackground(usernameText.getText().toString(),
 				passwordText.getText().toString(), new LogInCallback() {
 
-					@Override
-					public void done(ParseUser user, ParseException e) {
-						pDlg.dismiss();
-						if (e != null) {
-							Toast.makeText(LoginActivity.this, e.getMessage(),
-									Toast.LENGTH_LONG).show();
-						} else {
+			@Override
+			public void done(ParseUser user, ParseException e) {
+				pDlg.dismiss();
+				if (e != null) {
+					Toast.makeText(LoginActivity.this, e.getMessage(),
+							Toast.LENGTH_LONG).show();
+				} else {
 
-							final int countNum = checkUserExistInDB(user);
-							ParseQuery<ParseObject> query = ParseQuery
-									.getQuery("HistoryParse");
-							query.whereEqualTo("user",
-									ParseUser.getCurrentUser());
-							query.whereGreaterThan("countid", countNum);
-							query.orderByDescending("countid");
-							query.getFirstInBackground(new GetCallback<ParseObject>() {
+					final int countNum = checkUserExistInDB(user);
+					ParseQuery<ParseObject> query = ParseQuery
+							.getQuery("HistoryParse");
+					query.whereEqualTo("user",
+							ParseUser.getCurrentUser());
+					query.whereGreaterThan("countid", countNum);
+					query.orderByDescending("countid");
+					query.getFirstInBackground(new GetCallback<ParseObject>() {
 
-								@Override
-								public void done(ParseObject object,
-										ParseException e) {
-									if (object == null) {
-										Log.d("error in getfirstinbackground",
-												e.getMessage());
-										saveCountIdPref(countNum);
-									} else {
-										int countParse = object
-												.getInt("countid");
-										Log.d("countParse", "countparse: "
-												+ countParse);
-										saveCountIdPref(countParse);
-										queryAllObjects(countParse, countNum);
+						@Override
+						public void done(ParseObject object,
+								ParseException e) {
+							if (object == null) {
+								Log.d("error in getfirstinbackground",
+										e.getMessage());
+								saveCountIdPref(countNum);
+							} else {
+								int countParse = object
+										.getInt("countid");
+								Log.d("countParse", "countparse: "
+										+ countParse);
+								saveCountIdPref(countParse);
+								queryAllObjects(countParse, countNum);
 
-									}
-
-								}
-							});
-							goToDispatchActivity();
+							}
 
 						}
+					});
+					goToDispatchActivity();
 
-					}
-				});
+				}
+
+			}
+		});
 	}
 
 	private int checkUserExistInDB(ParseUser user) {
@@ -202,34 +207,34 @@ public class LoginActivity extends Activity {
 						allObjects.addAll(objects);
 						Log.d("queryworking",
 								"size all objects: " + allObjects.size());
-						
+
 						Thread myThread = new Thread(new MyThread());
 						myThread.start();
-						
+
 
 					}
 
 				}
 			});
 		}
-		
+
 
 	}
 
 	private void addObjectsToDb(ArrayList<ParseObject> allObjects) {
 
 		for (int i = 0; i < allObjects.size(); i++) {
-			
+
 			PostObjectsParse object = (PostObjectsParse) allObjects.get(i);
-			
-			
-			  helper.insertData(object.getLatitude(), object.getLongitude(),
-			  object.getAccuracy(), object.getAddress(), object
-			  .getBatteryCharge(), object.getBatteryPrec(), object.getMotion(),
-			  object.getPivotLatitude(), object .getPivotLongitude(),
-			  object.getPivotAccuracy(), object.getCountId(),
-			  object.getDateString(), ParseUser.getCurrentUser().getUsername(),object.getType(),object.getDateWithoutTime());
-			 
+
+
+			helper.insertData(object.getLatitude(), object.getLongitude(),
+					object.getAccuracy(), object.getAddress(), object
+					.getBatteryCharge(), object.getBatteryPrec(), object.getMotion(),
+					object.getPivotLatitude(), object .getPivotLongitude(),
+					object.getPivotAccuracy(), object.getCountId(),
+					object.getDateString(), ParseUser.getCurrentUser().getUsername(),object.getType(),object.getDateWithoutTime());
+
 
 		}
 	}
@@ -238,8 +243,36 @@ public class LoginActivity extends Activity {
 		@Override
 		public void run() {
 			addObjectsToDb(allObjects);
-			
+
 		}
+
+	}
+
+	private void setLoginButton() {
+		Button button = (Button) findViewById(R.id.button_loginscreen);
+		button.setTypeface(setTypeFaceAspire(), Typeface.BOLD);
+		button.setTextSize(35f);
+
+	}
+
+	private Typeface setTypeFaceAspire(){
+		Typeface type = Typeface.createFromAsset(getAssets(),
+				"aspire-demibold.ttf");
+		return type;
+	}
+	
+	private void setUserNameText(){
+		EditText userNameText = (EditText) findViewById(R.id.editText_username_login);
+		userNameText.setTextSize(30f);
+		userNameText.setHintTextColor(Color.BLACK);
+		
+		
+	}
+	private void setPasswordTtext(){
+		EditText userNameText = (EditText) findViewById(R.id.editText_password_login);
+		userNameText.setTextSize(30f);
+		userNameText.setHintTextColor(Color.BLACK);
+		
 		
 	}
 
