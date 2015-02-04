@@ -48,16 +48,7 @@ public class MainActivity extends Activity  {
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
-		textV = (TextView) findViewById(R.id.textview_database);
-		textV.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent dbmman = new Intent(MainActivity.this, AndroidDatabaseManager.class);
-				startActivity(dbmman);
-				
-			}
-		});
+		
 		
 
 	}
@@ -97,6 +88,11 @@ public class MainActivity extends Activity  {
 		}
 		if (id == R.id.action_logout) {
 			logoutAction();
+			return true;
+		}
+		if (id == R.id.database_manager) {
+			Intent dbmman = new Intent(MainActivity.this, AndroidDatabaseManager.class);
+			startActivity(dbmman);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

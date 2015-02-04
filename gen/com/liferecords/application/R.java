@@ -418,7 +418,7 @@ containing a value of this type.
         public static final int register_button=0x7f020023;
     }
     public static final class id {
-        public static final int action_logout=0x7f060023;
+        public static final int action_logout=0x7f060024;
         public static final int action_settings=0x7f060022;
         public static final int book_now=0x7f060010;
         public static final int button_login=0x7f06001e;
@@ -429,6 +429,7 @@ containing a value of this type.
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
         public static final int classic=0x7f060011;
+        public static final int database_manager=0x7f060023;
         public static final int editText_password_login=0x7f060016;
         public static final int editText_username_login=0x7f060015;
         public static final int edittext_signup_name=0x7f060019;
@@ -468,10 +469,10 @@ containing a value of this type.
         public static final int main=0x7f0b0000;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f04002a;
+        public static final int action_forgot_password=0x7f04002b;
         public static final int action_settings=0x7f040022;
-        public static final int action_sign_in_register=0x7f040028;
-        public static final int action_sign_in_short=0x7f040029;
+        public static final int action_sign_in_register=0x7f040029;
+        public static final int action_sign_in_short=0x7f04002a;
         public static final int app_name=0x7f040020;
         public static final int auth_client_needs_enabling_title=0x7f040001;
         public static final int auth_client_needs_installation_title=0x7f040002;
@@ -568,45 +569,46 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f04001e;
-        public static final int error_blank_password=0x7f040032;
-        public static final int error_blank_username=0x7f040031;
-        public static final int error_end=0x7f040035;
-        public static final int error_field_required=0x7f04002f;
-        public static final int error_incorrect_password=0x7f04002e;
-        public static final int error_intro=0x7f040030;
-        public static final int error_invalid_email=0x7f04002c;
-        public static final int error_invalid_password=0x7f04002d;
-        public static final int error_join=0x7f040034;
-        public static final int error_mismatched_passwords=0x7f040033;
+        public static final int database_manger=0x7f040024;
+        public static final int error_blank_password=0x7f040033;
+        public static final int error_blank_username=0x7f040032;
+        public static final int error_end=0x7f040036;
+        public static final int error_field_required=0x7f040030;
+        public static final int error_incorrect_password=0x7f04002f;
+        public static final int error_intro=0x7f040031;
+        public static final int error_invalid_email=0x7f04002d;
+        public static final int error_invalid_password=0x7f04002e;
+        public static final int error_join=0x7f040035;
+        public static final int error_mismatched_passwords=0x7f040034;
         public static final int hello_world=0x7f040021;
-        public static final int location_alert_dialog_message=0x7f040041;
-        public static final int location_alert_dialog_negative=0x7f040043;
-        public static final int location_alert_dialog_positive=0x7f040042;
+        public static final int location_alert_dialog_message=0x7f040042;
+        public static final int location_alert_dialog_negative=0x7f040044;
+        public static final int location_alert_dialog_positive=0x7f040043;
         /**  Main Activity 
          */
-        public static final int location_alert_dialog_title=0x7f040040;
-        public static final int login_button=0x7f04003b;
-        public static final int login_progress_signing_in=0x7f04002b;
-        public static final int logout_menu=0x7f04003c;
-        public static final int menu_dates_text=0x7f040045;
-        public static final int menu_day_or_week_text=0x7f040044;
-        public static final int password_signup=0x7f04003a;
-        public static final int progress_message=0x7f040037;
-        public static final int progress_title=0x7f040036;
-        public static final int screen_signup_button_signup=0x7f040027;
+        public static final int location_alert_dialog_title=0x7f040041;
+        public static final int login_button=0x7f04003c;
+        public static final int login_progress_signing_in=0x7f04002c;
+        public static final int logout_menu=0x7f04003d;
+        public static final int menu_dates_text=0x7f040046;
+        public static final int menu_day_or_week_text=0x7f040045;
+        public static final int password_signup=0x7f04003b;
+        public static final int progress_message=0x7f040038;
+        public static final int progress_title=0x7f040037;
+        public static final int screen_signup_button_signup=0x7f040028;
         /**  Sign Up screen Strings 
          */
-        public static final int screen_signup_name_hint=0x7f040024;
-        public static final int screen_signup_password_hint=0x7f040025;
-        public static final int screen_signup_password_repeat_hint=0x7f040026;
-        public static final int signup_button=0x7f04003f;
-        public static final int title_activity_dispatch=0x7f04003d;
-        public static final int title_activity_login=0x7f040038;
+        public static final int screen_signup_name_hint=0x7f040025;
+        public static final int screen_signup_password_hint=0x7f040026;
+        public static final int screen_signup_password_repeat_hint=0x7f040027;
+        public static final int signup_button=0x7f040040;
+        public static final int title_activity_dispatch=0x7f04003e;
+        public static final int title_activity_login=0x7f040039;
         public static final int title_activity_sign_up=0x7f040023;
-        public static final int title_activity_sign_up_or_login=0x7f04003e;
+        public static final int title_activity_sign_up_or_login=0x7f04003f;
         /**  login screen 
          */
-        public static final int username_signup=0x7f040039;
+        public static final int username_signup=0x7f04003a;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */
