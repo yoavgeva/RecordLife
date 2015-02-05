@@ -3,7 +3,9 @@ package com.liferecords.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferecords.model.DataDateAdapterItem;
 import com.liferecords.model.DateAdapterItem;
+import com.parse.ParseUser;
 
 import android.annotation.TargetApi;
 import android.content.ContentValues;
@@ -67,24 +69,24 @@ public class DataDBAdapter {
 		return countIndex;
 	}
 
-	public void getUserDataBasedOnDate(String day1, String day2) {
+	/*public void getUserDataBasedOnDate(String day1, String day2) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
 		String[] columns = {};
 		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns,
 				HistoryDB.TIMECREATED + " BETWEEN '" + day1 + "' AND '" + day2
-						+ "'", null, null, null, HistoryDB.TIMECREATED
-						+ " DESC");
+				+ "'", null, null, null, HistoryDB.TIMECREATED
+				+ " DESC");
 
-	}
+	}*/
 
-	
+
 	public void getUserDates(List<DateAdapterItem> dates) {
 		SQLiteDatabase db = helper.getWritableDatabase();
-		
-		
+
+
 		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.DATEWITHOUTTIME,HistoryDB.COUNTID};
-		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, null, null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + " = '" + ParseUser.getCurrentUser().getUsername() + "'", null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
 		if(cursor == null){
 			return;
 		}
@@ -92,13 +94,56 @@ public class DataDBAdapter {
 			cursor.close();
 			return;
 		}
-		
+
 		do{
 			DateAdapterItem date = new DateAdapterItem();
 			dates.add(date);
 			date.dateWithoutTime = cursor.getInt(1);
 			date.dateString = cursor.getString(0);
+
+		} while(cursor.moveToNext());
+		cursor.close();
+	}
+
+	public void getUserData(List<DataDateAdapterItem> dates, int dateWithoutTime) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.LATITUDE,HistoryDB.LONGITUDE,HistoryDB.ACCURACY,HistoryDB.ADDRESS,
+				HistoryDB.TYPEADDRESS,HistoryDB.BATTERYCHARGED,HistoryDB.BATTERYPREC,HistoryDB.MOTION,
+				HistoryDB.PIVOTLATITUDE,HistoryDB.PIVOTLONGITUDE,HistoryDB.PIVOTACCURACY,HistoryDB.COUNTID};
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + " = '" 
+				+ ParseUser.getCurrentUser().getUsername() + "'" + " AND " + HistoryDB.DATEWITHOUTTIME + " = '" + dateWithoutTime + "'"
+				, null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+		if(cursor == null){
+			return;
+		}
+		if(!cursor.moveToFirst()){
+			cursor.close();
+			return;
+		}
+
+		do{
+			DataDateAdapterItem date = new DataDateAdapterItem();
+			dates.add(date);
+			date.dateTime = cursor.getString(0);
+			date.latitude = cursor.getDouble(1);
+			date.longitude = cursor.getDouble(2);
+			date.accuracy = cursor.getDouble(3);
+			date.address = cursor.getString(4);
+			date.typeAdress = cursor.getString(5);
+			if(cursor.isNull(6) || cursor.getShort(6) == 0){
+				date.batteryCharged = false;
+				
+			} else {
+				date.batteryCharged = true;
+			}
+			date.batteryPrec = cursor.getInt(7);
+			date.motion = cursor.getInt(8);
+			date.pivotLatitude = cursor.getDouble(9);
+			date.pivotLongitude = cursor.getDouble(10);
+			date.pivotAccuracy = cursor.getDouble(11);
 			
+			
+
 		} while(cursor.moveToNext());
 		cursor.close();
 	}
