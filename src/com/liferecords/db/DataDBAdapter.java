@@ -3,11 +3,6 @@ package com.liferecords.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferecords.model.DataDateAdapterItem;
-import com.liferecords.model.DateAdapterItem;
-import com.parse.ParseUser;
-
-import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,8 +10,11 @@ import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
 import android.util.Log;
+
+import com.liferecords.model.DataDateAdapterItem;
+import com.liferecords.model.DateAdapterItem;
+import com.parse.ParseUser;
 
 public class DataDBAdapter {
 	HistoryDB helper;
@@ -132,7 +130,7 @@ public class DataDBAdapter {
 			date.typeAdress = cursor.getString(5);
 			if(cursor.isNull(6) || cursor.getShort(6) == 0){
 				date.batteryCharged = false;
-				
+
 			} else {
 				date.batteryCharged = true;
 			}
@@ -141,8 +139,8 @@ public class DataDBAdapter {
 			date.pivotLatitude = cursor.getDouble(9);
 			date.pivotLongitude = cursor.getDouble(10);
 			date.pivotAccuracy = cursor.getDouble(11);
-			
-			
+
+
 
 		} while(cursor.moveToNext());
 		cursor.close();

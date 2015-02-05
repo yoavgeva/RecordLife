@@ -35,6 +35,13 @@ public class Model {
 		return items;
 		
 	}
+	
+	public List<DataDateAdapterItem> getDataDateAdapterItems(int dateWithoutTime){
+		List<DataDateAdapterItem> items = new ArrayList<DataDateAdapterItem>();
+		DataDBAdapter helper = new DataDBAdapter(content);
+		helper.getUserData(items, dateWithoutTime);
+		return items;
+	}
 	public Bitmap sendStreeView(double latitude,double longitude){
 		Bitmap bitmap = network.getStreetView(latitude, longitude);
 		return bitmap;
