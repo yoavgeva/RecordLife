@@ -139,6 +139,7 @@ int layout activity_login 0x7f030000
 int layout activity_main 0x7f030001
 int layout activity_sign_up 0x7f030002
 int layout activity_sign_up_or_login 0x7f030003
+int layout day_group 0x7f030004
 int menu main 0x7f0b0000
 int string action_forgot_password 0x7f04002b
 int string action_settings 0x7f040022
