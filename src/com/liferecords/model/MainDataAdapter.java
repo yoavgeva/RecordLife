@@ -4,16 +4,17 @@ package com.liferecords.model;
 import java.util.List;
 import java.util.TreeMap;
 
-import com.liferecords.application.R;
-
-
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
+
+import com.liferecords.application.R;
+import com.parse.ParseUser;
 
 public class MainDataAdapter extends BaseExpandableListAdapter {
 
@@ -84,6 +85,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		}
 		DateAdapterItem item = getGroupItems(groupPosition);
 		CheckedTextView txtGroup = (CheckedTextView) convertView.findViewById(R.id.checked_textview_group);
+		txtGroup.setText(item.dateWithoutTime);
 		return convertView;
 	}
 
@@ -111,11 +113,17 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	}
 
 	private void populate(){
+		
+		Log.d("check if see", "seen " + ParseUser.getCurrentUser().getUsername());
 		this.itemsGroup = this.model.getDateAdapterItems();
+		Log.d("check query result", "" + this.itemsGroup  );
 
-		for (int i = 0; i <= this.itemsGroup.size(); i++) {
-			DateAdapterItem groupObject = (DateAdapterItem)this.itemsGroup.get(i);
-			this.itemsChildren.put(this.itemsGroup.get(i), this.model.getDataDateAdapterItems(groupObject.dateWithoutTime));
+		for (int i = 0; i < this.itemsGroup.size(); i++) {
+			if(this.itemsGroup.get(i) != null){
+			    DateAdapterItem groupObject = (DateAdapterItem)this.itemsGroup.get(i);			
+				this.itemsChildren.put(this.itemsGroup.get(i), this.model.getDataDateAdapterItems(groupObject.dateWithoutTime));
+			}
+			
 		}
 
 

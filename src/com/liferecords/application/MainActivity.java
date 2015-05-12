@@ -1,7 +1,6 @@
  package com.liferecords.application;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -14,14 +13,14 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.liferecords.model.DateAdapterItem;
+import com.liferecords.model.MainDataAdapter;
 import com.liferecords.model.Model;
 import com.liferecords.service.MainService;
 import com.parse.Parse;
@@ -31,7 +30,7 @@ public class MainActivity extends Activity  {
 
 	TextView textV;
 	ActionBar actionBar;
-	private List<DateAdapterItem> dateItems;
+	
 	private Model model;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,8 @@ public class MainActivity extends Activity  {
 		startMainService();
 		actionBar = getActionBar();
 		designActionBar();
-		//populate();
+		createExpListView();
+	
 		
 		
 		if (savedInstanceState == null) {
@@ -188,7 +188,11 @@ public class MainActivity extends Activity  {
 		actionBar.setIcon(R.color.transparent);
 	}
 	
-/*	private void populate(){
-		this.dateItems = this.model.getDateAdapterItems();
-	}*/
+	private void createExpListView(){
+		ExpandableListView exListView = (ExpandableListView) findViewById(R.id.ExListView);
+		MainDataAdapter adapter = new MainDataAdapter(this);
+		exListView.setAdapter(adapter);
+	}
+	
+
 }

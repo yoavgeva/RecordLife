@@ -67,20 +67,24 @@ public class DataDBAdapter {
 		return countIndex;
 	}
 
-	/*public void getUserDataBasedOnDate(String day1, String day2) {
+	public void getUserDates(List<DateAdapterItem> dates) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
-		String[] columns = {};
-		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns,
-				HistoryDB.TIMECREATED + " BETWEEN '" + day1 + "' AND '" + day2
-				+ "'", null, null, null, HistoryDB.TIMECREATED
-				+ " DESC");
 
-	}*/
+		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.DATEWITHOUTTIME,HistoryDB.COUNTID};
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + " = '" + ParseUser.getCurrentUser().getUsername() + "'", null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+		while(cursor.moveToNext()){
+			DateAdapterItem date = new DateAdapterItem();
+			dates.add(date);
+			date.timeCreated = cursor.getInt(0);
+			date.dateWithoutTime = cursor.getInt(1);
+			
+		} 
+	}
 
 	
 
-	public void getUserDates(List<DateAdapterItem> dates) {
+	/*public void getUserDates(List<DateAdapterItem> dates) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
 
@@ -101,18 +105,21 @@ public class DataDBAdapter {
 			date.timeCreated = cursor.getInt(0);
 			
 			
+			
 
 		} while(cursor.moveToNext());
 		cursor.close();
-	}
+	}*/
 
 	public void getUserData(List<ModelAdapterItem> dates, int dateWithoutTime) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.LATITUDE,HistoryDB.LONGITUDE,HistoryDB.ACCURACY,HistoryDB.ADDRESS,
 				HistoryDB.TYPEADDRESS,HistoryDB.BATTERYCHARGED,HistoryDB.BATTERYPREC,HistoryDB.MOTION,
 				HistoryDB.PIVOTLATITUDE,HistoryDB.PIVOTLONGITUDE,HistoryDB.PIVOTACCURACY,HistoryDB.COUNTID,HistoryDB.DATEWITHOUTTIME};
-		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + " = '" 
-				+ ParseUser.getCurrentUser().getUsername() + "'" + " AND " + HistoryDB.DATEWITHOUTTIME + " = '" + dateWithoutTime + "'", null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+		String name = ParseUser.getCurrentUser().getClassName();
+		
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + "= '" 
+				+ ParseUser.getCurrentUser().getUsername() + "'" + " AND " + HistoryDB.DATEWITHOUTTIME + "= '" + dateWithoutTime + "'", null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
 		if(cursor == null){
 			return;
 		}
