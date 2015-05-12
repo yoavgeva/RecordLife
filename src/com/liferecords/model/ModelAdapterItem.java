@@ -16,6 +16,7 @@ public class ModelAdapterItem {
 	public long recordTime;
 	public String userName;
 	public int countId;
+	public int dateOnly;
 	//public Bitmap streetViewImage;
 
 
@@ -40,6 +41,7 @@ public class ModelAdapterItem {
 			userName = item.userName;
 			countId = item.countId;
 			type = item.type;
+			dateOnly = item.dateOnly;
 			//	streetViewImage = item.streetViewImage;
 		}
 	}

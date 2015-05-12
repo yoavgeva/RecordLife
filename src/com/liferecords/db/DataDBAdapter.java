@@ -12,8 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.liferecords.model.DataDateAdapterItem;
 import com.liferecords.model.DateAdapterItem;
+import com.liferecords.model.ModelAdapterItem;
 import com.parse.ParseUser;
 
 public class DataDBAdapter {
@@ -78,6 +78,7 @@ public class DataDBAdapter {
 
 	}*/
 
+	
 
 	public void getUserDates(List<DateAdapterItem> dates) {
 		SQLiteDatabase db = helper.getWritableDatabase();
@@ -97,20 +98,21 @@ public class DataDBAdapter {
 			DateAdapterItem date = new DateAdapterItem();
 			dates.add(date);
 			date.dateWithoutTime = cursor.getInt(1);
-			date.dateString = cursor.getString(0);
+			date.timeCreated = cursor.getInt(0);
+			
+			
 
 		} while(cursor.moveToNext());
 		cursor.close();
 	}
 
-	public void getUserData(List<DataDateAdapterItem> dates, int dateWithoutTime) {
+	public void getUserData(List<ModelAdapterItem> dates, int dateWithoutTime) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.LATITUDE,HistoryDB.LONGITUDE,HistoryDB.ACCURACY,HistoryDB.ADDRESS,
 				HistoryDB.TYPEADDRESS,HistoryDB.BATTERYCHARGED,HistoryDB.BATTERYPREC,HistoryDB.MOTION,
-				HistoryDB.PIVOTLATITUDE,HistoryDB.PIVOTLONGITUDE,HistoryDB.PIVOTACCURACY,HistoryDB.COUNTID};
+				HistoryDB.PIVOTLATITUDE,HistoryDB.PIVOTLONGITUDE,HistoryDB.PIVOTACCURACY,HistoryDB.COUNTID,HistoryDB.DATEWITHOUTTIME};
 		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + " = '" 
-				+ ParseUser.getCurrentUser().getUsername() + "'" + " AND " + HistoryDB.DATEWITHOUTTIME + " = '" + dateWithoutTime + "'"
-				, null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+				+ ParseUser.getCurrentUser().getUsername() + "'" + " AND " + HistoryDB.DATEWITHOUTTIME + " = '" + dateWithoutTime + "'", null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
 		if(cursor == null){
 			return;
 		}
@@ -120,25 +122,27 @@ public class DataDBAdapter {
 		}
 
 		do{
-			DataDateAdapterItem date = new DataDateAdapterItem();
+			ModelAdapterItem date = new ModelAdapterItem();
 			dates.add(date);
-			date.dateTime = cursor.getString(0);
+			date.recordTime = cursor.getLong(0);
 			date.latitude = cursor.getDouble(1);
 			date.longitude = cursor.getDouble(2);
 			date.accuracy = cursor.getDouble(3);
 			date.address = cursor.getString(4);
-			date.typeAdress = cursor.getString(5);
+			date.type = cursor.getString(5);
 			if(cursor.isNull(6) || cursor.getShort(6) == 0){
-				date.batteryCharged = false;
+				date.batteryCharge = false;
 
 			} else {
-				date.batteryCharged = true;
+				date.batteryCharge = true;
 			}
-			date.batteryPrec = cursor.getInt(7);
+			date.batteryPrecent = cursor.getInt(7);
 			date.motion = cursor.getInt(8);
 			date.pivotLatitude = cursor.getDouble(9);
 			date.pivotLongitude = cursor.getDouble(10);
 			date.pivotAccuracy = cursor.getDouble(11);
+			date.countId = cursor.getInt(12);
+			date.dateOnly = cursor.getInt(13);
 
 
 
@@ -228,7 +232,7 @@ public class DataDBAdapter {
 				+ PIVOTLONGITUDE + " DOUBLE NOT NULL, " + PIVOTACCURACY
 				+ " DOUBLE NOT NULL, " + COUNTID + " INTEGER NOT NULL, "
 				+ DATEWITHOUTTIME + " INTEGER NOT NULL, " + USERID
-				+ " VARCHAR(255) NOT NULL, " + TIMECREATED + " TEXT);";
+				+ " VARCHAR(255) NOT NULL, " + TIMECREATED + " INTEGER NOT NULL);";
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS "
 				+ TABLE_HISTORY;
 

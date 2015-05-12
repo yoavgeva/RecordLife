@@ -1,11 +1,29 @@
 package com.liferecords.model;
 
+
+import java.util.List;
+import java.util.TreeMap;
+
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
 public class MainDataAdapter extends BaseExpandableListAdapter {
-
+	
+	
+	private final Context context;
+	private final Model model;	
+	private List<DateAdapterItem> itemsGroup;
+	private TreeMap<DateAdapterItem,List<ModelAdapterItem>> itemsChildren;
+	
+	
+	public MainDataAdapter(Context context){
+		this.context = context;
+		this.model = new Model(this.context);
+		populate();
+	}
+	
 	@Override
 	public int getGroupCount() {
 		// TODO Auto-generated method stub
@@ -66,6 +84,17 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	private void populate(){
+		this.itemsGroup = this.model.getDateAdapterItems();
+		
+		for (int i = 0; i <= this.itemsGroup.size(); i++) {
+			DateAdapterItem groupObject = (DateAdapterItem)this.itemsGroup.get(i);
+			this.itemsChildren.put(this.itemsGroup.get(i), this.model.getDataDateAdapterItems(groupObject.dateWithoutTime));
+		}
+		
+		
 	}
 
 }
