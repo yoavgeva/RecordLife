@@ -26,6 +26,7 @@ public class Model {
 		
 	}
 	
+		
 	public List<DateAdapterItem> getDateAdapterItems(){
 		List<DateAdapterItem> items = new ArrayList<DateAdapterItem>();
 		DataDBAdapter helper = new DataDBAdapter(content);
@@ -36,8 +37,8 @@ public class Model {
 		
 	}
 	
-	public List<DataDateAdapterItem> getDataDateAdapterItems(int dateWithoutTime){
-		List<DataDateAdapterItem> items = new ArrayList<DataDateAdapterItem>();
+	public List<ModelAdapterItem> getDataDateAdapterItems(int dateWithoutTime){
+		List<ModelAdapterItem> items = new ArrayList<ModelAdapterItem>();
 		DataDBAdapter helper = new DataDBAdapter(content);
 		helper.getUserData(items, dateWithoutTime);
 		return items;
