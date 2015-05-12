@@ -418,8 +418,8 @@ containing a value of this type.
         public static final int register_button=0x7f020023;
     }
     public static final class id {
-        public static final int action_logout=0x7f060024;
-        public static final int action_settings=0x7f060022;
+        public static final int action_logout=0x7f060025;
+        public static final int action_settings=0x7f060023;
         public static final int book_now=0x7f060010;
         public static final int button_login=0x7f06001e;
         public static final int button_loginscreen=0x7f060017;
@@ -429,7 +429,7 @@ containing a value of this type.
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
         public static final int classic=0x7f060011;
-        public static final int database_manager=0x7f060023;
+        public static final int database_manager=0x7f060024;
         public static final int editText_password_login=0x7f060016;
         public static final int editText_username_login=0x7f060015;
         public static final int edittext_signup_name=0x7f060019;
@@ -442,8 +442,8 @@ containing a value of this type.
         public static final int linear_login=0x7f060014;
         public static final int linear_signup_login=0x7f06001d;
         public static final int match_parent=0x7f06000c;
-        public static final int menu_main_spinner_dates=0x7f060021;
-        public static final int menu_main_spinner_day_or_week=0x7f060020;
+        public static final int menu_main_spinner_dates=0x7f060022;
+        public static final int menu_main_spinner_day_or_week=0x7f060021;
         public static final int monochrome=0x7f060013;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
@@ -453,6 +453,7 @@ containing a value of this type.
         public static final int selectionDetails=0x7f06000b;
         public static final int strict_sandbox=0x7f060009;
         public static final int terrain=0x7f060003;
+        public static final int textView1=0x7f060020;
         public static final int textview_database=0x7f060018;
         public static final int wrap_content=0x7f06000d;
     }
@@ -464,7 +465,8 @@ containing a value of this type.
         public static final int activity_main=0x7f030001;
         public static final int activity_sign_up=0x7f030002;
         public static final int activity_sign_up_or_login=0x7f030003;
-        public static final int day_group=0x7f030004;
+        public static final int listrow_details=0x7f030004;
+        public static final int listrow_group=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;

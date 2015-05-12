@@ -1,7 +1,5 @@
 package com.liferecords.model;
 
-import android.graphics.Bitmap;
-
 public class ModelAdapterItem {
 
 	public Double latitude;
@@ -18,14 +16,15 @@ public class ModelAdapterItem {
 	public long recordTime;
 	public String userName;
 	public int countId;
-	public Bitmap streetViewImage;
-	
-	
+	//public Bitmap streetViewImage;
+
+
 	public ModelAdapterItem() {
-		
+
 	}
-	
+
 	public ModelAdapterItem(ModelAdapterItem item){
+		super();
 		if(item != null){
 			latitude = item.latitude;
 			longitude = item.longitude;
@@ -41,7 +40,7 @@ public class ModelAdapterItem {
 			userName = item.userName;
 			countId = item.countId;
 			type = item.type;
-			streetViewImage = item.streetViewImage;
+			//	streetViewImage = item.streetViewImage;
 		}
 	}
 
@@ -54,11 +53,10 @@ public class ModelAdapterItem {
 				+ ", pivotLatitude=" + pivotLatitude + ", pivotLongitude="
 				+ pivotLongitude + ", pivotAccuracy=" + pivotAccuracy
 				+ ", recordTime=" + recordTime + ", userName=" + userName
-				+ ", countId=" + countId + ", streetViewImage="
-				+ streetViewImage + "]";
+				+ ", countId=" + countId +  "]";
 	}
 
-	
 
-	
+
+
 }
