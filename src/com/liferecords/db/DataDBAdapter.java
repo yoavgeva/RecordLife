@@ -110,8 +110,46 @@ public class DataDBAdapter {
 		} while(cursor.moveToNext());
 		cursor.close();
 	}*/
-
+	
 	public void getUserData(List<ModelAdapterItem> dates, int dateWithoutTime) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.LATITUDE,HistoryDB.LONGITUDE,HistoryDB.ACCURACY,HistoryDB.ADDRESS,
+				HistoryDB.TYPEADDRESS,HistoryDB.BATTERYCHARGED,HistoryDB.BATTERYPREC,HistoryDB.MOTION,
+				HistoryDB.PIVOTLATITUDE,HistoryDB.PIVOTLONGITUDE,HistoryDB.PIVOTACCURACY,HistoryDB.COUNTID,HistoryDB.DATEWITHOUTTIME};
+		String name = ParseUser.getCurrentUser().getClassName();
+		
+		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + "= '" 
+				+ ParseUser.getCurrentUser().getUsername() + "'" + " AND " + HistoryDB.DATEWITHOUTTIME + "= '" + dateWithoutTime + "'", null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+		while(cursor.moveToNext()){
+		
+			ModelAdapterItem date = new ModelAdapterItem();
+			dates.add(date);
+			date.recordTime = cursor.getLong(0);
+			date.latitude = cursor.getDouble(1);
+			date.longitude = cursor.getDouble(2);
+			date.accuracy = cursor.getDouble(3);
+			date.address = cursor.getString(4);
+			date.type = cursor.getString(5);
+			if(cursor.isNull(6) || cursor.getShort(6) == 0){
+				date.batteryCharge = false;
+
+			} else {
+				date.batteryCharge = true;
+			}
+			date.batteryPrecent = cursor.getInt(7);
+			date.motion = cursor.getInt(8);
+			date.pivotLatitude = cursor.getDouble(9);
+			date.pivotLongitude = cursor.getDouble(10);
+			date.pivotAccuracy = cursor.getDouble(11);
+			date.countId = cursor.getInt(12);
+			date.dateOnly = cursor.getInt(13);
+
+
+
+		} 
+	}
+
+	/*public void getUserData(List<ModelAdapterItem> dates, int dateWithoutTime) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.LATITUDE,HistoryDB.LONGITUDE,HistoryDB.ACCURACY,HistoryDB.ADDRESS,
 				HistoryDB.TYPEADDRESS,HistoryDB.BATTERYCHARGED,HistoryDB.BATTERYPREC,HistoryDB.MOTION,
@@ -155,7 +193,7 @@ public class DataDBAdapter {
 
 		} while(cursor.moveToNext());
 		cursor.close();
-	}
+	}*/
 
 	public ArrayList<Cursor> getData(String Query) {
 		// get writable database
