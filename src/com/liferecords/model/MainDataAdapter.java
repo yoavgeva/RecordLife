@@ -1,6 +1,7 @@
 package com.liferecords.model;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -22,7 +23,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private final Context context;
 	private final Model model;	
 	private List<DateAdapterItem> itemsGroup;
-	private TreeMap<DateAdapterItem,List<ModelAdapterItem>> itemsChildren;
+	private List<ModelAdapterItem> itemsChildrenAlpha;
+	private HashMap<DateAdapterItem,List<ModelAdapterItem>> itemsChildren;
 
 
 	public MainDataAdapter(Context context){
@@ -85,7 +87,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		}
 		DateAdapterItem item = getGroupItems(groupPosition);
 		CheckedTextView txtGroup = (CheckedTextView) convertView.findViewById(R.id.checked_textview_group);
-		txtGroup.setText(item.dateWithoutTime);
+		txtGroup.setText("" + item.dateWithoutTime);
 		return convertView;
 	}
 
@@ -116,15 +118,19 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		
 		Log.d("check if see", "seen " + ParseUser.getCurrentUser().getUsername());
 		this.itemsGroup = this.model.getDateAdapterItems();
-		Log.d("check query result", "" + this.itemsGroup  );
+		/*Log.d("check query result", "" + this.itemsGroup.size()  );
+		this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
+		Log.d("check if see", "seen children alpha " + this.itemsChildrenAlpha.size());
 
 		for (int i = 0; i < this.itemsGroup.size(); i++) {
-			if(this.itemsGroup.get(i) != null){
-			    DateAdapterItem groupObject = (DateAdapterItem)this.itemsGroup.get(i);			
-				this.itemsChildren.put(this.itemsGroup.get(i), this.model.getDataDateAdapterItems(groupObject.dateWithoutTime));
+			 DateAdapterItem groupObject = (DateAdapterItem)this.itemsGroup.get(i);
+			
+			 
+			if(this.itemsGroup.get(i) != null ){			   			
+				this.itemsChildren.put(this.itemsGroup.get(i).timeCreated, this.model.getDataDateAdapterItems(groupObject.dateWithoutTime));
 			}
 			
-		}
+		}*/
 
 
 	}

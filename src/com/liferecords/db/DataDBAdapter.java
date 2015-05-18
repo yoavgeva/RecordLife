@@ -111,15 +111,15 @@ public class DataDBAdapter {
 		cursor.close();
 	}*/
 	
-	public void getUserData(List<ModelAdapterItem> dates, int dateWithoutTime) {
+	public void getUserData(List<ModelAdapterItem> dates) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		String[] columns = {HistoryDB.TIMECREATED,HistoryDB.LATITUDE,HistoryDB.LONGITUDE,HistoryDB.ACCURACY,HistoryDB.ADDRESS,
 				HistoryDB.TYPEADDRESS,HistoryDB.BATTERYCHARGED,HistoryDB.BATTERYPREC,HistoryDB.MOTION,
 				HistoryDB.PIVOTLATITUDE,HistoryDB.PIVOTLONGITUDE,HistoryDB.PIVOTACCURACY,HistoryDB.COUNTID,HistoryDB.DATEWITHOUTTIME};
-		String name = ParseUser.getCurrentUser().getClassName();
+		
 		
 		Cursor cursor = db.query(HistoryDB.TABLE_HISTORY, columns, HistoryDB.USERID + "= '" 
-				+ ParseUser.getCurrentUser().getUsername() + "'" + " AND " + HistoryDB.DATEWITHOUTTIME + "= '" + dateWithoutTime + "'", null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
+				+ ParseUser.getCurrentUser().getUsername() + "'" , null, HistoryDB.DATEWITHOUTTIME, null, HistoryDB.DATEWITHOUTTIME + " DESC");
 		while(cursor.moveToNext()){
 		
 			ModelAdapterItem date = new ModelAdapterItem();

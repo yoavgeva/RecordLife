@@ -37,10 +37,11 @@ public class Model {
 		
 	}
 	
-	public List<ModelAdapterItem> getDataDateAdapterItems(int dateWithoutTime){
+	//remove datewithouttime from the method parameters
+	public List<ModelAdapterItem> getDataDateAdapterItems(){
 		List<ModelAdapterItem> items = new ArrayList<ModelAdapterItem>();
 		DataDBAdapter helper = new DataDBAdapter(content);
-		helper.getUserData(items, dateWithoutTime);
+		helper.getUserData(items);
 		return items;
 	}
 	public Bitmap sendStreeView(double latitude,double longitude){
