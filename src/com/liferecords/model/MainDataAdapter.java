@@ -1,9 +1,10 @@
 package com.liferecords.model;
 
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
 
 import android.content.Context;
 import android.util.Log;
@@ -98,13 +99,16 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
+		
+		final ModelAdapterItem childText =  (ModelAdapterItem) getChild(groupPosition, childPosition);
 		if(convertView == null){
 			LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.listrow_details, parent,false);
 		}
 		ModelAdapterItem item = getChildItems(childPosition);
+		//Log.d("check query result of children", "" + item.toString()  );
 		TextView  txtChild = (TextView) convertView.findViewById(R.id.textViewDetails);
-		txtChild.setText(item.address);
+		txtChild.setText(childText.address);
 		return convertView;
 	}
 
@@ -118,19 +122,48 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		
 		Log.d("check if see", "seen " + ParseUser.getCurrentUser().getUsername());
 		this.itemsGroup = this.model.getDateAdapterItems();
-		/*Log.d("check query result", "" + this.itemsGroup.size()  );
-		this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
-		Log.d("check if see", "seen children alpha " + this.itemsChildrenAlpha.size());
+		Collections.sort(itemsGroup, new Comparator<DateAdapterItem>() {
 
+			@Override
+			public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
+				
+				return lhs.dateWithoutTime - rhs.dateWithoutTime;
+			}
+
+			
+		});
+		Log.d("check query result", "" + this.itemsGroup.size()  );
+		Log.d("check query result", "" + this.itemsGroup.toString()  );
+		//this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
+		//Log.d("check if see", "seen children alpha " + this.itemsChildrenAlpha.size());
+		this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
+		Collections.sort(itemsChildrenAlpha, new Comparator<ModelAdapterItem>() {
+
+			@Override
+			public int compare(ModelAdapterItem lhs, ModelAdapterItem rhs) {
+				
+				return (int) (rhs.recordTime-lhs.recordTime);
+			}
+
+			
+			
+		});
+		
+		this.itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();
 		for (int i = 0; i < this.itemsGroup.size(); i++) {
 			 DateAdapterItem groupObject = (DateAdapterItem)this.itemsGroup.get(i);
 			
-			 
-			if(this.itemsGroup.get(i) != null ){			   			
-				this.itemsChildren.put(this.itemsGroup.get(i).timeCreated, this.model.getDataDateAdapterItems(groupObject.dateWithoutTime));
+			Log.d("check query result of children", "" + this.itemsChildrenAlpha.size()  );
+			Log.d("check query result of children", "" + this.itemsChildrenAlpha.get(0).toString()  );
+			if(groupObject != null){
+				this.itemsChildren.put(groupObject, this.itemsChildrenAlpha);
+				Log.d("check query result of children", "" + this.itemsChildren.get(groupObject).toString()  );
 			}
 			
-		}*/
+			
+		}
+
+	
 
 
 	}

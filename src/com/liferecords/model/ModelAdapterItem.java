@@ -14,7 +14,7 @@ public class ModelAdapterItem {
 	public Double pivotLongitude;
 	public double pivotAccuracy;
 	public long recordTime;
-	public String userName;
+	//public String userName;
 	public int countId;
 	public int dateOnly;
 	//public Bitmap streetViewImage;
@@ -38,7 +38,7 @@ public class ModelAdapterItem {
 			pivotLongitude = item.pivotLongitude;
 			pivotAccuracy = item.pivotAccuracy;
 			recordTime = item.recordTime;
-			userName = item.userName;
+			
 			countId = item.countId;
 			type = item.type;
 			dateOnly = item.dateOnly;
@@ -54,11 +54,11 @@ public class ModelAdapterItem {
 				+ ", batteryCharge=" + batteryCharge + ", motion=" + motion
 				+ ", pivotLatitude=" + pivotLatitude + ", pivotLongitude="
 				+ pivotLongitude + ", pivotAccuracy=" + pivotAccuracy
-				+ ", recordTime=" + recordTime + ", userName=" + userName
-				+ ", countId=" + countId +  "]";
+				+ ", recordTime=" + recordTime + ", countId=" + countId
+				+ ", dateOnly=" + dateOnly + "]";
 	}
 
-
+	
 
 
 }

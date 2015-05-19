@@ -86,9 +86,12 @@ public class SyncService extends IntentService {
 		}
 		model.account.data.sendGetAddress();
 	}
-	
+	//added 2nd if to deny status sent if address or latitude are empty
 	private void sendStatus(){
 		if(stop){
+			return;
+		}
+		if(model.account.data.getLatitude() == null || model.account.data.getLatitude() == 0 ){
 			return;
 		}
 		model.account.data.postDataToParse();

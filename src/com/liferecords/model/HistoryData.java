@@ -207,12 +207,16 @@ public class HistoryData {
 		return distance;
 	}
 
+	//added the if need to check if works
 	public void postDataToParse() {
-
 		toLoadPref();
+		if(latitude != null || latitude != 0){
+
+		
 		loadToDB();
 		loadToParse();
 		saveCountID();
+		}
 	}
 
 	private void toLoadPref() {
