@@ -13,7 +13,7 @@ public class ModelAdapterItem {
 	public Double pivotLatitude;
 	public Double pivotLongitude;
 	public double pivotAccuracy;
-	public long recordTime;
+	public String recordTime;
 	//public String userName;
 	public int countId;
 	public int dateOnly;

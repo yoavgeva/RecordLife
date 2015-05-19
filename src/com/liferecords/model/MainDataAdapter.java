@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,15 +105,12 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
-		final ModelAdapterItem childText =  (ModelAdapterItem) getChild(groupPosition, childPosition);
+		final ModelAdapterItem childView =  (ModelAdapterItem) getChild(groupPosition, childPosition);
 		if(convertView == null){
 			LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.listrow_details, parent,false);
 		}
-		ModelAdapterItem item = getChildItems(childPosition);
-		//Log.d("check query result of children", "" + item.toString()  );
-		TextView  txtChild = (TextView) convertView.findViewById(R.id.textViewDetails);
-		txtChild.setText(childText.address);
+		setChildView(childView, convertView);
 		return convertView;
 	}
 
@@ -117,55 +119,94 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+private void setChildView(ModelAdapterItem childView,View convertView){
+		TextView txtAdress = (TextView) convertView.findViewById(R.id.textViewDetails);
+		txtAdress.setText(childView.address);
+		TextView txtTime = (TextView) convertView.findViewById(R.id.textView_details_time);
+		String instanceTime = childView.recordTime.substring(9, 10) + ":" + childView.recordTime.substring(11, 12) + ":" + childView.recordTime.substring(13, 14);
+		txtTime.setText(instanceTime);
+		TextView txtMotion = (TextView) convertView.findViewById(R.id.textView_details_battery);
+		setMotionPicture(txtMotion,childView);
+		TextView txtType = (TextView) convertView.findViewById(R.id.textView_details_type);
+		setTypePicture(txtType,childView);
+		
+	}
+
+private void setTypePicture(TextView txtType, ModelAdapterItem childView) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+private void setMotionPicture(TextView txtMotion,ModelAdapterItem childView){
+	if(childView.motion == 0){
+		Bitmap motionIconBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_motion_driving);
+		 Drawable motionIcon = new BitmapDrawable(context.getResources(), motionIconBit);
+		 txtMotion.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null, null, null);
+		 txtMotion.setText(context.getResources().getText(R.string.details_motion_driving));
+	}
+	else if (childView.motion == 1){
+		Bitmap motionIconBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_motion_cycling);
+		 Drawable motionIcon = new BitmapDrawable(context.getResources(), motionIconBit);
+		 txtMotion.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null, null, null);
+		 txtMotion.setText(context.getResources().getText(R.string.details_motion_cycling));
+		
+	} else if (childView.motion == 8){
+		Bitmap motionIconBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_motion_running);
+		 Drawable motionIcon = new BitmapDrawable(context.getResources(), motionIconBit);
+		 txtMotion.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null, null, null);
+		 txtMotion.setText(context.getResources().getText(R.string.details_motion_running));
+		
+	} else if (childView.motion == 7 || childView.motion == 2){
+		Bitmap motionIconBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_motion_walking);
+		 Drawable motionIcon = new BitmapDrawable(context.getResources(), motionIconBit);
+		 txtMotion.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null, null, null);
+		 txtMotion.setText(context.getResources().getText(R.string.details_motion_walking));
+		 
+	} else {
+		Bitmap motionIconBit = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_motion_standing);
+		 Drawable motionIcon = new BitmapDrawable(context.getResources(), motionIconBit);
+		 txtMotion.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null, null, null);
+		 txtMotion.setText(context.getResources().getText(R.string.details_motion_standing));
+	
+		
+	} 
+}
+
 
 	private void populate(){
 		
 		Log.d("check if see", "seen " + ParseUser.getCurrentUser().getUsername());
 		this.itemsGroup = this.model.getDateAdapterItems();
 		Collections.sort(itemsGroup, new Comparator<DateAdapterItem>() {
-
 			@Override
 			public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
-				
 				return lhs.dateWithoutTime - rhs.dateWithoutTime;
 			}
-
-			
 		});
 		Log.d("check query result", "" + this.itemsGroup.size()  );
 		Log.d("check query result", "" + this.itemsGroup.toString()  );
-		//this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
-		//Log.d("check if see", "seen children alpha " + this.itemsChildrenAlpha.size());
+		
 		this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
 		Collections.sort(itemsChildrenAlpha, new Comparator<ModelAdapterItem>() {
-
 			@Override
-			public int compare(ModelAdapterItem lhs, ModelAdapterItem rhs) {
-				
-				return (int) (rhs.recordTime-lhs.recordTime);
-			}
-
-			
-			
+			public int compare(ModelAdapterItem lhs, ModelAdapterItem rhs) {				
+				return  (lhs.countId-rhs.countId);
+			}		
 		});
 		
 		this.itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();
 		for (int i = 0; i < this.itemsGroup.size(); i++) {
 			 DateAdapterItem groupObject = (DateAdapterItem)this.itemsGroup.get(i);
-			
 			Log.d("check query result of children", "" + this.itemsChildrenAlpha.size()  );
 			Log.d("check query result of children", "" + this.itemsChildrenAlpha.get(0).toString()  );
 			if(groupObject != null){
 				this.itemsChildren.put(groupObject, this.itemsChildrenAlpha);
 				Log.d("check query result of children", "" + this.itemsChildren.get(groupObject).toString()  );
-			}
-			
-			
-		}
-
-	
-
-
+			}					
+		}	
 	}
-
+	
+	
 }

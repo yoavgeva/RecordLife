@@ -404,23 +404,31 @@ containing a value of this type.
         public static final int common_signin_btn_text_normal_light=0x7f020015;
         public static final int common_signin_btn_text_pressed_dark=0x7f020016;
         public static final int common_signin_btn_text_pressed_light=0x7f020017;
-        public static final int ic_launcher=0x7f020018;
-        public static final int ic_password_picture=0x7f020019;
-        public static final int ic_plusone_medium_off_client=0x7f02001a;
-        public static final int ic_plusone_small_off_client=0x7f02001b;
-        public static final int ic_plusone_standard_off_client=0x7f02001c;
-        public static final int ic_plusone_tall_off_client=0x7f02001d;
-        public static final int ic_username_picture=0x7f02001e;
-        public static final int phone_register_edittext=0x7f02001f;
-        public static final int powered_by_google_dark=0x7f020020;
-        public static final int powered_by_google_light=0x7f020021;
-        public static final int regi_backgorund=0x7f020022;
-        public static final int register_button=0x7f020023;
+        public static final int ic_0battery_charging=0x7f020018;
+        public static final int ic_0battery_discharging=0x7f020019;
+        public static final int ic_launcher=0x7f02001a;
+        public static final int ic_motion_cycling=0x7f02001b;
+        public static final int ic_motion_driving=0x7f02001c;
+        public static final int ic_motion_running=0x7f02001d;
+        public static final int ic_motion_standing=0x7f02001e;
+        public static final int ic_motion_walking=0x7f02001f;
+        public static final int ic_password_picture=0x7f020020;
+        public static final int ic_plusone_medium_off_client=0x7f020021;
+        public static final int ic_plusone_small_off_client=0x7f020022;
+        public static final int ic_plusone_standard_off_client=0x7f020023;
+        public static final int ic_plusone_tall_off_client=0x7f020024;
+        public static final int ic_type_road=0x7f020025;
+        public static final int ic_username_picture=0x7f020026;
+        public static final int phone_register_edittext=0x7f020027;
+        public static final int powered_by_google_dark=0x7f020028;
+        public static final int powered_by_google_light=0x7f020029;
+        public static final int regi_backgorund=0x7f02002a;
+        public static final int register_button=0x7f02002b;
     }
     public static final class id {
         public static final int ExListView=0x7f060018;
-        public static final int action_logout=0x7f060026;
-        public static final int action_settings=0x7f060024;
+        public static final int action_logout=0x7f06002a;
+        public static final int action_settings=0x7f060028;
         public static final int book_now=0x7f060010;
         public static final int button_login=0x7f06001e;
         public static final int button_loginscreen=0x7f060017;
@@ -429,9 +437,9 @@ containing a value of this type.
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
-        public static final int checked_textview_group=0x7f060021;
+        public static final int checked_textview_group=0x7f060025;
         public static final int classic=0x7f060011;
-        public static final int database_manager=0x7f060025;
+        public static final int database_manager=0x7f060029;
         public static final int editText_password_login=0x7f060016;
         public static final int editText_username_login=0x7f060015;
         public static final int edittext_signup_name=0x7f060019;
@@ -444,8 +452,8 @@ containing a value of this type.
         public static final int linear_login=0x7f060014;
         public static final int linear_signup_login=0x7f06001d;
         public static final int match_parent=0x7f06000c;
-        public static final int menu_main_spinner_dates=0x7f060023;
-        public static final int menu_main_spinner_day_or_week=0x7f060022;
+        public static final int menu_main_spinner_dates=0x7f060027;
+        public static final int menu_main_spinner_day_or_week=0x7f060026;
         public static final int monochrome=0x7f060013;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
@@ -456,6 +464,10 @@ containing a value of this type.
         public static final int strict_sandbox=0x7f060009;
         public static final int terrain=0x7f060003;
         public static final int textViewDetails=0x7f060020;
+        public static final int textView_details_battery=0x7f060024;
+        public static final int textView_details_motion=0x7f060022;
+        public static final int textView_details_time=0x7f060021;
+        public static final int textView_details_type=0x7f060023;
         public static final int wrap_content=0x7f06000d;
     }
     public static final class integer {
@@ -574,6 +586,11 @@ containing a value of this type.
          */
         public static final int common_signin_button_text_long=0x7f04001e;
         public static final int database_manger=0x7f040024;
+        public static final int details_motion_cycling=0x7f04004a;
+        public static final int details_motion_driving=0x7f04004c;
+        public static final int details_motion_running=0x7f040049;
+        public static final int details_motion_standing=0x7f040048;
+        public static final int details_motion_walking=0x7f04004b;
         public static final int error_blank_password=0x7f040033;
         public static final int error_blank_username=0x7f040032;
         public static final int error_end=0x7f040036;
@@ -597,6 +614,7 @@ containing a value of this type.
         public static final int menu_dates_text=0x7f040046;
         public static final int menu_day_or_week_text=0x7f040045;
         public static final int password_signup=0x7f04003b;
+        public static final int picture_battery=0x7f040047;
         public static final int progress_message=0x7f040038;
         public static final int progress_title=0x7f040037;
         public static final int screen_signup_button_signup=0x7f040028;

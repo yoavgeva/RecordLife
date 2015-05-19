@@ -173,7 +173,7 @@ public class DataDBAdapter {
 		do{
 			ModelAdapterItem date = new ModelAdapterItem();
 			
-			date.recordTime = cursor.getLong(0);
+			date.recordTime = cursor.getString(0);
 			date.latitude = cursor.getDouble(1);
 			date.longitude = cursor.getDouble(2);
 			date.accuracy = cursor.getDouble(3);

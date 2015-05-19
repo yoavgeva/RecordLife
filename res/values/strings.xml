@@ -46,5 +46,12 @@
     <string name="location_alert_dialog_negative">Cancel</string>
     <string name="menu_day_or_week_text">Day</string>
     <string name="menu_dates_text">Dates</string>
+    <string name="picture_battery">Battery status</string>
+    <string name="details_motion_standing">Standing</string>
+    <string name="details_motion_running">Running</string>
+    <string name="details_motion_cycling">Cycling</string>
+    <string name="details_motion_walking">Walking</string>
+    <string name="details_motion_driving">Driving</string>
+    
 
 </resources>
