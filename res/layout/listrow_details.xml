@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="vertical"
     tools:context=".MainActivity" >
@@ -33,7 +33,7 @@
             android:id="@+id/textView_details_motion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_motion_walking"
+            android:drawableLeft="@drawable/ic_motion_standing"
             android:textSize="14sp"/>
         <TextView 
             android:id="@+id/textView_details_type"
@@ -43,7 +43,7 @@
             android:textSize="14sp"/>
 
         <ImageView 
-            android:id="@+id/textView_details_battery"
+            android:id="@+id/imageView_details_battery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/picture_battery"
