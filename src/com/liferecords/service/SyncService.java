@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.os.BatteryManager;
 import android.os.Binder;
 import android.os.IBinder;
@@ -87,14 +88,28 @@ public class SyncService extends IntentService {
 		model.account.data.sendGetAddress();
 	}
 	//added 2nd if to deny status sent if address or latitude are empty
+	//added 3rd if to deny status update if gps not working
 	private void sendStatus(){
 		if(stop){
 			return;
 		}
 		if(model.account.data.getLatitude() == null || model.account.data.getLatitude() == 0 ){
 			return;
+		} 
+		if(!checkGpsWorking()){
+			return;
 		}
 		model.account.data.postDataToParse();
+	}
+	
+	private boolean checkGpsWorking() {
+		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean isEnabled = locationManager
+				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		isEnabled |= locationManager
+				.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		return isEnabled;
+
 	}
 
 }
