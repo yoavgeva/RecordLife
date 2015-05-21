@@ -1,10 +1,12 @@
  package com.liferecords.application;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -17,19 +19,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.liferecords.model.MainDataAdapter;
+import com.liferecords.model.MapInterFace;
 import com.liferecords.model.Model;
+import com.liferecords.model.ModelAdapterItem;
 import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity implements MapInterFace {
 
 	TextView textV;
 	ActionBar actionBar;
+	
 	
 	private Model model;
 	@Override
@@ -152,6 +158,7 @@ public class MainActivity extends Activity  {
 			ArrayList<String> itemList = new ArrayList<String>();
 			itemList.add("Day");
 			itemList.add("Week");
+			
 			ArrayAdapter<String> dayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1,itemList);
 			spinner.setAdapter(dayAdapter);
 			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -192,7 +199,17 @@ public class MainActivity extends Activity  {
 		ExpandableListView exListView = (ExpandableListView) findViewById(R.id.ExListView);
 		MainDataAdapter adapter = new MainDataAdapter(this);
 		exListView.setAdapter(adapter);
+		
 	}
+
+	@Override
+	public void respond(List<ModelAdapterItem> mapItems) {
+		FragmentManager manager = getFragmentManager();
+		LocationFragment mapFragment =	(LocationFragment) manager.findFragmentById(R.id.location_map);
+		mapFragment.setItems(mapItems);
+		
+	}
+	
 	
 
 }

@@ -11,15 +11,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.liferecords.application.MainActivity;
 import com.liferecords.application.R;
 import com.parse.ParseUser;
 
@@ -31,7 +34,9 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private List<ModelAdapterItem> itemsChildrenAlpha;
 	private List<ModelAdapterItem> itemsChildrenBeta;
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
+	
 
+	// added haspmap and list<dateadapteritem>
 	public MainDataAdapter(Context context) {
 		this.context = context;
 		this.model = new Model(this.context);
@@ -95,11 +100,49 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 			convertView = inflater.inflate(R.layout.listrow_group, parent,
 					false);
 		}
-		DateAdapterItem item = getGroupItems(groupPosition);
-		CheckedTextView txtGroup = (CheckedTextView) convertView
+
+		TextView txtGroup = (TextView) convertView
 				.findViewById(R.id.checked_textview_group);
-		txtGroup.setText("" + item.dateWithoutTime);
+		setGroupContent(txtGroup, convertView, groupPosition);
+
 		return convertView;
+	}
+
+	private void setGroupContent(TextView txtGroup, View convertView,
+			int groupPosition) {
+		final DateAdapterItem item = getGroupItems(groupPosition);
+		txtGroup.setText("" + item.dateWithoutTime);
+		ImageView imageGroupMap = (ImageView) convertView
+				.findViewById(R.id.group_map_icon);
+		setPictureImage(R.drawable.ic_map, imageGroupMap);
+		imageGroupMap.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				List<ModelAdapterItem> itemsMap = new ArrayList<ModelAdapterItem>();
+				ModelAdapterItem addedItem = new ModelAdapterItem();
+				addedItem = itemsChildren.get(item).get(0);
+				itemsMap.add(addedItem);
+
+				for (int i = 1; i < itemsChildren.get(item).size(); i++) {
+
+					float distance = distanceBetween(addedItem.latitude,
+							addedItem.longitude,
+							itemsChildren.get(item).get(i).latitude,
+							itemsChildren.get(item).get(i).longitude);
+					if (distance >= 100) {
+						addedItem = itemsChildren.get(item).get(i);
+						itemsMap.add(addedItem);
+					}
+				}
+				
+				if(context instanceof MainActivity){
+					((MainActivity) context).respond(itemsMap);
+				}
+
+			}
+		});
+
 	}
 
 	public ModelAdapterItem getChildItems(int position) {
@@ -261,6 +304,15 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		txtSubject.setText(context.getResources().getText(resString));
 	}
 
+	public float distanceBetween(double startlangtitude, double startlongitude,
+			double endlangitude, double endlongitude) {
+		float[] results = new float[2];
+		Location.distanceBetween(startlangtitude, startlongitude, endlangitude,
+				endlongitude, results);
+		float distance = results[0];
+		return distance;
+	}
+
 	private void populate() {
 
 		Log.d("check if see", "seen "
@@ -269,7 +321,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		Collections.sort(itemsGroup, new Comparator<DateAdapterItem>() {
 			@Override
 			public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
-				return lhs.dateWithoutTime - rhs.dateWithoutTime;
+				return rhs.dateWithoutTime - lhs.dateWithoutTime;
 			}
 		});
 		Log.d("check query result", "" + this.itemsGroup.size());
@@ -309,5 +361,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 			}
 		}
 	}
+
+	
 
 }
