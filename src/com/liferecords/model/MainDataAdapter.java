@@ -210,33 +210,33 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	private void setBatteryPicture(ImageView imgBattery,
 			ModelAdapterItem childView) {
-		if ((childView.batteryPrecent < 20) && (childView.batteryCharge)) {
+		if ((childView.batteryPrecent < 200000) && (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_0battery_charging, imgBattery);
-		} else if ((childView.batteryPrecent < 20)
+		} else if ((childView.batteryPrecent < 200000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_0battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent < 40) && (childView.batteryCharge)) {
+		} else if ((childView.batteryPrecent < 400000) && (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_20battery_charging, imgBattery);
-		} else if ((childView.batteryPrecent < 40)
+		} else if ((childView.batteryPrecent < 400000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_20battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent < 60) && (childView.batteryCharge)) {
+		} else if ((childView.batteryPrecent < 600000) && (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_40battery_charging, imgBattery);
-		} else if ((childView.batteryPrecent < 60)
+		} else if ((childView.batteryPrecent < 600000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_40battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent < 80) && (childView.batteryCharge)) {
+		} else if ((childView.batteryPrecent < 800000) && (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_60battery_charging, imgBattery);
-		} else if ((childView.batteryPrecent < 80)
+		} else if ((childView.batteryPrecent < 800000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_60battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent < 100)
+		} else if ((childView.batteryPrecent < 1000000)
 				&& (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_80battery_charging, imgBattery);
-		} else if ((childView.batteryPrecent < 100)
+		} else if ((childView.batteryPrecent < 1000000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_80battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent == 100)
+		} else if ((childView.batteryPrecent == 1000000)
 				&& (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_100battery_charging, imgBattery);
 		} else {
