@@ -72,6 +72,7 @@
         </service>
         <service android:name="com.liferecords.service.ActivityService" >
         </service>
+        <activity android:name="MapActivity"></activity>
     </application>
 
 </manifest>
