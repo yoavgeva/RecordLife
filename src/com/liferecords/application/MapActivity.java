@@ -3,16 +3,16 @@ package com.liferecords.application;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.liferecords.model.ModelAdapterItem;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 
 public class MapActivity extends Activity {
 
@@ -39,6 +39,8 @@ public class MapActivity extends Activity {
 		for (int i = 0; i < itemsMapFrag.size(); i++) {
 			map.addMarker(new MarkerOptions().position(new LatLng(itemsMapFrag.get(i).latitude, itemsMapFrag.get(i).longitude)));
 		}
+		LatLng FirstLocation = new LatLng(itemsMapFrag.get(0).latitude, itemsMapFrag.get(0).longitude);
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(FirstLocation, 15));
 		
 		
 		
