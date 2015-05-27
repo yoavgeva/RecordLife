@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,9 +22,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.CancelableCallback;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.liferecords.model.ModelAdapterItem;
@@ -32,6 +38,7 @@ public class MapActivity extends Activity {
 
 	private GoogleMap map;
 	private List<ModelAdapterItem> itemsMapFrag = new ArrayList<ModelAdapterItem>();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,22 +72,53 @@ public class MapActivity extends Activity {
 				.findViewById(R.id.motion_picture_map);
 		ImageView batteryImage = (ImageView) marker
 				.findViewById(R.id.battery_picture_map);
-		
-		setMarkerOnMap(motionImage, batteryImage, marker);
+
+		setMarkerOnMap(motionImage, batteryImage, marker, timeText);
 
 		setPolylineOnMap();
 
-		LatLng FirstLocation = new LatLng(itemsMapFrag.get(0).latitude,
-				itemsMapFrag.get(0).longitude);
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(FirstLocation, 15));
+		setCameraAnimation();
+		map.setOnMapClickListener(new OnMapClickListener() {
+			
+			@Override
+			public void onMapClick(LatLng arg0) {
+				map.stopAnimation();
+				setCameraFirstLocation();
+			}
+		});
+		map.setOnMarkerClickListener(new OnMarkerClickListener() {
+			
+			@Override
+			public boolean onMarkerClick(Marker arg0) {
+				
+				return false;
+			}
+		});
 
 	}
 
+	private void setCameraAnimation() {
+		
+		setCameraFirstLocation();
+
+		map.animateCamera(CameraUpdateFactory.zoomTo(16), 3000,
+				myCancelablecallback);
+
+	}
+
+	private void setCameraFirstLocation() {
+		LatLng firstLocation = new LatLng(itemsMapFrag.get(0).latitude,
+				itemsMapFrag.get(0).longitude);
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 14));
+		
+	}
+
 	private void setMarkerOnMap(ImageView motionImage, ImageView batteryImage,
-			View marker) {
+			View marker, TextView timeText) {
 		for (int i = 0; i < itemsMapFrag.size(); i++) {
 			setMotionPicture(motionImage, itemsMapFrag.get(i));
 			setBatteryPicture(batteryImage, itemsMapFrag.get(i));
+			setTimeText(timeText, itemsMapFrag.get(i));
 			map.addMarker(new MarkerOptions()
 					.position(
 							new LatLng(itemsMapFrag.get(i).latitude,
@@ -195,5 +233,50 @@ public class MapActivity extends Activity {
 		}
 
 	}
+
+	private void setTimeText(TextView txtTime, ModelAdapterItem childView) {
+		String instanceTime = childView.recordTime.substring(9, 11) + ":"
+				+ childView.recordTime.substring(11, 13);
+		txtTime.setText(instanceTime);
+
+	}
+
+	CancelableCallback myCancelablecallback = new CancelableCallback() {
+
+		@Override
+		public void onFinish() {
+			for (int i = 1; i < itemsMapFrag.size(); i++) {
+				Location startingLocation = new Location("starting");
+				startingLocation
+						.setLatitude(map.getCameraPosition().target.latitude);
+				startingLocation
+						.setLongitude(map.getCameraPosition().target.longitude);
+
+				Location endingLocation = new Location("ending");
+				endingLocation.setLatitude(itemsMapFrag.get(i).latitude);
+				endingLocation.setLongitude(itemsMapFrag.get(i).longitude);
+
+				float targetBearting = startingLocation
+						.bearingTo(endingLocation);
+
+				LatLng currentLatlng = new LatLng(itemsMapFrag.get(i).latitude,
+						itemsMapFrag.get(i).longitude);
+
+				CameraPosition cameraPosition = new CameraPosition.Builder()
+						.target(currentLatlng).bearing(targetBearting).zoom(14).tilt(45)
+						.build();
+				map.animateCamera(
+						CameraUpdateFactory.newCameraPosition(cameraPosition),
+						2000, myCancelablecallback);
+			}
+
+		}
+
+		@Override
+		public void onCancel() {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 }

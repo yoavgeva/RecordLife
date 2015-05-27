@@ -239,6 +239,9 @@ int string error_join 0x7f040035
 int string error_mismatched_passwords 0x7f040034
 int string group_map_icon 0x7f040052
 int string hello_world 0x7f040021
+int string image_battery_map_desc 0x7f040055
+int string image_icon_map_desc 0x7f040053
+int string image_motion_map_desc 0x7f040054
 int string location_alert_dialog_message 0x7f040042
 int string location_alert_dialog_negative 0x7f040044
 int string location_alert_dialog_positive 0x7f040043

@@ -6,7 +6,8 @@
     <ImageView
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:src="@drawable/emptywindow" />
+        android:src="@drawable/emptywindow"
+        android:contentDescription="@string/image_icon_map_desc" />
 
     <TextView
         android:id="@+id/time_text_map"
@@ -14,22 +15,24 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="2dp"
-        android:text="15:30"
         android:textSize="10sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+         />
 
     <ImageView
         android:id="@+id/motion_picture_map"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/image_motion_map_desc" />
 
     <ImageView
         android:id="@+id/battery_picture_map"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="18dp"
-        android:layout_marginLeft="25dp" />
+        android:contentDescription="@string/image_battery_map_desc" />
 
 </FrameLayout>

@@ -632,6 +632,11 @@ containing a value of this type.
         public static final int error_mismatched_passwords=0x7f040034;
         public static final int group_map_icon=0x7f040052;
         public static final int hello_world=0x7f040021;
+        public static final int image_battery_map_desc=0x7f040055;
+        /**  Map Activity 
+         */
+        public static final int image_icon_map_desc=0x7f040053;
+        public static final int image_motion_map_desc=0x7f040054;
         public static final int location_alert_dialog_message=0x7f040042;
         public static final int location_alert_dialog_negative=0x7f040044;
         public static final int location_alert_dialog_positive=0x7f040043;
