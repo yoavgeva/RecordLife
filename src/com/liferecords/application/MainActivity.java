@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,10 +32,11 @@ import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class MainActivity extends Activity implements MapInterFace {
+public class MainActivity extends Activity {
 
 	TextView textV;
 	ActionBar actionBar;
+	private List<ModelAdapterItem> mapCoords;
 	
 	
 	private Model model;
@@ -202,14 +204,17 @@ public class MainActivity extends Activity implements MapInterFace {
 		
 	}
 
-	@Override
+	/*@Override
 	public void respond(List<ModelAdapterItem> mapItems) {
+		mapCoords = new ArrayList<ModelAdapterItem>();
+		mapCoords = mapItems;
+		Log.d("check if data passed",""+ mapCoords);
 		FragmentManager manager = getFragmentManager();
 		LocationFragment mapFragment =	(LocationFragment) manager.findFragmentById(R.id.location_map);
-		mapFragment.setItems(mapItems);
+		mapFragment.setItems(mapCoords);
 		
 	}
-	
+	*/
 	
 
 }

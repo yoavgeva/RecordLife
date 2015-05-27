@@ -6,12 +6,17 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +27,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.google.android.gms.maps.MapFragment;
+import com.liferecords.application.LocationFragment;
 import com.liferecords.application.MainActivity;
+import com.liferecords.application.MapActivity;
 import com.liferecords.application.R;
 import com.parse.ParseUser;
 
@@ -135,10 +143,11 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 						itemsMap.add(addedItem);
 					}
 				}
-				
-				if(context instanceof MainActivity){
-					((MainActivity) context).respond(itemsMap);
-				}
+				Bundle bundle = new Bundle();
+				bundle.putParcelableArrayList("items", (ArrayList<? extends Parcelable>) itemsMap);
+				Intent intent = new Intent(context, MapActivity.class);
+				intent.putExtras(bundle);
+				context.startActivity(intent);
 
 			}
 		});
