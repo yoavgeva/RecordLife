@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,10 +24,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.google.android.gms.maps.MapFragment;
-import com.liferecords.application.LocationFragment;
-import com.liferecords.application.MainActivity;
 import com.liferecords.application.MapActivity;
 import com.liferecords.application.R;
 import com.parse.ParseUser;

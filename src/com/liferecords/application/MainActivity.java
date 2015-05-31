@@ -43,10 +43,11 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		startMainService();
 		setContentView(R.layout.activity_main);
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
-		startMainService();
+		
 		actionBar = getActionBar();
 		designActionBar();
 		createExpListView();
@@ -92,6 +93,8 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent inte = new Intent(this, SettingsActivity.class);
+			startActivity(inte);
 			return true;
 		}
 		if (id == R.id.action_logout) {

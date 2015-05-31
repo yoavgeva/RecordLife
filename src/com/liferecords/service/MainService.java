@@ -1,5 +1,7 @@
 package com.liferecords.service;
 
+import com.liferecords.application.SettingsFragment;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Service;
@@ -9,8 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -18,7 +22,8 @@ public class MainService extends Service {
 	static final String TAG = MainService.class.getSimpleName();
 	
 
-	private static final int TIME = 1000 * 60 / 6; // type the minutes last
+	//private static final int TIME = 1000 * 60 * 30; // type the minutes last
+	int intervalTiming;
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 
 		@Override
@@ -55,7 +60,7 @@ public class MainService extends Service {
 		@Override
 		public void run() {
 			sync();
-			timerHandler.postDelayed(timerTask, TIME);
+			timerHandler.postDelayed(timerTask, intervalTiming);
 
 		}
 	};
@@ -67,6 +72,7 @@ public class MainService extends Service {
 
 	@Override
 	public void onCreate() {
+		loadTimingSettings();
 		registerReciver();
 		startServices();
 		super.onCreate();
@@ -115,7 +121,7 @@ public class MainService extends Service {
 
 	private void startTimer() {
 		stopTimer();
-		timerHandler.postDelayed(timerTask, TIME);
+		timerHandler.postDelayed(timerTask, intervalTiming);
 
 	}
 
@@ -158,6 +164,14 @@ public class MainService extends Service {
 			}
 		}
 		return false;
+	}
+	
+	private void loadTimingSettings() {
+		SharedPreferences prefrences = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		int interval = prefrences
+				.getInt(SettingsFragment.KEY_INTERVAL_TIME, 30);
+		intervalTiming = 1000 * 60 * interval;
 	}
 
 	

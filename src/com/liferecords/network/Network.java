@@ -72,6 +72,7 @@ public class Network {
 		try{
 			InputStream in = new java.net.URL(url).openStream();
 			bitmap = BitmapFactory.decodeStream(in);
+			Log.d(TAG, "working");
 		} catch (Exception e){
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();

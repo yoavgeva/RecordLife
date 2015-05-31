@@ -7,5 +7,17 @@
         <item>Week</item>
     </string-array>
     
+    <!-- Instance Time Settings -->
+    <string-array name="instance_time_set">
+        <item >30 Minutes</item>
+        <item >1 Hour</item>
+        <item >2 Hours</item>
+    </string-array>
+    
+    <string-array name="instance_time_values">
+        <item >30</item>
+        <item >60</item>
+        <item >120</item>
+    </string-array>
     
 </resources>

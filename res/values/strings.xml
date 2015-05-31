@@ -63,5 +63,10 @@
     <string name="image_icon_map_desc">Icon Map</string>
     <string name="image_motion_map_desc">Motion Picture</string>
     <string name="image_battery_map_desc">Battery status picture</string>
+    <string name="image_streetview_map_desc">StreetView Picture</string>
+    
+    <!-- Settings Activity -->
+    <string name="settings_sample_instance_category_title">First</string>
+    <string name="settings_sample_instance_list_title">Sample Timing</string>
 
 </resources>

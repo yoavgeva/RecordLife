@@ -3,6 +3,8 @@ package com.liferecords.application;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.util.LangUtils;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.CancelableCallback;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
@@ -32,12 +36,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.liferecords.model.Model;
 import com.liferecords.model.ModelAdapterItem;
 
 public class MapActivity extends Activity {
 
 	private GoogleMap map;
 	private List<ModelAdapterItem> itemsMapFrag = new ArrayList<ModelAdapterItem>();
+	private Model model;
+	public ImageView imageStreet;
 	
 
 	@Override
@@ -90,12 +97,43 @@ public class MapActivity extends Activity {
 			
 			@Override
 			public boolean onMarkerClick(Marker arg0) {
+				Log.d("check latlng at marker", "" + arg0.getPosition().latitude);
+				final View viewInfoWindow = getLayoutInflater().inflate(R.layout.marker_popup_layout, null);
+				 imageStreet = (ImageView) viewInfoWindow.findViewById(R.id.steetview_image);
+			
+				 setMarkerOnMarker(viewInfoWindow,arg0.getPosition());
+				 new DownloadImagesTask().execute(arg0.getPosition());
+				
 				
 				return false;
 			}
 		});
 
 	}
+	
+	public class DownloadImagesTask extends AsyncTask<LatLng, Void, Bitmap> {
+		
+		Model model;
+			@Override
+			protected Bitmap doInBackground(LatLng... params) {
+				// TODO Auto-generated method stub
+				return download_image(params[0]);
+			}
+
+			@Override
+				protected void onPostExecute(Bitmap result) {
+				if(result == null){
+					return;
+				}
+				imageStreet.setImageBitmap(result);
+				}
+			
+			private Bitmap download_image(LatLng locationLatLng){
+				Bitmap bm = model.sendStreeView(locationLatLng.latitude, locationLatLng.longitude);
+				return bm;
+				
+			}
+		}
 
 	private void setCameraAnimation() {
 		
@@ -112,6 +150,23 @@ public class MapActivity extends Activity {
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 14));
 		
 	}
+	
+	private void setMarkerOnMarker(
+			View marker,LatLng location) {
+		
+			
+			map.addMarker(new MarkerOptions()
+					.position(
+							new LatLng(location.latitude,
+									location.longitude))
+					.title("title")
+					.snippet("snippet")
+					.icon(BitmapDescriptorFactory
+							.fromBitmap(createDrawableFromView(this, marker))));
+		
+
+	}
+
 
 	private void setMarkerOnMap(ImageView motionImage, ImageView batteryImage,
 			View marker, TextView timeText) {
@@ -279,4 +334,7 @@ public class MapActivity extends Activity {
 		}
 	};
 
+	private void setAsyncTaskStreetView(){
+		
+	}
 }
