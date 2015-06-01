@@ -28,7 +28,7 @@ import com.liferecords.application.MapActivity;
 import com.liferecords.application.R;
 import com.parse.ParseUser;
 
-public class MainDataAdapter extends BaseExpandableListAdapter {
+public class MainDataAdapter extends BaseExpandableListAdapter  {
 
 	private final Context context;
 	private final Model model;
@@ -365,6 +365,9 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		}
 	}
 
-	
+	public void refresh(){
+		populate();
+		notifyDataSetChanged();
+	}
 
 }

@@ -1,4 +1,4 @@
- package com.liferecords.application;
+package com.liferecords.application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,40 +6,34 @@ import java.util.List;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.liferecords.model.MainDataAdapter;
-import com.liferecords.model.MapInterFace;
+import com.liferecords.application.MainFragment.Listener;
 import com.liferecords.model.Model;
 import com.liferecords.model.ModelAdapterItem;
 import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Listener {
 
 	TextView textV;
 	ActionBar actionBar;
 	private List<ModelAdapterItem> mapCoords;
-	
-	
+
 	private Model model;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,18 +41,15 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
-		
+
 		actionBar = getActionBar();
 		designActionBar();
-		createExpListView();
-	
-		
-		
+		// createExpListView();
+		populateContent();
+
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
-		
-		
 
 	}
 
@@ -74,47 +65,15 @@ public class MainActivity extends Activity {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		MenuItem mainMenuSpinnerDayOrWeek = menu.findItem(R.id.menu_main_spinner_day_or_week);
-		setDropDownDayOrWeek(mainMenuSpinnerDayOrWeek);
-		
-		MenuItem datesSpinner = menu.findItem(R.id.menu_main_spinner_dates);
-		setDropDownDates(datesSpinner);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			Intent inte = new Intent(this, SettingsActivity.class);
-			startActivity(inte);
-			return true;
-		}
-		if (id == R.id.action_logout) {
-			logoutAction();
-			return true;
-		}
-		if (id == R.id.database_manager) {
-			Intent dbmman = new Intent(MainActivity.this, AndroidDatabaseManager.class);
-			startActivity(dbmman);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	
+	
 
 	private void startMainService() {
 		Intent intent = new Intent(this, MainService.class);
 		startService(intent);
 	}
 
-	private void logoutAction() {
+	public void logoutAction() {
 		ParseUser.logOut();
 		stopMainService();
 		Intent intent = new Intent(MainActivity.this,
@@ -122,6 +81,7 @@ public class MainActivity extends Activity {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
+
 	}
 
 	private void dialogLocationNotWorking() {
@@ -150,21 +110,23 @@ public class MainActivity extends Activity {
 				});
 		locationDialog.show();
 	}
-	
-	private void stopMainService(){
+
+	private void stopMainService() {
 		Intent inte = new Intent(this, MainService.class);
 		stopService(inte);
 	}
-	
-	private void setDropDownDayOrWeek(MenuItem item){
+
+	private void setDropDownDayOrWeek(MenuItem item) {
 		View view = item.getActionView();
-		if(view instanceof Spinner){
+		if (view instanceof Spinner) {
 			Spinner spinner = (Spinner) view;
 			ArrayList<String> itemList = new ArrayList<String>();
 			itemList.add("Day");
 			itemList.add("Week");
-			
-			ArrayAdapter<String> dayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1,itemList);
+
+			ArrayAdapter<String> dayAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_dropdown_item_1line,
+					android.R.id.text1, itemList);
 			spinner.setAdapter(dayAdapter);
 			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -172,52 +134,49 @@ public class MainActivity extends Activity {
 				public void onItemSelected(AdapterView<?> parent, View view,
 						int position, long id) {
 					// TODO Auto-generated method stub
-					if(position == 0){
-						
+					if (position == 0) {
+
 					} else {
-						
+
 					}
 				}
 
 				@Override
 				public void onNothingSelected(AdapterView<?> parent) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 		}
-		
-		
-	}
-	
-	private void setDropDownDates(MenuItem item){
-	
+
 	}
 
-	
-	private void designActionBar(){
+	private void setDropDownDates(MenuItem item) {
+
+	}
+
+	private void designActionBar() {
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setIcon(R.color.transparent);
 	}
-	
-	private void createExpListView(){
-		ExpandableListView exListView = (ExpandableListView) findViewById(R.id.ExListView);
-		MainDataAdapter adapter = new MainDataAdapter(this);
-		exListView.setAdapter(adapter);
-		
+
+	/*
+	 * private void createExpListView(){ ExpandableListView exListView =
+	 * (ExpandableListView) findViewById(R.id.ExListView); MainDataAdapter
+	 * adapter = new MainDataAdapter(this); exListView.setAdapter(adapter);
+	 * 
+	 * }
+	 */
+
+	@Override
+	public void onMenuLogOut() {
+		logoutAction();
+
 	}
 
-	/*@Override
-	public void respond(List<ModelAdapterItem> mapItems) {
-		mapCoords = new ArrayList<ModelAdapterItem>();
-		mapCoords = mapItems;
-		Log.d("check if data passed",""+ mapCoords);
-		FragmentManager manager = getFragmentManager();
-		LocationFragment mapFragment =	(LocationFragment) manager.findFragmentById(R.id.location_map);
-		mapFragment.setItems(mapCoords);
-		
+	private void populateContent() {
+		getFragmentManager().beginTransaction()
+				.replace(android.R.id.content, new MainFragment()).commit();
 	}
-	*/
-	
 
 }

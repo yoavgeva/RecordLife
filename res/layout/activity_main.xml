@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.liferecords.application.MainActivity" >
     <ExpandableListView
-        android:id="@+id/ExListView"
+        android:id="@id/android:list"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" >
+        android:layout_width="match_parent"
+        class="com.liferecords.application.MainFragment" >
         
     </ExpandableListView>
 

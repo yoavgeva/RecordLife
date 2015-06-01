@@ -112,6 +112,7 @@ public class DataDBAdapter {
 
 		} while(cursor.moveToNext());
 		cursor.close();
+		db.close();
 	}
 	
 	/*public void getUserData(List<ModelAdapterItem> dates,int dateWithoutTime) {
@@ -198,6 +199,7 @@ public class DataDBAdapter {
 
 		} while(cursor.moveToNext());
 		cursor.close();
+		db.close();
 	}
 
 	public ArrayList<Cursor> getData(String Query) {

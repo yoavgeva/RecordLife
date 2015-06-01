@@ -113,7 +113,7 @@ public class MapActivity extends Activity {
 	
 	public class DownloadImagesTask extends AsyncTask<LatLng, Void, Bitmap> {
 		
-		Model model;
+		
 			@Override
 			protected Bitmap doInBackground(LatLng... params) {
 				// TODO Auto-generated method stub
