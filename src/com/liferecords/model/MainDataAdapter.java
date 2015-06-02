@@ -28,7 +28,7 @@ import com.liferecords.application.MapActivity;
 import com.liferecords.application.R;
 import com.parse.ParseUser;
 
-public class MainDataAdapter extends BaseExpandableListAdapter  {
+public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	private final Context context;
 	private final Model model;
@@ -36,14 +36,21 @@ public class MainDataAdapter extends BaseExpandableListAdapter  {
 	private List<ModelAdapterItem> itemsChildrenAlpha;
 	private List<ModelAdapterItem> itemsChildrenBeta;
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
-	
 
 	// added haspmap and list<dateadapteritem>
 	public MainDataAdapter(Context context) {
 		this.context = context;
 		this.model = new Model(this.context);
-		populate();
+		
+		 populate();
 	}
+
+	/*
+	 * public void setData(List<DateAdapterItem>
+	 * itemsGroupSet,HashMap<DateAdapterItem, List<ModelAdapterItem>>
+	 * itemsChildrenSet){ if(itemsGroupSet != null || itemsChildrenSet != null){
+	 * itemsGroup = itemsGroupSet; itemsChildren = itemsChildrenSet; } }
+	 */
 
 	@Override
 	public int getGroupCount() {
@@ -138,7 +145,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter  {
 					}
 				}
 				Bundle bundle = new Bundle();
-				bundle.putParcelableArrayList("items", (ArrayList<? extends Parcelable>) itemsMap);
+				bundle.putParcelableArrayList("items",
+						(ArrayList<? extends Parcelable>) itemsMap);
 				Intent intent = new Intent(context, MapActivity.class);
 				intent.putExtras(bundle);
 				context.startActivity(intent);
@@ -209,17 +217,20 @@ public class MainDataAdapter extends BaseExpandableListAdapter  {
 		} else if ((childView.batteryPrecent < 200000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_0battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent < 400000) && (childView.batteryCharge)) {
+		} else if ((childView.batteryPrecent < 400000)
+				&& (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_20battery_charging, imgBattery);
 		} else if ((childView.batteryPrecent < 400000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_20battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent < 600000) && (childView.batteryCharge)) {
+		} else if ((childView.batteryPrecent < 600000)
+				&& (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_40battery_charging, imgBattery);
 		} else if ((childView.batteryPrecent < 600000)
 				&& (!childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_40battery_discharging, imgBattery);
-		} else if ((childView.batteryPrecent < 800000) && (childView.batteryCharge)) {
+		} else if ((childView.batteryPrecent < 800000)
+				&& (childView.batteryCharge)) {
 			setPictureImage(R.drawable.ic_60battery_charging, imgBattery);
 		} else if ((childView.batteryPrecent < 800000)
 				&& (!childView.batteryCharge)) {
@@ -322,6 +333,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter  {
 				+ ParseUser.getCurrentUser().getUsername());
 		this.itemsGroup = this.model.getDateAdapterItems();
 		Collections.sort(itemsGroup, new Comparator<DateAdapterItem>() {
+
 			@Override
 			public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
 				return rhs.dateWithoutTime - lhs.dateWithoutTime;
@@ -333,6 +345,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter  {
 		this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
 		Collections.sort(itemsChildrenAlpha,
 				new Comparator<ModelAdapterItem>() {
+
 					@Override
 					public int compare(ModelAdapterItem lhs,
 							ModelAdapterItem rhs) {
@@ -365,8 +378,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter  {
 		}
 	}
 
-	public void refresh(){
-		populate();
+	public void refresh() {
+		 populate();
 		notifyDataSetChanged();
 	}
 

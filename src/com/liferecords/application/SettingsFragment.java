@@ -1,8 +1,14 @@
 package com.liferecords.application;
 
+import com.liferecords.service.MainService;
+import com.liferecords.service.MainService.LocalBinder;
+
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -10,6 +16,7 @@ import android.util.Log;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnSharedPreferenceChangeListener {
+	MainService mainService;
 
 	public static final String KEY_LIST_PREFERENCE = "listTiming";
 	public static final String KEY_INTERVAL_TIME = "timeInterval";
@@ -66,4 +73,20 @@ public class SettingsFragment extends PreferenceFragment implements
 		editor.putInt(KEY_INTERVAL_TIME, timeValue);
 		editor.commit();
 	}
+	
+	private ServiceConnection sc = new ServiceConnection() {
+		
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			LocalBinder binder = (LocalBinder)service;
+			mainService = binder.getMainService();
+			
+		}
+	};
 }

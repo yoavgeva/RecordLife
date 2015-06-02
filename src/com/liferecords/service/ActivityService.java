@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class ActivityService extends Service implements
 		GooglePlayServicesClient.ConnectionCallbacks,
@@ -21,7 +22,7 @@ public class ActivityService extends Service implements
 	PendingIntent pendingInte;
 	ActivityRecognitionClient activityClient;
 	//private static final int TIME = 1000 * 60 * 30; // type the minutes last
-	int intervalTiming;
+	long intervalTiming = 1000 * 60 * 30;
 
 	@Override
 	public void onCreate() {
@@ -55,6 +56,7 @@ public class ActivityService extends Service implements
 
 	@Override
 	public void onConnected(Bundle arg0) {
+		Log.d(TAG, "intervalttiming = " + intervalTiming);
 		activityClient.requestActivityUpdates(intervalTiming, pendingInte);
 
 	}
@@ -73,4 +75,5 @@ public class ActivityService extends Service implements
 		intervalTiming = 1000 * 60 * interval;
 	}
 
+	
 }

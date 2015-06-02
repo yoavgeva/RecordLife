@@ -32,7 +32,7 @@ public class LocationServ extends Service implements LocationListener,
 	Intent intent;
 	Model model;
 	int counter = 0;
-	int intervalTiming;
+	long intervalTiming = 1000 * 60 * 30;
 
 	@Override
 	public void onCreate() {
@@ -40,6 +40,7 @@ public class LocationServ extends Service implements LocationListener,
 		Context content = this;
 		model = new Model(content);
 		loadTimingSettings();
+		Log.d(TAG, "intervalttiming = " + intervalTiming);
 		locationRequest = LocationRequest.create();
 		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 		locationRequest.setInterval(intervalTiming);

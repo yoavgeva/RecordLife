@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -20,10 +21,9 @@ import android.util.Log;
 
 public class MainService extends Service {
 	static final String TAG = MainService.class.getSimpleName();
-	
+	private final IBinder settingsBinder = new LocalBinder();
 
-	//private static final int TIME = 1000 * 60 * 30; // type the minutes last
-	int intervalTiming;
+	
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 
 		@Override
@@ -54,11 +54,13 @@ public class MainService extends Service {
 		}
 	};
 
+	long intervalTiming;
 	private Handler timerHandler = new Handler();
 	private Runnable timerTask = new Runnable() {
 
 		@Override
 		public void run() {
+			Log.d(TAG, "intervalttiming = " + intervalTiming);
 			sync();
 			timerHandler.postDelayed(timerTask, intervalTiming);
 
@@ -67,7 +69,13 @@ public class MainService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		return null;
+		return settingsBinder;
+	}
+	
+	public class LocalBinder extends Binder{
+		public MainService getMainService(){
+			return MainService.this;
+		}
 	}
 
 	@Override
@@ -83,17 +91,22 @@ public class MainService extends Service {
 		stopTimer();
 		unregisterReciver();
 		stopServices();
+		Log.d(TAG, "Destoryedservice" + intervalTiming);
 		super.onDestroy();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.d(TAG, "onStartCommand running");
+		Log.d(TAG, "intervalttiming = " + intervalTiming);
 		sync();
 		startTimer();
 		return START_STICKY;
 	}
 
 	private void sync() {
+		Log.d(TAG, "intervalttiming sync = " + intervalTiming);
+		loadTimingSettings();
 		startSyncService();
 
 	}

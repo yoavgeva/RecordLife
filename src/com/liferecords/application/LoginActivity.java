@@ -164,6 +164,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void goToDispatchActivity() {
+		
 		Intent intent = new Intent(LoginActivity.this, DispatchActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -275,5 +276,6 @@ public class LoginActivity extends Activity {
 		
 		
 	}
+	
 
 }

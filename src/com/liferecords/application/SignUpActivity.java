@@ -130,6 +130,7 @@ public class SignUpActivity extends Activity {
 					Toast.makeText(SignUpActivity.this, e.getMessage(),
 							Toast.LENGTH_LONG).show();
 				} else {
+					
 					saveCountIdPref();
 					Intent intent = new Intent(SignUpActivity.this,
 							DispatchActivity.class);
@@ -179,4 +180,6 @@ public class SignUpActivity extends Activity {
 		passwordRepetText.setHintTextColor(Color.BLACK);
 		
 	}
+	
+	
 }

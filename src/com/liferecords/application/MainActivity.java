@@ -1,27 +1,24 @@
 package com.liferecords.application;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.liferecords.application.MainFragment.Listener;
+import com.liferecords.model.MainDataAdapter;
 import com.liferecords.model.Model;
-import com.liferecords.model.ModelAdapterItem;
 import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
@@ -30,7 +27,7 @@ public class MainActivity extends Activity implements Listener {
 
 	TextView textV;
 	ActionBar actionBar;
-	private List<ModelAdapterItem> mapCoords;
+	public static final String CONNECTED_OR_NOT = "connected";
 
 	private Model model;
 
@@ -44,13 +41,40 @@ public class MainActivity extends Activity implements Listener {
 
 		actionBar = getActionBar();
 		designActionBar();
-		// createExpListView();
-		populateContent();
+		createExpListView();
+		// populateContent();
 
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			Intent inte = new Intent(this, SettingsActivity.class);
+			startActivity(inte);
+			return true;
+		}
+		if (id == R.id.action_logout) {
+			logoutAction();
+			return true;
+		}
+		if (id == R.id.database_manager) {
+			Intent dbmman = new Intent(MainActivity.this,
+					AndroidDatabaseManager.class);
+			startActivity(dbmman);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void checkGpsWorking() {
@@ -65,16 +89,22 @@ public class MainActivity extends Activity implements Listener {
 
 	}
 
-	
-	
-
 	private void startMainService() {
-		Intent intent = new Intent(this, MainService.class);
-		startService(intent);
+		boolean loggedIn = checkIfStillLogged();
+		Log.d(MainActivity.class.getSimpleName(), "" + loggedIn);
+		if(!loggedIn){
+			Log.d(MainActivity.class.getSimpleName(), "is calling mainservice"  );
+			Intent intent = new Intent(this, MainService.class);
+			startService(intent);	
+		}
+
+		
+		checkLogged(true);
 	}
 
 	public void logoutAction() {
 		ParseUser.logOut();
+		checkLogged(false);
 		stopMainService();
 		Intent intent = new Intent(MainActivity.this,
 				SignUpOrLoginActivity.class);
@@ -116,57 +146,44 @@ public class MainActivity extends Activity implements Listener {
 		stopService(inte);
 	}
 
-	private void setDropDownDayOrWeek(MenuItem item) {
-		View view = item.getActionView();
-		if (view instanceof Spinner) {
-			Spinner spinner = (Spinner) view;
-			ArrayList<String> itemList = new ArrayList<String>();
-			itemList.add("Day");
-			itemList.add("Week");
-
-			ArrayAdapter<String> dayAdapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_dropdown_item_1line,
-					android.R.id.text1, itemList);
-			spinner.setAdapter(dayAdapter);
-			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view,
-						int position, long id) {
-					// TODO Auto-generated method stub
-					if (position == 0) {
-
-					} else {
-
-					}
-				}
-
-				@Override
-				public void onNothingSelected(AdapterView<?> parent) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-		}
-
-	}
-
-	private void setDropDownDates(MenuItem item) {
-
-	}
+	/*
+	 * private void setDropDownDayOrWeek(MenuItem item) { View view =
+	 * item.getActionView(); if (view instanceof Spinner) { Spinner spinner =
+	 * (Spinner) view; ArrayList<String> itemList = new ArrayList<String>();
+	 * itemList.add("Day"); itemList.add("Week");
+	 * 
+	 * ArrayAdapter<String> dayAdapter = new ArrayAdapter<String>(this,
+	 * android.R.layout.simple_dropdown_item_1line, android.R.id.text1,
+	 * itemList); spinner.setAdapter(dayAdapter);
+	 * spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+	 * 
+	 * @Override public void onItemSelected(AdapterView<?> parent, View view,
+	 * int position, long id) { // TODO Auto-generated method stub if (position
+	 * == 0) {
+	 * 
+	 * } else {
+	 * 
+	 * } }
+	 * 
+	 * @Override public void onNothingSelected(AdapterView<?> parent) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * } }); }
+	 * 
+	 * }
+	 */
 
 	private void designActionBar() {
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setIcon(R.color.transparent);
 	}
 
-	/*
-	 * private void createExpListView(){ ExpandableListView exListView =
-	 * (ExpandableListView) findViewById(R.id.ExListView); MainDataAdapter
-	 * adapter = new MainDataAdapter(this); exListView.setAdapter(adapter);
-	 * 
-	 * }
-	 */
+	private void createExpListView() {
+		ExpandableListView exListView = (ExpandableListView) findViewById(R.id.ex_list_view);
+		MainDataAdapter adapter = new MainDataAdapter(this);
+		exListView.setAdapter(adapter);
+
+	}
 
 	@Override
 	public void onMenuLogOut() {
@@ -174,9 +191,24 @@ public class MainActivity extends Activity implements Listener {
 
 	}
 
-	private void populateContent() {
-		getFragmentManager().beginTransaction()
-				.replace(android.R.id.content, new MainFragment()).commit();
+	/*
+	 * private void populateContent() { getFragmentManager().beginTransaction()
+	 * .replace(android.R.id.content, new MainFragment()).commit(); }
+	 */
+	private void checkLogged(boolean connected) {
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putBoolean(MainActivity.CONNECTED_OR_NOT, connected);
+		editor.commit();
+
+	}
+
+	private boolean checkIfStillLogged() {
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		boolean logged = pref.getBoolean(CONNECTED_OR_NOT, false);
+		return logged;
 	}
 
 }
