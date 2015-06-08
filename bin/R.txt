@@ -149,7 +149,6 @@ int id group_map_icon 0x7f070029
 int id holo_dark 0x7f070005
 int id holo_light 0x7f070006
 int id hybrid 0x7f070004
-int id imageView_details_battery 0x7f070027
 int id linear_login 0x7f070014
 int id linear_signup_login 0x7f07001d
 int id location_map 0x7f07002a
@@ -168,6 +167,7 @@ int id steetview_image 0x7f07002b
 int id strict_sandbox 0x7f070009
 int id terrain 0x7f070003
 int id textViewDetails 0x7f070023
+int id textView_details_battery 0x7f070027
 int id textView_details_motion 0x7f070025
 int id textView_details_time 0x7f070024
 int id textView_details_type 0x7f070026

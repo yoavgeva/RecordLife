@@ -41,8 +41,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	public MainDataAdapter(Context context) {
 		this.context = context;
 		this.model = new Model(this.context);
-		
-		 populate();
+
+		populate();
 	}
 
 	/*
@@ -196,8 +196,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		TextView txtType = (TextView) convertView
 				.findViewById(R.id.textView_details_type);
 		setTypePicture(txtType, childView);
-		ImageView imgBattery = (ImageView) convertView
-				.findViewById(R.id.imageView_details_battery);
+		TextView imgBattery = (TextView) convertView
+				.findViewById(R.id.textView_details_battery);
 		setBatteryPicture(imgBattery, childView);
 
 	}
@@ -210,42 +210,64 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	}
 
-	private void setBatteryPicture(ImageView imgBattery,
+	private void setBatteryPicture(TextView imgBattery,
 			ModelAdapterItem childView) {
 		if ((childView.batteryPrecent < 200000) && (childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_0battery_charging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_0battery_charging,
+					imgBattery, childView);
 		} else if ((childView.batteryPrecent < 200000)
 				&& (!childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_0battery_discharging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_0battery_discharging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 400000)
 				&& (childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_20battery_charging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_20battery_charging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 400000)
 				&& (!childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_20battery_discharging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_20battery_discharging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 600000)
 				&& (childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_40battery_charging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_40battery_charging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 600000)
 				&& (!childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_40battery_discharging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_40battery_discharging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 800000)
 				&& (childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_60battery_charging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_60battery_charging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 800000)
 				&& (!childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_60battery_discharging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_60battery_discharging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 1000000)
 				&& (childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_80battery_charging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_80battery_charging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent < 1000000)
 				&& (!childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_80battery_discharging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_80battery_discharging,
+					imgBattery, childView);
+
 		} else if ((childView.batteryPrecent == 1000000)
 				&& (childView.batteryCharge)) {
-			setPictureImage(R.drawable.ic_100battery_charging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_100battery_charging,
+					imgBattery, childView);
+
 		} else {
-			setPictureImage(R.drawable.ic_100battery_discharging, imgBattery);
+			setPictureAndTextBattery(R.drawable.ic_100battery_discharging,
+					imgBattery, childView);
 		}
 
 	}
@@ -318,6 +340,17 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		txtSubject.setText(context.getResources().getText(resString));
 	}
 
+	private void setPictureAndTextBattery(int resDrawable, TextView txtSubject,
+			ModelAdapterItem childView) {
+		Bitmap motionIconBit = BitmapFactory.decodeResource(
+				context.getResources(), resDrawable);
+		Drawable motionIcon = new BitmapDrawable(context.getResources(),
+				motionIconBit);
+		txtSubject.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null,
+				null, null);
+		txtSubject.setText("" + childView.batteryPrecent);
+	}
+
 	public float distanceBetween(double startlangtitude, double startlongitude,
 			double endlangitude, double endlongitude) {
 		float[] results = new float[2];
@@ -379,7 +412,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	}
 
 	public void refresh() {
-		 populate();
+		populate();
 		notifyDataSetChanged();
 	}
 

@@ -472,7 +472,6 @@ containing a value of this type.
         public static final int holo_dark=0x7f070005;
         public static final int holo_light=0x7f070006;
         public static final int hybrid=0x7f070004;
-        public static final int imageView_details_battery=0x7f070027;
         public static final int linear_login=0x7f070014;
         public static final int linear_signup_login=0x7f07001d;
         public static final int location_map=0x7f07002a;
@@ -491,6 +490,7 @@ containing a value of this type.
         public static final int strict_sandbox=0x7f070009;
         public static final int terrain=0x7f070003;
         public static final int textViewDetails=0x7f070023;
+        public static final int textView_details_battery=0x7f070027;
         public static final int textView_details_motion=0x7f070025;
         public static final int textView_details_time=0x7f070024;
         public static final int textView_details_type=0x7f070026;

@@ -59,6 +59,7 @@
     <string name="details_type_road">Road</string>
     <string name="group_map_icon">Map of the places</string>
     
+    
     <!-- Map Activity -->
     <string name="image_icon_map_desc">Icon Map</string>
     <string name="image_motion_map_desc">Motion Picture</string>

@@ -182,8 +182,8 @@ public class MainService extends Service {
 	private void loadTimingSettings() {
 		SharedPreferences prefrences = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		int interval = prefrences
-				.getInt(SettingsFragment.KEY_INTERVAL_TIME, 30);
+		long interval = prefrences
+				.getLong(SettingsFragment.KEY_INTERVAL_TIME, 30);
 		intervalTiming = 1000 * 60 * interval;
 	}
 

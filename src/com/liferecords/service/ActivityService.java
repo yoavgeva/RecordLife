@@ -22,7 +22,7 @@ public class ActivityService extends Service implements
 	PendingIntent pendingInte;
 	ActivityRecognitionClient activityClient;
 	//private static final int TIME = 1000 * 60 * 30; // type the minutes last
-	long intervalTiming = 1000 * 60 * 30;
+	long intervalTiming;
 
 	@Override
 	public void onCreate() {
@@ -70,8 +70,8 @@ public class ActivityService extends Service implements
 	private void loadTimingSettings() {
 		SharedPreferences prefrences = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		int interval = prefrences
-				.getInt(SettingsFragment.KEY_INTERVAL_TIME, 30);
+		long interval = prefrences
+				.getLong(SettingsFragment.KEY_INTERVAL_TIME, 30);
 		intervalTiming = 1000 * 60 * interval;
 	}
 

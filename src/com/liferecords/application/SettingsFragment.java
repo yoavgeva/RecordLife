@@ -29,9 +29,10 @@ public class SettingsFragment extends PreferenceFragment implements
 		if (key.equals(KEY_LIST_PREFERENCE)) {
 			listInstanceTimes.setSummary("Current Value is "
 					+ listInstanceTimes.getEntry().toString());
-			int setTime = Integer.parseInt(listInstanceTimes.getValue());
-			updateTimingPreference(setTime);
-			Log.d(getActivity().getClass().getSimpleName(), "" + setTime);
+			long setTi = Long.parseLong(listInstanceTimes.getValue());
+			
+			updateTimingPreference(setTi);
+			Log.d(getActivity().getClass().getSimpleName(), "" + setTi);
 		}
 
 		
@@ -67,26 +68,12 @@ public class SettingsFragment extends PreferenceFragment implements
 				.unregisterOnSharedPreferenceChangeListener(this);
 	}
 	
-	private void updateTimingPreference(int timeValue){
+	private void updateTimingPreference(long timeValue){
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt(KEY_INTERVAL_TIME, timeValue);
+		editor.putLong(KEY_INTERVAL_TIME, timeValue);
 		editor.commit();
 	}
 	
-	private ServiceConnection sc = new ServiceConnection() {
-		
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			LocalBinder binder = (LocalBinder)service;
-			mainService = binder.getMainService();
-			
-		}
-	};
+	
 }
