@@ -1,15 +1,20 @@
 package com.liferecords.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -120,7 +125,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private void setGroupContent(TextView txtGroup, View convertView,
 			int groupPosition) {
 		final DateAdapterItem item = getGroupItems(groupPosition);
-		txtGroup.setText("" + item.dateWithoutTime);
+		setDayDesign(txtGroup, item);
+
 		ImageView imageGroupMap = (ImageView) convertView
 				.findViewById(R.id.group_map_icon);
 		setPictureImage(R.drawable.ic_map, imageGroupMap);
@@ -156,6 +162,24 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	}
 
+	private void setDayDesign(TextView txtGroup, DateAdapterItem item) {
+		String date = Integer.toString(item.timeCreated);
+		int year = Integer.parseInt(date.substring(0, 4));
+		int month = Integer.parseInt(date.substring(4, 6));
+		int day = Integer.parseInt(date.substring(6, 8));
+		Calendar calendar = new GregorianCalendar(year, month - 1, day);
+		Log.d(MainDataAdapter.class.getSimpleName(), "" + year + month + day);
+		String dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK,
+				Calendar.LONG, Locale.getDefault());
+		String monthName = calendar.getDisplayName(Calendar.MONTH,
+				Calendar.LONG, Locale.getDefault());
+		txtGroup.setText(dayName + ", " + monthName + " " + day);
+		txtGroup.setTypeface(setTypeFaceRoboto());
+		txtGroup.setTextSize(18f);
+		txtGroup.setTextColor(Color.parseColor("#3066BC"));
+
+	}
+
 	public ModelAdapterItem getChildItems(int position) {
 		return (ModelAdapterItem) itemsChildren.get(position);
 
@@ -173,6 +197,23 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 			convertView = inflater.inflate(R.layout.listrow_details, parent,
 					false);
 		}
+		convertView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				ModelAdapterItem addedItem = new ModelAdapterItem();
+				addedItem = childView;
+				Bundle bundle = new Bundle();
+				bundle.putParcelable("item", addedItem);
+				Log.d(MainDataAdapter.class.getSimpleName(), "" + addedItem);
+				
+				Intent intent = new Intent(context, MapActivity.class);
+				intent.putExtras(bundle);
+				context.startActivity(intent);
+				
+			}
+		});
 		setChildView(childView, convertView);
 		return convertView;
 	}
@@ -186,7 +227,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private void setChildView(ModelAdapterItem childView, View convertView) {
 		TextView txtAdress = (TextView) convertView
 				.findViewById(R.id.textViewDetails);
-		txtAdress.setText(childView.address);
+		setAdressDesign(childView, txtAdress);
+
 		TextView txtTime = (TextView) convertView
 				.findViewById(R.id.textView_details_time);
 		setTimeText(txtTime, childView);
@@ -195,11 +237,27 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		setMotionPicture(txtMotion, childView);
 		TextView txtType = (TextView) convertView
 				.findViewById(R.id.textView_details_type);
-		setTypePicture(txtType, childView);
+		setTypeText(txtType, childView);
 		TextView imgBattery = (TextView) convertView
 				.findViewById(R.id.textView_details_battery);
 		setBatteryPicture(imgBattery, childView);
+		ImageView imgType = (ImageView) convertView
+				.findViewById(R.id.imageview_details_type);
+		setTypeImage(imgType, childView);
 
+	}
+
+	private void setAdressDesign(ModelAdapterItem childView, TextView txtAdress) {
+		txtAdress.setText(childView.address);
+		txtAdress.setTextSize(14f);
+		txtAdress.setTypeface(setTypeFaceRoboto());
+
+	}
+
+	private Typeface setTypeFaceRoboto() {
+		Typeface type = Typeface.createFromAsset(context.getAssets(),
+				"roboto_regular.ttf");
+		return type;
 	}
 
 	private void setTimeText(TextView txtTime, ModelAdapterItem childView) {
@@ -207,6 +265,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 				+ childView.recordTime.substring(11, 13) + ":"
 				+ childView.recordTime.substring(13, 15);
 		txtTime.setText(instanceTime);
+		txtTime.setTypeface(setTypeFaceRoboto());
 
 	}
 
@@ -278,25 +337,50 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		imgView.setImageBitmap(bitPic);
 	}
 
-	private void setTypePicture(TextView txtType, ModelAdapterItem childView) {
+	private void setTypeText(TextView txtType, ModelAdapterItem childView) {
 		if (childView.type.equals("airport")) {
-			setPictureAndText(R.drawable.ic_type_airport,
-					R.string.details_type_airport, txtType);
+
+			txtType.setText(R.string.details_type_airport);
 		} else if (childView.type.equals("bus_station")
 				|| childView.type.equals("train_station")
 				|| childView.type.equals("transit_station")) {
-			setPictureAndText(R.drawable.ic_type_bus,
-					R.string.details_type_bus, txtType);
+
+			txtType.setText(R.string.details_type_bus);
 		} else if (childView.type.equals("park")
 				|| childView.type.equals("natural_feature")) {
-			setPictureAndText(R.drawable.ic_type_park,
-					R.string.details_type_park, txtType);
+
+			txtType.setText(R.string.details_type_park);
 		} else if (childView.type.equals("parking")) {
-			setPictureAndText(R.drawable.ic_type_parking,
-					R.string.details_type_parking, txtType);
+
+			txtType.setText(R.string.details_type_parking);
 		} else {
-			setPictureAndText(R.drawable.ic_type_road,
-					R.string.details_type_road, txtType);
+
+			txtType.setText(R.string.details_type_road);
+		}
+
+		txtType.setTextColor(Color.parseColor("#8D9AA0"));
+
+	}
+
+	private void setTypeImage(ImageView imgType, ModelAdapterItem childView) {
+		if (childView.type.equals("airport")) {
+
+			setPicture(R.drawable.ic_type_airport, imgType);
+		} else if (childView.type.equals("bus_station")
+				|| childView.type.equals("train_station")
+				|| childView.type.equals("transit_station")) {
+
+			setPicture(R.drawable.ic_type_bus, imgType);
+		} else if (childView.type.equals("park")
+				|| childView.type.equals("natural_feature")) {
+
+			setPicture(R.drawable.ic_type_park, imgType);
+		} else if (childView.type.equals("parking")) {
+
+			setPicture(R.drawable.ic_type_parking, imgType);
+		} else {
+
+			setPicture(R.drawable.ic_type_road, imgType);
 		}
 
 	}
@@ -329,6 +413,13 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		}
 	}
 
+	private void setPicture(int resDrawable, ImageView image) {
+		Bitmap motionIconBit = BitmapFactory.decodeResource(
+				context.getResources(), resDrawable);
+
+		image.setImageBitmap(motionIconBit);
+	}
+
 	private void setPictureAndText(int resDrawable, int resString,
 			TextView txtSubject) {
 		Bitmap motionIconBit = BitmapFactory.decodeResource(
@@ -338,6 +429,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		txtSubject.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null,
 				null, null);
 		txtSubject.setText(context.getResources().getText(resString));
+		txtSubject.setTypeface(setTypeFaceRoboto());
 	}
 
 	private void setPictureAndTextBattery(int resDrawable, TextView txtSubject,
@@ -348,7 +440,18 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 				motionIconBit);
 		txtSubject.setCompoundDrawablesWithIntrinsicBounds(motionIcon, null,
 				null, null);
-		txtSubject.setText("" + childView.batteryPrecent);
+		setBatteryText(txtSubject, childView);
+	}
+
+	private void setBatteryText(TextView txtSubject, ModelAdapterItem childView) {
+		String batteryPrecentage = Integer.toString(childView.batteryPrecent);
+		if (batteryPrecentage.equals("1000000")) {
+			txtSubject.setText("100%");
+		} else {
+			txtSubject.setText(batteryPrecentage.substring(0, 2) + "%");
+		}
+		txtSubject.setTypeface(setTypeFaceRoboto());
+
 	}
 
 	public float distanceBetween(double startlangtitude, double startlongitude,

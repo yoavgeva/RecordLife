@@ -58,6 +58,7 @@
     <string name="details_type_parking">Car park</string>
     <string name="details_type_road">Road</string>
     <string name="group_map_icon">Map of the places</string>
+    <string name="details_image_type">Image of type of place</string>
     
     
     <!-- Map Activity -->

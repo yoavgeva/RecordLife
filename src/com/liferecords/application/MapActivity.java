@@ -3,11 +3,10 @@ package com.liferecords.application;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.util.LangUtils;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.CancelableCallback;
-import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
@@ -44,8 +42,8 @@ public class MapActivity extends Activity {
 	private GoogleMap map;
 	private List<ModelAdapterItem> itemsMapFrag = new ArrayList<ModelAdapterItem>();
 	private Model model;
+	private ModelAdapterItem itemMap;
 	public ImageView imageStreet;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +51,20 @@ public class MapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.location_fragment);
 		Bundle bundle = this.getIntent().getExtras();
+		Intent intent = getIntent();
 		if (bundle != null) {
-			itemsMapFrag = bundle.getParcelableArrayList("items");
-			Log.d("amout of items in map", "" + itemsMapFrag.size());
+			if (intent.hasExtra("items")) {
+				itemsMapFrag = bundle.getParcelableArrayList("items");
+				Log.d("amout of items in map", "" + itemsMapFrag.size());
+			} else if (intent.hasExtra("item")) {
+				itemMap = new ModelAdapterItem();
+				itemMap = bundle.getParcelable("item");
+				itemsMapFrag.add(itemMap);
+				Log.d("amout of items in map", "" + itemMap);
+
+			} else {
+				Log.d("amout of items in map", "no bundle");
+			}
 		}
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(
@@ -83,61 +92,65 @@ public class MapActivity extends Activity {
 		setMarkerOnMap(motionImage, batteryImage, marker, timeText);
 
 		setPolylineOnMap();
+		setCameraFirstLocation();
 
-		setCameraAnimation();
-		map.setOnMapClickListener(new OnMapClickListener() {
-			
-			@Override
-			public void onMapClick(LatLng arg0) {
-				map.stopAnimation();
-				setCameraFirstLocation();
-			}
-		});
+		if (itemsMapFrag.size() > 1) {
+			setCameraAnimation();
+			map.setOnMapClickListener(new OnMapClickListener() {
+
+				@Override
+				public void onMapClick(LatLng arg0) {
+					map.stopAnimation();
+					setCameraFirstLocation();
+				}
+			});
+		}
+
 		map.setOnMarkerClickListener(new OnMarkerClickListener() {
-			
+
 			@Override
 			public boolean onMarkerClick(Marker arg0) {
-				Log.d("check latlng at marker", "" + arg0.getPosition().latitude);
-				final View viewInfoWindow = getLayoutInflater().inflate(R.layout.marker_popup_layout, null);
-				 imageStreet = (ImageView) viewInfoWindow.findViewById(R.id.steetview_image);
-			
-				 setMarkerOnMarker(viewInfoWindow,arg0.getPosition());
-				 new DownloadImagesTask().execute(arg0.getPosition());
-				
-				
+				Log.d("check latlng at marker", ""
+						+ arg0.getPosition().latitude);
+				final View viewInfoWindow = getLayoutInflater().inflate(
+						R.layout.marker_popup_layout, null);
+				imageStreet = (ImageView) viewInfoWindow
+						.findViewById(R.id.steetview_image);
+
+				setMarkerOnMarker(viewInfoWindow, arg0.getPosition());
+				new DownloadImagesTask().execute(arg0.getPosition());
+
 				return false;
 			}
 		});
 
 	}
-	
-	public class DownloadImagesTask extends AsyncTask<LatLng, Void, Bitmap> {
-		
-		
-			@Override
-			protected Bitmap doInBackground(LatLng... params) {
-				// TODO Auto-generated method stub
-				return download_image(params[0]);
-			}
 
-			@Override
-				protected void onPostExecute(Bitmap result) {
-				if(result == null){
-					return;
-				}
-				imageStreet.setImageBitmap(result);
-				}
-			
-			private Bitmap download_image(LatLng locationLatLng){
-				Bitmap bm = model.sendStreeView(locationLatLng.latitude, locationLatLng.longitude);
-				return bm;
-				
-			}
+	public class DownloadImagesTask extends AsyncTask<LatLng, Void, Bitmap> {
+
+		@Override
+		protected Bitmap doInBackground(LatLng... params) {
+			// TODO Auto-generated method stub
+			return download_image(params[0]);
 		}
 
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			if (result == null) {
+				return;
+			}
+			imageStreet.setImageBitmap(result);
+		}
+
+		private Bitmap download_image(LatLng locationLatLng) {
+			Bitmap bm = model.sendStreeView(locationLatLng.latitude,
+					locationLatLng.longitude);
+			return bm;
+
+		}
+	}
+
 	private void setCameraAnimation() {
-		
-		setCameraFirstLocation();
 
 		map.animateCamera(CameraUpdateFactory.zoomTo(16), 3000,
 				myCancelablecallback);
@@ -148,25 +161,19 @@ public class MapActivity extends Activity {
 		LatLng firstLocation = new LatLng(itemsMapFrag.get(0).latitude,
 				itemsMapFrag.get(0).longitude);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 14));
-		
-	}
-	
-	private void setMarkerOnMarker(
-			View marker,LatLng location) {
-		
-			
-			map.addMarker(new MarkerOptions()
-					.position(
-							new LatLng(location.latitude,
-									location.longitude))
-					.title("title")
-					.snippet("snippet")
-					.icon(BitmapDescriptorFactory
-							.fromBitmap(createDrawableFromView(this, marker))));
-		
 
 	}
 
+	private void setMarkerOnMarker(View marker, LatLng location) {
+
+		map.addMarker(new MarkerOptions()
+				.position(new LatLng(location.latitude, location.longitude))
+				.title("title")
+				.snippet("snippet")
+				.icon(BitmapDescriptorFactory
+						.fromBitmap(createDrawableFromView(this, marker))));
+
+	}
 
 	private void setMarkerOnMap(ImageView motionImage, ImageView batteryImage,
 			View marker, TextView timeText) {
@@ -318,8 +325,8 @@ public class MapActivity extends Activity {
 						itemsMapFrag.get(i).longitude);
 
 				CameraPosition cameraPosition = new CameraPosition.Builder()
-						.target(currentLatlng).bearing(targetBearting).zoom(14).tilt(45)
-						.build();
+						.target(currentLatlng).bearing(targetBearting).zoom(14)
+						.tilt(45).build();
 				map.animateCamera(
 						CameraUpdateFactory.newCameraPosition(cameraPosition),
 						2000, myCancelablecallback);
@@ -334,7 +341,7 @@ public class MapActivity extends Activity {
 		}
 	};
 
-	private void setAsyncTaskStreetView(){
-		
+	private void setAsyncTaskStreetView() {
+
 	}
 }

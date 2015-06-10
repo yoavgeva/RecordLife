@@ -348,8 +348,9 @@ containing a value of this type.
         public static final int common_signin_btn_light_text_disabled=0x7f060006;
         public static final int common_signin_btn_light_text_focused=0x7f060007;
         public static final int common_signin_btn_light_text_pressed=0x7f060005;
-        public static final int common_signin_btn_text_dark=0x7f060018;
-        public static final int common_signin_btn_text_light=0x7f060019;
+        public static final int common_signin_btn_text_dark=0x7f060019;
+        public static final int common_signin_btn_text_light=0x7f06001a;
+        public static final int lightgrey_details=0x7f060018;
         public static final int transparent=0x7f060017;
         public static final int wallet_bright_foreground_disabled_holo_light=0x7f06000f;
         /** 
@@ -369,8 +370,8 @@ containing a value of this type.
         public static final int wallet_hint_foreground_holo_light=0x7f060011;
         public static final int wallet_holo_blue_light=0x7f060015;
         public static final int wallet_link_text_light=0x7f060016;
-        public static final int wallet_primary_text_holo_light=0x7f06001a;
-        public static final int wallet_secondary_text_holo_dark=0x7f06001b;
+        public static final int wallet_primary_text_holo_light=0x7f06001b;
+        public static final int wallet_secondary_text_holo_dark=0x7f06001c;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -447,8 +448,8 @@ containing a value of this type.
         public static final int register_button=0x7f02003c;
     }
     public static final class id {
-        public static final int action_logout=0x7f070030;
-        public static final int action_settings=0x7f07002e;
+        public static final int action_logout=0x7f070031;
+        public static final int action_settings=0x7f07002f;
         public static final int battery_picture_map=0x7f070022;
         public static final int book_now=0x7f070010;
         public static final int button_login=0x7f07001e;
@@ -458,9 +459,9 @@ containing a value of this type.
         public static final int buyButton=0x7f07000a;
         public static final int buy_now=0x7f07000f;
         public static final int buy_with_google=0x7f07000e;
-        public static final int checked_textview_group=0x7f070028;
+        public static final int checked_textview_group=0x7f070029;
         public static final int classic=0x7f070011;
-        public static final int database_manager=0x7f07002f;
+        public static final int database_manager=0x7f070030;
         public static final int editText_password_login=0x7f070016;
         public static final int editText_username_login=0x7f070015;
         public static final int edittext_signup_name=0x7f070019;
@@ -468,16 +469,17 @@ containing a value of this type.
         public static final int edittext_signup_pw_repeat=0x7f07001b;
         public static final int ex_list_view=0x7f070018;
         public static final int grayscale=0x7f070012;
-        public static final int group_map_icon=0x7f070029;
+        public static final int group_map_icon=0x7f07002a;
         public static final int holo_dark=0x7f070005;
         public static final int holo_light=0x7f070006;
         public static final int hybrid=0x7f070004;
+        public static final int imageview_details_type=0x7f070023;
         public static final int linear_login=0x7f070014;
         public static final int linear_signup_login=0x7f07001d;
-        public static final int location_map=0x7f07002a;
+        public static final int location_map=0x7f07002b;
         public static final int match_parent=0x7f07000c;
-        public static final int menu_main_spinner_dates=0x7f07002d;
-        public static final int menu_main_spinner_day_or_week=0x7f07002c;
+        public static final int menu_main_spinner_dates=0x7f07002e;
+        public static final int menu_main_spinner_day_or_week=0x7f07002d;
         public static final int monochrome=0x7f070013;
         public static final int motion_picture_map=0x7f070021;
         public static final int none=0x7f070000;
@@ -486,14 +488,14 @@ containing a value of this type.
         public static final int sandbox=0x7f070008;
         public static final int satellite=0x7f070002;
         public static final int selectionDetails=0x7f07000b;
-        public static final int steetview_image=0x7f07002b;
+        public static final int steetview_image=0x7f07002c;
         public static final int strict_sandbox=0x7f070009;
         public static final int terrain=0x7f070003;
-        public static final int textViewDetails=0x7f070023;
-        public static final int textView_details_battery=0x7f070027;
-        public static final int textView_details_motion=0x7f070025;
-        public static final int textView_details_time=0x7f070024;
-        public static final int textView_details_type=0x7f070026;
+        public static final int textViewDetails=0x7f070024;
+        public static final int textView_details_battery=0x7f070028;
+        public static final int textView_details_motion=0x7f070027;
+        public static final int textView_details_time=0x7f070026;
+        public static final int textView_details_type=0x7f070025;
         public static final int time_text_map=0x7f070020;
         public static final int wrap_content=0x7f07000d;
     }
@@ -616,6 +618,7 @@ containing a value of this type.
          */
         public static final int common_signin_button_text_long=0x7f05001e;
         public static final int database_manger=0x7f050024;
+        public static final int details_image_type=0x7f050053;
         public static final int details_motion_cycling=0x7f05004a;
         public static final int details_motion_driving=0x7f05004c;
         public static final int details_motion_running=0x7f050049;
@@ -638,12 +641,12 @@ containing a value of this type.
         public static final int error_mismatched_passwords=0x7f050034;
         public static final int group_map_icon=0x7f050052;
         public static final int hello_world=0x7f050021;
-        public static final int image_battery_map_desc=0x7f050055;
+        public static final int image_battery_map_desc=0x7f050056;
         /**  Map Activity 
          */
-        public static final int image_icon_map_desc=0x7f050053;
-        public static final int image_motion_map_desc=0x7f050054;
-        public static final int image_streetview_map_desc=0x7f050056;
+        public static final int image_icon_map_desc=0x7f050054;
+        public static final int image_motion_map_desc=0x7f050055;
+        public static final int image_streetview_map_desc=0x7f050057;
         public static final int location_alert_dialog_message=0x7f050042;
         public static final int location_alert_dialog_negative=0x7f050044;
         public static final int location_alert_dialog_positive=0x7f050043;
@@ -667,8 +670,8 @@ containing a value of this type.
         public static final int screen_signup_password_repeat_hint=0x7f050027;
         /**  Settings Activity 
          */
-        public static final int settings_sample_instance_category_title=0x7f050057;
-        public static final int settings_sample_instance_list_title=0x7f050058;
+        public static final int settings_sample_instance_category_title=0x7f050058;
+        public static final int settings_sample_instance_list_title=0x7f050059;
         public static final int signup_button=0x7f050040;
         public static final int title_activity_dispatch=0x7f05003e;
         public static final int title_activity_login=0x7f050039;
