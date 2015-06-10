@@ -21,12 +21,12 @@ public class ActivityService extends Service implements
 	static final String TAG = ActivityService.class.getSimpleName();
 	PendingIntent pendingInte;
 	ActivityRecognitionClient activityClient;
-	//private static final int TIME = 1000 * 60 * 30; // type the minutes last
-	long intervalTiming;
+	private static final int TIME = 1000 * 60 * 5; // type the minutes last
+	//long intervalTiming;
 
 	@Override
 	public void onCreate() {
-		loadTimingSettings();
+		//loadTimingSettings();
 		activityClient = new ActivityRecognitionClient(this, this, this);
 		Intent inte = new Intent(this, ActivityIntentService.class);
 		pendingInte = PendingIntent.getService(this, 0, inte,
@@ -56,8 +56,8 @@ public class ActivityService extends Service implements
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		Log.d(TAG, "intervalttiming = " + intervalTiming);
-		activityClient.requestActivityUpdates(intervalTiming, pendingInte);
+		Log.d(TAG, "intervalttiming = " + TIME);
+		activityClient.requestActivityUpdates(TIME, pendingInte);
 
 	}
 
@@ -67,13 +67,13 @@ public class ActivityService extends Service implements
 		stopSelf();
 
 	}
-	private void loadTimingSettings() {
+/*	private void loadTimingSettings() {
 		SharedPreferences prefrences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		long interval = prefrences
 				.getLong(SettingsFragment.KEY_INTERVAL_TIME, 30);
 		intervalTiming = 1000 * 60 * interval;
-	}
+	}*/
 
 	
 }

@@ -28,6 +28,7 @@ public class MainActivity extends Activity implements Listener {
 	TextView textV;
 	ActionBar actionBar;
 	public static final String CONNECTED_OR_NOT = "connected";
+	
 
 	private Model model;
 
@@ -90,21 +91,23 @@ public class MainActivity extends Activity implements Listener {
 	}
 
 	private void startMainService() {
-		boolean loggedIn = checkIfStillLogged();
+		int loggedIn = checkIfStillLogged();
+		Intent intent = new Intent(this, MainService.class);
+		startService(intent);	
 		Log.d(MainActivity.class.getSimpleName(), "" + loggedIn);
-		if(!loggedIn){
+		if(loggedIn == 0){
 			Log.d(MainActivity.class.getSimpleName(), "is calling mainservice"  );
-			Intent intent = new Intent(this, MainService.class);
-			startService(intent);	
+			
+			checkLogged(1);
+			
 		}
 
 		
-		checkLogged(true);
 	}
 
 	public void logoutAction() {
 		ParseUser.logOut();
-		checkLogged(false);
+		checkLogged(0);
 		stopMainService();
 		Intent intent = new Intent(MainActivity.this,
 				SignUpOrLoginActivity.class);
@@ -195,19 +198,19 @@ public class MainActivity extends Activity implements Listener {
 	 * private void populateContent() { getFragmentManager().beginTransaction()
 	 * .replace(android.R.id.content, new MainFragment()).commit(); }
 	 */
-	private void checkLogged(boolean connected) {
+	private void checkLogged(int connected) {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putBoolean(MainActivity.CONNECTED_OR_NOT, connected);
+		editor.putInt(MainActivity.CONNECTED_OR_NOT, connected);
 		editor.commit();
 
 	}
 
-	private boolean checkIfStillLogged() {
+	private int checkIfStillLogged() {
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		boolean logged = pref.getBoolean(CONNECTED_OR_NOT, false);
+		int logged = pref.getInt(CONNECTED_OR_NOT, 0);
 		return logged;
 	}
 

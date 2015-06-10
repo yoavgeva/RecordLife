@@ -150,6 +150,7 @@ public class LoginActivity extends Activity {
 
 						}
 					});
+					setLoggedInMainService(0);
 					goToDispatchActivity();
 
 				}
@@ -275,6 +276,15 @@ public class LoginActivity extends Activity {
 		userNameText.setHintTextColor(Color.BLACK);
 		
 		
+	}
+	
+	private void setLoggedInMainService(int connected){
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt(MainActivity.CONNECTED_OR_NOT, connected);
+		editor.commit();
+
 	}
 	
 

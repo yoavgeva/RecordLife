@@ -132,6 +132,7 @@ public class SignUpActivity extends Activity {
 				} else {
 					
 					saveCountIdPref();
+					setLoggedInMainService(0);
 					Intent intent = new Intent(SignUpActivity.this,
 							DispatchActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -179,6 +180,14 @@ public class SignUpActivity extends Activity {
 		passwordRepetText.setTextSize(25f);
 		passwordRepetText.setHintTextColor(Color.BLACK);
 		
+	}
+	private void setLoggedInMainService(int connected){
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt(MainActivity.CONNECTED_OR_NOT, connected);
+		editor.commit();
+
 	}
 	
 	

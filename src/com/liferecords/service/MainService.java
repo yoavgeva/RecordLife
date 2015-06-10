@@ -22,8 +22,8 @@ import android.util.Log;
 public class MainService extends Service {
 	static final String TAG = MainService.class.getSimpleName();
 	private final IBinder settingsBinder = new LocalBinder();
+	private static final int TIME = 1000 * 60 * 5; // type the minutes last
 
-	
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 
 		@Override
@@ -54,15 +54,15 @@ public class MainService extends Service {
 		}
 	};
 
-	long intervalTiming;
+	// long intervalTiming;
 	private Handler timerHandler = new Handler();
 	private Runnable timerTask = new Runnable() {
 
 		@Override
 		public void run() {
-			Log.d(TAG, "intervalttiming = " + intervalTiming);
+			Log.d(TAG, "intervalttiming = " + TIME);
 			sync();
-			timerHandler.postDelayed(timerTask, intervalTiming);
+			timerHandler.postDelayed(timerTask, TIME);
 
 		}
 	};
@@ -71,16 +71,16 @@ public class MainService extends Service {
 	public IBinder onBind(Intent intent) {
 		return settingsBinder;
 	}
-	
-	public class LocalBinder extends Binder{
-		public MainService getMainService(){
+
+	public class LocalBinder extends Binder {
+		public MainService getMainService() {
 			return MainService.this;
 		}
 	}
 
 	@Override
 	public void onCreate() {
-		loadTimingSettings();
+		// loadTimingSettings();
 		registerReciver();
 		startServices();
 		super.onCreate();
@@ -91,22 +91,22 @@ public class MainService extends Service {
 		stopTimer();
 		unregisterReciver();
 		stopServices();
-		Log.d(TAG, "Destoryedservice" + intervalTiming);
+		Log.d(TAG, "Destoryedservice" + TIME);
 		super.onDestroy();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d(TAG, "onStartCommand running");
-		Log.d(TAG, "intervalttiming = " + intervalTiming);
+		Log.d(TAG, "intervalttiming = " + TIME);
 		sync();
 		startTimer();
 		return START_STICKY;
 	}
 
 	private void sync() {
-		Log.d(TAG, "intervalttiming sync = " + intervalTiming);
-		loadTimingSettings();
+		Log.d(TAG, "intervalttiming sync = " + TIME);
+		// loadTimingSettings();
 		startSyncService();
 
 	}
@@ -134,7 +134,7 @@ public class MainService extends Service {
 
 	private void startTimer() {
 		stopTimer();
-		timerHandler.postDelayed(timerTask, intervalTiming);
+		timerHandler.postDelayed(timerTask, TIME);
 
 	}
 
@@ -178,14 +178,12 @@ public class MainService extends Service {
 		}
 		return false;
 	}
-	
-	private void loadTimingSettings() {
-		SharedPreferences prefrences = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		long interval = prefrences
-				.getLong(SettingsFragment.KEY_INTERVAL_TIME, 30);
-		intervalTiming = 1000 * 60 * interval;
-	}
 
-	
+	/*
+	 * private void loadTimingSettings() { SharedPreferences prefrences =
+	 * PreferenceManager .getDefaultSharedPreferences(this); long interval =
+	 * prefrences .getLong(SettingsFragment.KEY_INTERVAL_TIME, 30);
+	 * intervalTiming = 1000 * 60 * interval; }
+	 */
+
 }

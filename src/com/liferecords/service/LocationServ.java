@@ -26,25 +26,26 @@ public class LocationServ extends Service implements LocationListener,
 	static final String TAG = LocationServ.class.getSimpleName();
 	public static final String BROADCASTACTION = "com.liferecords.service."
 			+ LocationServ.class.getSimpleName() + ".BROADCAST";
-	//private static final int TIME = 1000 * 60 * 30; // type the minutes last
+	private static final int TIME = 1000 * 60 * 5; // type the minutes last
 	LocationRequest locationRequest;
 	LocationClient locationClient;
 	Intent intent;
 	Model model;
 	int counter = 0;
-	long intervalTiming;
+
+	// long intervalTiming;
 
 	@Override
 	public void onCreate() {
 
 		Context content = this;
 		model = new Model(content);
-		loadTimingSettings();
-		Log.d(TAG, "intervalttiming = " + intervalTiming);
+		// loadTimingSettings();
+		Log.d(TAG, "intervalttiming = " + TIME);
 		locationRequest = LocationRequest.create();
 		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		locationRequest.setInterval(intervalTiming);
-		locationRequest.setFastestInterval(intervalTiming);
+		locationRequest.setInterval(TIME);
+		locationRequest.setFastestInterval(TIME);
 		locationClient = new LocationClient(this, this, this);
 		locationClient.connect();
 
@@ -100,12 +101,11 @@ public class LocationServ extends Service implements LocationListener,
 
 	}
 
-	private void loadTimingSettings() {
-		SharedPreferences prefrences = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		long interval = prefrences
-				.getLong(SettingsFragment.KEY_INTERVAL_TIME, 30);
-		intervalTiming = 1000 * 60 * interval;
-	}
+	/*
+	 * private void loadTimingSettings() { SharedPreferences prefrences =
+	 * PreferenceManager .getDefaultSharedPreferences(this); long interval =
+	 * prefrences .getLong(SettingsFragment.KEY_INTERVAL_TIME, 30);
+	 * intervalTiming = 1000 * 60 * interval; }
+	 */
 
 }
