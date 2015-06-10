@@ -448,10 +448,11 @@ containing a value of this type.
         public static final int register_button=0x7f02003c;
     }
     public static final class id {
-        public static final int action_logout=0x7f070031;
-        public static final int action_settings=0x7f07002f;
+        public static final int action_logout=0x7f070032;
+        public static final int action_settings=0x7f070030;
         public static final int battery_picture_map=0x7f070022;
         public static final int book_now=0x7f070010;
+        public static final int borderline_details=0x7f070029;
         public static final int button_login=0x7f07001e;
         public static final int button_loginscreen=0x7f070017;
         public static final int button_signup=0x7f07001c;
@@ -459,9 +460,9 @@ containing a value of this type.
         public static final int buyButton=0x7f07000a;
         public static final int buy_now=0x7f07000f;
         public static final int buy_with_google=0x7f07000e;
-        public static final int checked_textview_group=0x7f070029;
+        public static final int checked_textview_group=0x7f07002a;
         public static final int classic=0x7f070011;
-        public static final int database_manager=0x7f070030;
+        public static final int database_manager=0x7f070031;
         public static final int editText_password_login=0x7f070016;
         public static final int editText_username_login=0x7f070015;
         public static final int edittext_signup_name=0x7f070019;
@@ -469,17 +470,17 @@ containing a value of this type.
         public static final int edittext_signup_pw_repeat=0x7f07001b;
         public static final int ex_list_view=0x7f070018;
         public static final int grayscale=0x7f070012;
-        public static final int group_map_icon=0x7f07002a;
+        public static final int group_map_icon=0x7f07002b;
         public static final int holo_dark=0x7f070005;
         public static final int holo_light=0x7f070006;
         public static final int hybrid=0x7f070004;
         public static final int imageview_details_type=0x7f070023;
         public static final int linear_login=0x7f070014;
         public static final int linear_signup_login=0x7f07001d;
-        public static final int location_map=0x7f07002b;
+        public static final int location_map=0x7f07002c;
         public static final int match_parent=0x7f07000c;
-        public static final int menu_main_spinner_dates=0x7f07002e;
-        public static final int menu_main_spinner_day_or_week=0x7f07002d;
+        public static final int menu_main_spinner_dates=0x7f07002f;
+        public static final int menu_main_spinner_day_or_week=0x7f07002e;
         public static final int monochrome=0x7f070013;
         public static final int motion_picture_map=0x7f070021;
         public static final int none=0x7f070000;
@@ -488,7 +489,7 @@ containing a value of this type.
         public static final int sandbox=0x7f070008;
         public static final int satellite=0x7f070002;
         public static final int selectionDetails=0x7f07000b;
-        public static final int steetview_image=0x7f07002c;
+        public static final int steetview_image=0x7f07002d;
         public static final int strict_sandbox=0x7f070009;
         public static final int terrain=0x7f070003;
         public static final int textViewDetails=0x7f070024;

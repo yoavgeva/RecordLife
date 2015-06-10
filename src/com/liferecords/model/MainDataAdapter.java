@@ -244,7 +244,14 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		ImageView imgType = (ImageView) convertView
 				.findViewById(R.id.imageview_details_type);
 		setTypeImage(imgType, childView);
+		View viewBorder = convertView.findViewById(R.id.borderline_details);
+		setBorderLinesDesign(viewBorder);
 
+	}
+
+	private void setBorderLinesDesign(View viewBorder) {
+		viewBorder.setBackgroundColor(Color.parseColor("#CED3E8"));
+		
 	}
 
 	private void setAdressDesign(ModelAdapterItem childView, TextView txtAdress) {

@@ -63,19 +63,20 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_motion_standing"
             android:gravity="center"
-            android:paddingLeft="20dp" />
+            android:paddingLeft="30dp" />
 
         <TextView
             android:id="@+id/textView_details_battery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="20dp" />
+            android:gravity="center_vertical"
+            android:paddingLeft="30dp" />
     </LinearLayout>
 
     <View
+        android:id="@+id/borderline_details"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/holo_blue_light" />
+        />
 
 </LinearLayout>
