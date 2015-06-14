@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.CancelableCallback;
-import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
@@ -36,7 +35,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.liferecords.model.InfoWindowMapAdapter;
 import com.liferecords.model.Model;
 import com.liferecords.model.ModelAdapterItem;
 import com.liferecords.model.WrapperMarker;
@@ -49,8 +47,8 @@ public class MapActivity extends Activity {
 	private ModelAdapterItem itemMap;
 	public ImageView imageStreet;
 	private ProgressDialog pDialog;
-	private View viewInfoWindow;
-	private Context content;
+
+	private boolean pictureOn = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,14 +117,14 @@ public class MapActivity extends Activity {
 			public boolean onMarkerClick(Marker arg0) {
 				Log.d("check latlng at marker", ""
 						+ arg0.getPosition().latitude);
-				/*
-				 * final View viewInfoWindow = getLayoutInflater().inflate(
-				 * R.layout.marker_popup_layout, null); imageStreet =
-				 * (ImageView) viewInfoWindow
-				 * .findViewById(R.id.steetview_image);
-				 */
 
-				new DownloadImagesTask().execute(arg0.getPosition());
+				if (!pictureOn) {
+
+					new DownloadImagesTask().execute(arg0.getPosition());
+				} else {
+					map.clear();
+					setUpMap();
+				}
 
 				return false;
 			}
@@ -150,13 +148,15 @@ public class MapActivity extends Activity {
 			}
 
 			pDialog.dismiss();
-			
+			map.clear();
+
 			View viewInfoWindow = getLayoutInflater().inflate(
 					R.layout.marker_popup_layout, null);
 			imageStreet = (ImageView) viewInfoWindow
 					.findViewById(R.id.steetview_image);
 			imageStreet.setImageBitmap(result.picBitmap);
 			setMarkerOnMarker(viewInfoWindow, result.location);
+			pictureOn = true;
 
 		}
 
@@ -207,30 +207,6 @@ public class MapActivity extends Activity {
 				.icon(BitmapDescriptorFactory
 						.fromBitmap(createDrawableFromView(this, marker))));
 
-	}
-
-	private void setInfoWindowMap(final Bitmap infoPopupBitmap) {
-
-		map.setInfoWindowAdapter(new InfoWindowAdapter() {
-
-			@Override
-			public View getInfoWindow(Marker marker) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public View getInfoContents(Marker marker) {
-				LayoutInflater inflater = (LayoutInflater) content
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				View popUp = inflater.inflate(R.layout.marker_popup_layout,
-						null, false);
-				ImageView popUpImage = (ImageView) popUp
-						.findViewById(R.id.steetview_image);
-				popUpImage.setImageBitmap(infoPopupBitmap);
-				return popUp;
-			}
-		});
 	}
 
 	private void setMarkerOnMap(ImageView motionImage, ImageView batteryImage,
@@ -400,7 +376,5 @@ public class MapActivity extends Activity {
 		}
 	};
 
-	private void setAsyncTaskStreetView() {
-
-	}
+	
 }
