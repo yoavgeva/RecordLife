@@ -1,34 +1,55 @@
 package com.liferecords.application;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.liferecords.application.MainFragment.Listener;
+import com.liferecords.model.DateAdapterItem;
 import com.liferecords.model.MainDataAdapter;
 import com.liferecords.model.Model;
+import com.liferecords.model.ModelAdapterItem;
 import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class MainActivity extends Activity implements Listener {
+public class MainActivity extends AppCompatActivity implements Listener {
 
 	TextView textV;
-	ActionBar actionBar;
+	android.support.v7.app.ActionBar actionBar;
 	public static final String CONNECTED_OR_NOT = "connected";
-	
+	String[] navMenuTitles;
+	TypedArray navMenuIcons;
+	private List<DateAdapterItem> itemsGroup;
+	private List<ModelAdapterItem> itemsChildrenAlpha;
+	private List<ModelAdapterItem> itemsChildrenBeta;
+	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
+	private ExpandableListView exListView;
 
 	private Model model;
 
@@ -37,12 +58,22 @@ public class MainActivity extends Activity implements Listener {
 		super.onCreate(savedInstanceState);
 		startMainService();
 		setContentView(R.layout.activity_main);
+			
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
+		
+		exListView = (ExpandableListView) findViewById(R.id.exlistview);
+		populate();
+		MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,
+				itemsChildren);
+		//Log.d(MainActivity.class.getSimpleName(), );
+		exListView.setAdapter(adapter);
 
-		actionBar = getActionBar();
-		designActionBar();
-		createExpListView();
+		
+		 actionBar = getSupportActionBar();
+		 designActionBar();
+
+		//createExpListView();
 		// populateContent();
 
 		if (savedInstanceState == null) {
@@ -56,6 +87,19 @@ public class MainActivity extends Activity implements Listener {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
+
+	/*private void setNavigationBarActivity() {
+		
+		 * navMenuTitles =
+		 * getResources().getStringArray(R.array.navigation_items);
+		 * 
+		 * navMenuIcons =
+		 * getResources().obtainTypedArray(R.array.navigation_icons);
+		 
+		Log.d(MainActivity.class.getSimpleName(), "" + navMenuTitles
+				+ navMenuIcons);
+		// set();
+	}*/
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -93,16 +137,15 @@ public class MainActivity extends Activity implements Listener {
 	private void startMainService() {
 		int loggedIn = checkIfStillLogged();
 		Intent intent = new Intent(this, MainService.class);
-		startService(intent);	
+		startService(intent);
 		Log.d(MainActivity.class.getSimpleName(), "" + loggedIn);
-		if(loggedIn == 0){
-			Log.d(MainActivity.class.getSimpleName(), "is calling mainservice"  );
-			
+		if (loggedIn == 0) {
+			Log.d(MainActivity.class.getSimpleName(), "is calling mainservice");
+
 			checkLogged(1);
-			
+
 		}
 
-		
 	}
 
 	public void logoutAction() {
@@ -177,13 +220,17 @@ public class MainActivity extends Activity implements Listener {
 	 */
 
 	private void designActionBar() {
-		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setIcon(R.color.transparent);
+		actionBar.show();
 	}
 
 	private void createExpListView() {
-		ExpandableListView exListView = (ExpandableListView) findViewById(R.id.ex_list_view);
-		MainDataAdapter adapter = new MainDataAdapter(this);
+		
+		populate();
+		MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,
+				itemsChildren);
+		
 		exListView.setAdapter(adapter);
 
 	}
@@ -212,6 +259,58 @@ public class MainActivity extends Activity implements Listener {
 				.getDefaultSharedPreferences(this);
 		int logged = pref.getInt(CONNECTED_OR_NOT, 0);
 		return logged;
+	}
+
+	private void populate() {
+
+		Log.d("check if see", "seen "
+				+ ParseUser.getCurrentUser().getUsername());
+		model = new Model(getApplicationContext());
+		itemsGroup = new ArrayList<DateAdapterItem>();
+		itemsGroup = model.getDateAdapterItems();
+		Collections.sort(itemsGroup, new Comparator<DateAdapterItem>() {
+
+			@Override
+			public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
+				return rhs.dateWithoutTime - lhs.dateWithoutTime;
+			}
+		});
+		Log.d("check query result", "" + itemsGroup.size());
+		Log.d("check query result", "" + itemsGroup.toString());
+
+		itemsChildrenAlpha = new ArrayList<ModelAdapterItem>();
+		itemsChildrenAlpha = model.getDataDateAdapterItems();
+		Collections.sort(itemsChildrenAlpha,
+				new Comparator<ModelAdapterItem>() {
+
+					@Override
+					public int compare(ModelAdapterItem lhs,
+							ModelAdapterItem rhs) {
+						return (rhs.countId - lhs.countId);
+					}
+				});
+
+		itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();
+
+		for (int i = 0; i < itemsGroup.size(); i++) {
+			DateAdapterItem groupObject = (DateAdapterItem) itemsGroup.get(i);
+			Log.d("check query result of children",
+					"" + itemsChildrenAlpha.size());
+			Log.d("check query result of children", ""
+					+ itemsChildrenAlpha.get(0).toString());
+			itemsChildrenBeta = new ArrayList<ModelAdapterItem>();
+			for (int j = 0; j < itemsChildrenAlpha.size(); j++) {
+				ModelAdapterItem childrenObject = itemsChildrenAlpha.get(j);
+				if (groupObject.dateWithoutTime == childrenObject.dateOnly) {
+					itemsChildrenBeta.add(childrenObject);
+				}
+			}
+			if (groupObject != null) {
+				itemsChildren.put(groupObject, itemsChildrenBeta);
+				Log.d("check query result of children",
+						"" + itemsChildren.get(groupObject).toString());
+			}
+		}
 	}
 
 }

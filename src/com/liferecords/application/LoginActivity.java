@@ -47,8 +47,8 @@ public class LoginActivity extends Activity {
 		account = new Account(this);
 		helper = new DataDBAdapter(this);
 
-		usernameText = (EditText) findViewById(R.id.editText_username_login);
-		passwordText = (EditText) findViewById(R.id.editText_password_login);
+		usernameText = (EditText) findViewById(R.id.edittext_username_login);
+		passwordText = (EditText) findViewById(R.id.edittext_password_login);
 		signinButton = (Button) findViewById(R.id.button_loginscreen);
 		signinButton.setOnClickListener(new OnClickListener() {
 
@@ -70,7 +70,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void setScreenDesign() {
-		getActionBar().hide();
+		//getActionBar().hide();
 		setLoginButton();
 		setUserNameText();
 		setPasswordTtext();
@@ -264,14 +264,14 @@ public class LoginActivity extends Activity {
 	}
 	
 	private void setUserNameText(){
-		EditText userNameText = (EditText) findViewById(R.id.editText_username_login);
+		EditText userNameText = (EditText) findViewById(R.id.edittext_username_login);
 		userNameText.setTextSize(30f);
 		userNameText.setHintTextColor(Color.BLACK);
 		
 		
 	}
 	private void setPasswordTtext(){
-		EditText userNameText = (EditText) findViewById(R.id.editText_password_login);
+		EditText userNameText = (EditText) findViewById(R.id.edittext_password_login);
 		userNameText.setTextSize(30f);
 		userNameText.setHintTextColor(Color.BLACK);
 		

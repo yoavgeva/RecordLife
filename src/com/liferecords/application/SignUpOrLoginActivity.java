@@ -43,7 +43,7 @@ public class SignUpOrLoginActivity extends Activity {
 	}
 
 	private void setScreenDesign(){
-		getActionBar().hide();
+		//getActionBar().hide();
 		setLoginButtonDesign();
 		setSignupButtonDesign();
 	}
@@ -54,13 +54,13 @@ public class SignUpOrLoginActivity extends Activity {
 	}
 	private void setLoginButtonDesign(){
 		loginButton = (Button) findViewById(R.id.button_login);
-		loginButton.setTypeface(setTypeFaceAspire(),Typeface.BOLD);
-		loginButton.setTextSize(35f);
+		loginButton.setTypeface(setTypeFaceAspire(),Typeface.NORMAL);
+		loginButton.setTextSize(22f);
 	}
 	private void setSignupButtonDesign(){
 		signupButton = (Button) findViewById(R.id.button_signup_login);
-		signupButton.setTypeface(setTypeFaceAspire(),Typeface.BOLD);
-		signupButton.setTextSize(35f);
+		signupButton.setTypeface(setTypeFaceAspire(),Typeface.NORMAL);
+		signupButton.setTextSize(22f);
 		
 	}
 }

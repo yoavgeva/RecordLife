@@ -3,35 +3,34 @@ package com.liferecords.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.liferecords.application.SettingsFragment;
+import com.google.android.gms.location.LocationServices;
 import com.liferecords.model.Model;
 
 public class LocationServ extends Service implements LocationListener,
-		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+		ConnectionCallbacks, OnConnectionFailedListener {
 
 	static final String TAG = LocationServ.class.getSimpleName();
 	public static final String BROADCASTACTION = "com.liferecords.service."
 			+ LocationServ.class.getSimpleName() + ".BROADCAST";
 	private static final int TIME = 1000 * 60 * 5; // type the minutes last
 	LocationRequest locationRequest;
-	LocationClient locationClient;
+	//LocationClient locationClient;
 	Intent intent;
 	Model model;
 	int counter = 0;
+	GoogleApiClient locationApiClient;
 
 	// long intervalTiming;
 
@@ -46,16 +45,20 @@ public class LocationServ extends Service implements LocationListener,
 		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 		locationRequest.setInterval(TIME);
 		locationRequest.setFastestInterval(TIME);
-		locationClient = new LocationClient(this, this, this);
-		locationClient.connect();
-
+		locationApiClient = new GoogleApiClient.Builder(content)
+				.addApi(LocationServices.API).addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this).build();
+		locationApiClient.connect();
+		
 	}
 
 	@Override
 	public void onDestroy() {
-		if (locationClient.isConnected()) {
-			locationClient.removeLocationUpdates(this);
-			locationClient.disconnect();
+		if (locationApiClient.isConnected()) {
+			LocationServices.FusedLocationApi.removeLocationUpdates(locationApiClient, this);
+			locationApiClient.disconnect();
+			/*locationClient.removeLocationUpdates(this);
+			locationClient.disconnect();*/
 		}
 
 	}
@@ -77,15 +80,16 @@ public class LocationServ extends Service implements LocationListener,
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		locationClient.requestLocationUpdates(locationRequest, this);
+		LocationServices.FusedLocationApi.requestLocationUpdates(locationApiClient, locationRequest, this);
+		//locationClient.requestLocationUpdates(locationRequest, this);
 	}
 
-	@Override
+	/*@Override
 	public void onDisconnected() {
-		locationClient.removeLocationUpdates(this);
+		LocationServices.FusedLocationApi.removeLocationUpdates(locationApiClient, this);
 		stopSelf();
 	}
-
+*/
 	private void updateLocation(Location location) {
 		Log.d(TAG, "Location: " + location);
 		if (location != null) {
@@ -100,6 +104,14 @@ public class LocationServ extends Service implements LocationListener,
 		}
 
 	}
+
+	@Override
+	public void onConnectionSuspended(int cause) {
+		LocationServices.FusedLocationApi.removeLocationUpdates(locationApiClient, this);
+		stopSelf();
+
+	}
+	
 
 	/*
 	 * private void loadTimingSettings() { SharedPreferences prefrences =

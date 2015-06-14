@@ -16,5 +16,15 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    
+<style name="MyTheme" parent="Theme.AppCompat">
+    ...
+</style>
 
+<style name="MyTheme.NoActionBar">
+    <!-- Both of these are needed -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+</style>
 </resources>

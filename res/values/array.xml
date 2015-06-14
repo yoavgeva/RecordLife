@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-     <!-- Day/Week Spinner -->
+
+    <!-- Day/Week Spinner -->
     <string-array name="spinner_time_arrangement">
         <item>Day</item>
         <item>Week</item>
     </string-array>
-    
+
     <!-- Instance Time Settings -->
     <string-array name="instance_time_set">
-        <item >30 Minutes</item>
-        <item >1 Hour</item>
-        <item >2 Hours</item>
+        <item>30 Minutes</item>
+        <item>1 Hour</item>
+        <item>2 Hours</item>
     </string-array>
-    
     <string-array name="instance_time_values">
-        <item >30</item>
-        <item >60</item>
-        <item >120</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
     </string-array>
-    
+    <!-- Navigation Drawer items -->
+    <string-array name="navigation_items">
+        <item>Main</item>
+        <item>Settings</item>
+        <item>FeedBack</item>
+        <item>Privacy Policy</item>
+    </string-array>
+
+    <string-array name="navigation_icons">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+   </string-array>
+
 </resources>

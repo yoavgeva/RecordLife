@@ -111,7 +111,7 @@ public class MainFragment extends ListFragment {
 		setEmptyText("not working");
 		setHasOptionsMenu(true);
 
-		lv = (ExpandableListView) getActivity().findViewById(R.id.ex_list_view);
+		lv = (ExpandableListView) getActivity().findViewById(R.id.exlistview);
 
 		lv.setAdapter(mainAdapter);
 		setListShown(false);

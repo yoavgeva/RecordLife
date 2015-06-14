@@ -63,7 +63,7 @@ public class SignUpActivity extends Activity {
 	}
 
 	private void setScreenDesign() {
-		getActionBar().hide();
+		//getActionBar().hide();
 		setUserNameSignupDesign();
 		setSignupButtonDesign();
 		setPasswordDesign();

@@ -7,5 +7,15 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
         <!-- API 11 theme customizations can go here. -->
     </style>
+    
+    <style name="MyTheme" parent="Theme.AppCompat">
+    ...
+</style>
+
+<style name="MyTheme.NoActionBar">
+    <!-- Both of these are needed -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+</style>
 
 </resources>

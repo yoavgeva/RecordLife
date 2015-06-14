@@ -20,7 +20,7 @@
         android:paddingRight="20dp" >
 
         <EditText
-            android:id="@+id/editText_username_login"
+            android:id="@+id/edittext_username_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/phone_register_edittext"
@@ -34,7 +34,7 @@
         </EditText>
 
         <EditText
-            android:id="@+id/editText_password_login"
+            android:id="@+id/edittext_password_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"

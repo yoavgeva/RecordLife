@@ -43,11 +43,13 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
 
 	// added haspmap and list<dateadapteritem>
-	public MainDataAdapter(Context context) {
+	public MainDataAdapter(Context context,List<DateAdapterItem> itemsGroup, HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren) {
 		this.context = context;
 		this.model = new Model(this.context);
+		this.itemsGroup = itemsGroup;
+		this.itemsChildren = itemsChildren;
 
-		populate();
+		//populate();
 	}
 
 	/*
@@ -226,20 +228,20 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	private void setChildView(ModelAdapterItem childView, View convertView) {
 		TextView txtAdress = (TextView) convertView
-				.findViewById(R.id.textViewDetails);
+				.findViewById(R.id.textviewdetails);
 		setAdressDesign(childView, txtAdress);
 
 		TextView txtTime = (TextView) convertView
-				.findViewById(R.id.textView_details_time);
+				.findViewById(R.id.textview_details_time);
 		setTimeText(txtTime, childView);
 		TextView txtMotion = (TextView) convertView
-				.findViewById(R.id.textView_details_motion);
+				.findViewById(R.id.textview_details_motion);
 		setMotionPicture(txtMotion, childView);
 		TextView txtType = (TextView) convertView
 				.findViewById(R.id.textView_details_type);
 		setTypeText(txtType, childView);
 		TextView imgBattery = (TextView) convertView
-				.findViewById(R.id.textView_details_battery);
+				.findViewById(R.id.textview_details_battery);
 		setBatteryPicture(imgBattery, childView);
 		ImageView imgType = (ImageView) convertView
 				.findViewById(R.id.imageview_details_type);
