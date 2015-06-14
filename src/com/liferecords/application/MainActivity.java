@@ -58,27 +58,27 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		super.onCreate(savedInstanceState);
 		startMainService();
 		setContentView(R.layout.activity_main);
-			
+
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
-		
-		exListView = (ExpandableListView) findViewById(R.id.exlistview);
-		populate();
-		MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,
-				itemsChildren);
-		//Log.d(MainActivity.class.getSimpleName(), );
-		exListView.setAdapter(adapter);
 
-		
-		 actionBar = getSupportActionBar();
-		 designActionBar();
+		// exListView = (ExpandableListView) findViewById(R.id.exlistview);
 
-		//createExpListView();
-		// populateContent();
+		// createExpListView();
+		actionBar = getSupportActionBar();
+		designActionBar();
+
+		populateContent();
 
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
+
+	}
+
+	private void populateContent() {
+		getFragmentManager().beginTransaction()
+				.add(R.id.main_frag, new MainFragment()).commit();
 
 	}
 
@@ -88,18 +88,16 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	/*private void setNavigationBarActivity() {
-		
-		 * navMenuTitles =
-		 * getResources().getStringArray(R.array.navigation_items);
-		 * 
-		 * navMenuIcons =
-		 * getResources().obtainTypedArray(R.array.navigation_icons);
-		 
-		Log.d(MainActivity.class.getSimpleName(), "" + navMenuTitles
-				+ navMenuIcons);
-		// set();
-	}*/
+	/*
+	 * private void setNavigationBarActivity() {
+	 * 
+	 * navMenuTitles = getResources().getStringArray(R.array.navigation_items);
+	 * 
+	 * navMenuIcons = getResources().obtainTypedArray(R.array.navigation_icons);
+	 * 
+	 * Log.d(MainActivity.class.getSimpleName(), "" + navMenuTitles +
+	 * navMenuIcons); // set(); }
+	 */
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -226,12 +224,11 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	}
 
 	private void createExpListView() {
-		
+
 		populate();
-		MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,
-				itemsChildren);
-		
-		exListView.setAdapter(adapter);
+		//MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,	itemsChildren);
+
+		//exListView.setAdapter(adapter);
 
 	}
 

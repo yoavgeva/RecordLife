@@ -38,18 +38,21 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private final Context context;
 	private final Model model;
 	private List<DateAdapterItem> itemsGroup;
-	private List<ModelAdapterItem> itemsChildrenAlpha;
-	private List<ModelAdapterItem> itemsChildrenBeta;
+	//private List<ModelAdapterItem> itemsChildrenAlpha;
+	//private List<ModelAdapterItem> itemsChildrenBeta;
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
 
 	// added haspmap and list<dateadapteritem>
-	public MainDataAdapter(Context context,List<DateAdapterItem> itemsGroup, HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren) {
+	public MainDataAdapter(Context context, List<DateAdapterItem> itemsGroup,
+			HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren) {
 		this.context = context;
 		this.model = new Model(this.context);
+		
 		this.itemsGroup = itemsGroup;
+		
 		this.itemsChildren = itemsChildren;
 
-		//populate();
+		// populate();
 	}
 
 	/*
@@ -200,20 +203,20 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 					false);
 		}
 		convertView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				ModelAdapterItem addedItem = new ModelAdapterItem();
 				addedItem = childView;
 				Bundle bundle = new Bundle();
 				bundle.putParcelable("item", addedItem);
 				Log.d(MainDataAdapter.class.getSimpleName(), "" + addedItem);
-				
+
 				Intent intent = new Intent(context, MapActivity.class);
 				intent.putExtras(bundle);
 				context.startActivity(intent);
-				
+
 			}
 		});
 		setChildView(childView, convertView);
@@ -253,7 +256,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	private void setBorderLinesDesign(View viewBorder) {
 		viewBorder.setBackgroundColor(Color.parseColor("#CED3E8"));
-		
+
 	}
 
 	private void setAdressDesign(ModelAdapterItem childView, TextView txtAdress) {
@@ -472,59 +475,48 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		return distance;
 	}
 
-	private void populate() {
+	/*
+	 * private void populate() {
+	 * 
+	 * Log.d("check if see", "seen " +
+	 * ParseUser.getCurrentUser().getUsername()); this.itemsGroup =
+	 * this.model.getDateAdapterItems(); Collections.sort(itemsGroup, new
+	 * Comparator<DateAdapterItem>() {
+	 * 
+	 * @Override public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
+	 * return rhs.dateWithoutTime - lhs.dateWithoutTime; } });
+	 * Log.d("check query result", "" + this.itemsGroup.size());
+	 * Log.d("check query result", "" + this.itemsGroup.toString());
+	 * 
+	 * this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
+	 * Collections.sort(itemsChildrenAlpha, new Comparator<ModelAdapterItem>() {
+	 * 
+	 * @Override public int compare(ModelAdapterItem lhs, ModelAdapterItem rhs)
+	 * { return (rhs.countId - lhs.countId); } });
+	 * 
+	 * this.itemsChildren = new HashMap<DateAdapterItem,
+	 * List<ModelAdapterItem>>();
+	 * 
+	 * for (int i = 0; i < this.itemsGroup.size(); i++) { DateAdapterItem
+	 * groupObject = (DateAdapterItem) this.itemsGroup .get(i);
+	 * Log.d("check query result of children", "" +
+	 * this.itemsChildrenAlpha.size()); Log.d("check query result of children",
+	 * "" + this.itemsChildrenAlpha.get(0).toString()); this.itemsChildrenBeta =
+	 * new ArrayList<ModelAdapterItem>(); for (int j = 0; j <
+	 * this.itemsChildrenAlpha.size(); j++) { ModelAdapterItem childrenObject =
+	 * this.itemsChildrenAlpha .get(j); if (groupObject.dateWithoutTime ==
+	 * childrenObject.dateOnly) { this.itemsChildrenBeta.add(childrenObject); }
+	 * } if (groupObject != null) { this.itemsChildren.put(groupObject,
+	 * this.itemsChildrenBeta); Log.d("check query result of children", "" +
+	 * this.itemsChildren.get(groupObject).toString()); } } }
+	 */
 
-		Log.d("check if see", "seen "
-				+ ParseUser.getCurrentUser().getUsername());
-		this.itemsGroup = this.model.getDateAdapterItems();
-		Collections.sort(itemsGroup, new Comparator<DateAdapterItem>() {
-
-			@Override
-			public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
-				return rhs.dateWithoutTime - lhs.dateWithoutTime;
-			}
-		});
-		Log.d("check query result", "" + this.itemsGroup.size());
-		Log.d("check query result", "" + this.itemsGroup.toString());
-
-		this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
-		Collections.sort(itemsChildrenAlpha,
-				new Comparator<ModelAdapterItem>() {
-
-					@Override
-					public int compare(ModelAdapterItem lhs,
-							ModelAdapterItem rhs) {
-						return (rhs.countId - lhs.countId);
-					}
-				});
-
-		this.itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();
-
-		for (int i = 0; i < this.itemsGroup.size(); i++) {
-			DateAdapterItem groupObject = (DateAdapterItem) this.itemsGroup
-					.get(i);
-			Log.d("check query result of children", ""
-					+ this.itemsChildrenAlpha.size());
-			Log.d("check query result of children", ""
-					+ this.itemsChildrenAlpha.get(0).toString());
-			this.itemsChildrenBeta = new ArrayList<ModelAdapterItem>();
-			for (int j = 0; j < this.itemsChildrenAlpha.size(); j++) {
-				ModelAdapterItem childrenObject = this.itemsChildrenAlpha
-						.get(j);
-				if (groupObject.dateWithoutTime == childrenObject.dateOnly) {
-					this.itemsChildrenBeta.add(childrenObject);
-				}
-			}
-			if (groupObject != null) {
-				this.itemsChildren.put(groupObject, this.itemsChildrenBeta);
-				Log.d("check query result of children", ""
-						+ this.itemsChildren.get(groupObject).toString());
-			}
-		}
-	}
-
-	public void refresh() {
-		populate();
+	public void swapData(List<DateAdapterItem> itemsGroup,
+			HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren) {
+		this.itemsGroup.clear();
+		this.itemsGroup.addAll(itemsGroup);
+		this.itemsChildren.clear();
+		this.itemsChildren.putAll(itemsChildren);
 		notifyDataSetChanged();
 	}
 

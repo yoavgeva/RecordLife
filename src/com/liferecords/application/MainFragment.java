@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.google.android.gms.wearable.DataApi;
 import com.liferecords.model.DateAdapterItem;
 import com.liferecords.model.MainDataAdapter;
 import com.liferecords.model.Model;
@@ -34,7 +36,7 @@ import com.liferecords.model.ModelAdapterItem;
 import com.liferecords.service.SyncService;
 import com.parse.ParseUser;
 
-public class MainFragment extends ListFragment {
+public class MainFragment extends Fragment {
 
 	private static final String TAG = MainFragment.class.getSimpleName();
 	private static final int LOADER_ID = 1;
@@ -49,7 +51,7 @@ public class MainFragment extends ListFragment {
 		public void onReceive(Context context, Intent intent) {
 			Log.d(TAG, intent.getAction());
 			if (intent.getAction().equals(SyncService.ACTION)) {
-				mainAdapter.refresh();
+				
 				return;
 			}
 
@@ -64,14 +66,26 @@ public class MainFragment extends ListFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+		itemsGroup = new ArrayList<DateAdapterItem>();
+		itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();	
+		
+		setHasOptionsMenu(true);
+		Context content = getActivity();
+		mainAdapter = new MainDataAdapter(content,itemsGroup,itemsChildren);	
 
+		
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
+		View view = inflater.inflate(R.layout.listview_fragment, container,
+				false);
+		lv = (ExpandableListView) view.findViewById(R.id.exlistview);
+		
+		return view;
 	}
 
 	@Override
@@ -108,15 +122,9 @@ public class MainFragment extends ListFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		setEmptyText("not working");
-		setHasOptionsMenu(true);
-
-		lv = (ExpandableListView) getActivity().findViewById(R.id.exlistview);
-
 		lv.setAdapter(mainAdapter);
-		setListShown(false);
 		getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
-
+		
 		super.onActivityCreated(savedInstanceState);
 
 	}
@@ -124,6 +132,9 @@ public class MainFragment extends ListFragment {
 	public void onStart() {
 
 		registerReceiver();
+		
+		
+		
 		/*
 		 * if (mainAdapter == null) { Context context = getActivity();
 		 * mainAdapter = new MainDataAdapter(context);
@@ -186,14 +197,18 @@ public class MainFragment extends ListFragment {
 		public void onLoadFinished(
 				Loader<Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>>> loader,
 				Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>> data) {
-			//need to set adapter if used
-			setListShown(true);
+			mainAdapter.swapData(data.first, data.second);
 
 		}
 
 		@Override
 		public void onLoaderReset(
 				Loader<Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>>> loader) {
+			mainAdapter
+					.swapData(
+							Collections.<DateAdapterItem> emptyList(),
+							(HashMap<DateAdapterItem, List<ModelAdapterItem>>) Collections
+									.<DateAdapterItem, List<ModelAdapterItem>> emptyMap());
 
 		}
 	};
@@ -226,9 +241,9 @@ public class MainFragment extends ListFragment {
 			});
 			Log.d("check query result", "" + itemsGroup.size());
 			Log.d("check query result", "" + itemsGroup.toString());
+			List<ModelAdapterItem> itemsChildrenAlpha = new ArrayList<ModelAdapterItem>();
 
-			List<ModelAdapterItem> itemsChildrenAlpha = model
-					.getDataDateAdapterItems();
+			itemsChildrenAlpha = model.getDataDateAdapterItems();
 			Collections.sort(itemsChildrenAlpha,
 					new Comparator<ModelAdapterItem>() {
 						@Override
@@ -268,6 +283,7 @@ public class MainFragment extends ListFragment {
 		@Override
 		public void deliverResult(
 				Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>> data) {
+			Log.d(TAG, "Group " + data.first.size() + " children " + data.second.size());
 
 			super.deliverResult(data);
 
