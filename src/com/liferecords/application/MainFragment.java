@@ -8,7 +8,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
 import android.content.BroadcastReceiver;
@@ -28,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
-import com.google.android.gms.wearable.DataApi;
 import com.liferecords.model.DateAdapterItem;
 import com.liferecords.model.MainDataAdapter;
 import com.liferecords.model.Model;
@@ -81,6 +79,7 @@ public class MainFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		View view = inflater.inflate(R.layout.listview_fragment, container,
 				false);
 		lv = (ExpandableListView) view.findViewById(R.id.exlistview);
@@ -123,6 +122,7 @@ public class MainFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		lv.setAdapter(mainAdapter);
+		
 		getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
 		
 		super.onActivityCreated(savedInstanceState);

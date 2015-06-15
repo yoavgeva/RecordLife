@@ -9,6 +9,7 @@
 
     <!-- Sign Up screen Strings -->
     <string name="screen_signup_name_hint">Name</string>
+    <string name="screen_signup_email_hint">Email</string>
     <string name="screen_signup_password_hint">Password</string>
     <string name="screen_signup_password_repeat_hint">Password again</string>
     <string name="screen_signup_button_signup">Sign Up</string>
@@ -23,12 +24,21 @@
     <string name="error_intro">"Please "</string>
     <string name="error_blank_username">enter a username</string>
     <string name="error_blank_password">enter a password</string>
+    <string name="error_blank_email">enter an email</string>
     <string name="error_mismatched_passwords">enter the same password twice</string>
     <string name="error_join">", and "</string>
     <string name="error_end">.</string>
     <string name="progress_title">Please wait.</string>
     <string name="progress_message">Signing up. Please wait.</string>
     <string name="title_activity_login">LoginActivity</string>
+    
+     <!-- FeedBack Fragment -->
+    <string name="edittext_hint_feedback_subject">Subject</string>
+    <string name="edittext_hint_feeedback_content">Message</string>
+    <string name="button_feedback_send">Send feedback</string>
+    <string name="error_blank_subject">enter a subject</string>
+    <string name="error_blank_content">enter a message</string>
+    
 
     <!-- login screen -->
     <string name="username_signup">Username</string>
@@ -75,5 +85,6 @@
     <string name="navigation_drawer_desc_open">Open navigation drawer</string>
     <string name="navigation_drawer_desc_close">Close navigation drawer</string>
     <string name="navigation_icon_description">Icon of navigation subject</string>
+   
 
 </resources>

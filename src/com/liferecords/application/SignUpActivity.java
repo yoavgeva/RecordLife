@@ -1,5 +1,8 @@
 package com.liferecords.application;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,7 +23,7 @@ import com.parse.SignUpCallback;
 
 public class SignUpActivity extends Activity {
 
-	EditText userNameView, passwordView, passwordAgainView;
+	EditText userNameView, passwordView, passwordAgainView, emailView;
 	Button signUpButton;
 	SharedPreferences sharedpref;
 	SharedPreferences.Editor editor;
@@ -33,14 +36,16 @@ public class SignUpActivity extends Activity {
 		userNameView = (EditText) findViewById(R.id.edittext_signup_name);
 		passwordAgainView = (EditText) findViewById(R.id.edittext_signup_pw_repeat);
 		passwordView = (EditText) findViewById(R.id.edittext_signup_pw);
+		// emailView = (EditText) findViewById(R.id.edittext_signup_email);
 		signUpButton = (Button) findViewById(R.id.button_signup);
 		signUpButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				checkSignUpErrors();
+				//checkForEmailErrors();
 				signUpParseUser();
-				
+
 			}
 		});
 
@@ -63,26 +68,23 @@ public class SignUpActivity extends Activity {
 	}
 
 	private void setScreenDesign() {
-		//getActionBar().hide();
+		// getActionBar().hide();
 		setUserNameSignupDesign();
 		setSignupButtonDesign();
 		setPasswordDesign();
 		setPasswordRepetDesign();
 	}
-	
-	
 
-
-
-	private void checkSignUpErrors(){
+	private void checkSignUpErrors() {
 		boolean validationError = false;
-		StringBuilder validationErrorMessage = new StringBuilder(
-				getResources().getString(R.string.error_intro));
+		StringBuilder validationErrorMessage = new StringBuilder(getResources()
+				.getString(R.string.error_intro));
 		if (isEmpty(userNameView)) {
 			validationError = true;
 			validationErrorMessage.append(getResources().getString(
 					R.string.error_blank_username));
 		}
+
 		if (isEmpty(passwordView)) {
 			if (validationError) {
 				validationErrorMessage.append(getResources().getString(
@@ -110,17 +112,18 @@ public class SignUpActivity extends Activity {
 		}
 
 	}
-	private void signUpParseUser(){
+
+	private void signUpParseUser() {
 		final ProgressDialog progressDialogSignup = new ProgressDialog(
 				SignUpActivity.this);
 		progressDialogSignup.setTitle(R.string.progress_title);
-		progressDialogSignup
-				.setMessage("Signing to LifeRecords. Please wait");
+		progressDialogSignup.setMessage("Signing to LifeRecords. Please wait");
 		progressDialogSignup.show();
 
 		ParseUser user = new ParseUser();
 		user.setUsername(userNameView.getText().toString());
 		user.setPassword(passwordView.getText().toString());
+		user.setEmail(emailView.getText().toString());
 		user.signUpInBackground(new SignUpCallback() {
 
 			@Override
@@ -130,7 +133,7 @@ public class SignUpActivity extends Activity {
 					Toast.makeText(SignUpActivity.this, e.getMessage(),
 							Toast.LENGTH_LONG).show();
 				} else {
-					
+
 					saveCountIdPref();
 					setLoggedInMainService(0);
 					Intent intent = new Intent(SignUpActivity.this,
@@ -145,6 +148,7 @@ public class SignUpActivity extends Activity {
 		});
 
 	}
+
 	private void saveCountIdPref() {
 		int countid = 1;
 		sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -152,36 +156,42 @@ public class SignUpActivity extends Activity {
 		editor.putInt("countid", countid);
 		editor.commit();
 	}
-	private Typeface setTypeFaceAspire(){
+
+	private Typeface setTypeFaceAspire() {
 		Typeface type = Typeface.createFromAsset(getAssets(),
 				"aspire-demibold.ttf");
 		return type;
 	}
-	private void setUserNameSignupDesign(){
+
+	private void setUserNameSignupDesign() {
 		EditText userNameText = (EditText) findViewById(R.id.edittext_signup_name);
 		userNameText.setTextSize(25f);
 		userNameText.setHintTextColor(Color.BLACK);
-		
+
 	}
-	private void setSignupButtonDesign(){
+
+	private void setSignupButtonDesign() {
 		Button button = (Button) findViewById(R.id.button_signup);
 		button.setTypeface(setTypeFaceAspire(), Typeface.BOLD);
 		button.setTextSize(35f);
 
 	}
+
 	private void setPasswordDesign() {
 		EditText passwordText = (EditText) findViewById(R.id.edittext_signup_pw);
 		passwordText.setTextSize(25f);
 		passwordText.setHintTextColor(Color.BLACK);
-		
+
 	}
+
 	private void setPasswordRepetDesign() {
 		EditText passwordRepetText = (EditText) findViewById(R.id.edittext_signup_pw_repeat);
 		passwordRepetText.setTextSize(25f);
 		passwordRepetText.setHintTextColor(Color.BLACK);
-		
+
 	}
-	private void setLoggedInMainService(int connected){
+
+	private void setLoggedInMainService(int connected) {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		SharedPreferences.Editor editor = sharedPref.edit();
@@ -189,6 +199,21 @@ public class SignUpActivity extends Activity {
 		editor.commit();
 
 	}
-	
-	
+	// if register will use email than use it
+	private boolean isValidEmailAddress(String email) {
+		String ePattern = "/[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i";
+		Pattern p = java.util.regex.Pattern.compile(ePattern);
+		Matcher m = p.matcher(email);
+		return m.matches();
+	}
+// if register will use email than use it
+	private void checkForEmailErrors() {
+		if (!isValidEmailAddress(emailView.getText().toString())) {
+			Toast.makeText(SignUpActivity.this,
+					getResources().getString(R.string.error_invalid_email),
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+
+	}
 }

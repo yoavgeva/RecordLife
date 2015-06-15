@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,7 +28,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,7 +62,10 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	private ActionBarDrawerToggle drawerToggle;
 	private String activityTitle;
 	private ArrayList<NavDrawerItem> navDrawerItems;
+	private int realPosition = 0;
+	FragmentManager manager;
 
+	
 	private Model model;
 
 	@Override
@@ -69,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
 		designActionBar();
-		populateNavDrawer();
 		populateContent();
+		populateNavDrawer();
 		
 
 		if (savedInstanceState == null) {
@@ -91,44 +98,45 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
 	private void designDrawerList(ListView listDrawer2) {
 		listDrawer2.setBackgroundColor(Color.parseColor("#f5f5f5"));
-		
+
 	}
 
 	private void setupDrawer() {
 		drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
 				R.string.navigation_drawer_desc_open,
-				R.string.navigation_drawer_desc_close){
+				R.string.navigation_drawer_desc_close) {
 			@Override
 			public void onDrawerOpened(View drawerView) {
-				
+
 				super.onDrawerOpened(drawerView);
 				getSupportActionBar().setTitle("Navigate");
 				invalidateOptionsMenu();
 			}
-			
+
 			@Override
-					public void onDrawerClosed(View drawerView) {
-						
-						super.onDrawerClosed(drawerView);
-						getSupportActionBar().setTitle(activityTitle);
-						invalidateOptionsMenu();
-					}
+			public void onDrawerClosed(View drawerView) {
+
+				super.onDrawerClosed(drawerView);
+				getSupportActionBar().setTitle(activityTitle);
+				invalidateOptionsMenu();
+			}
 		};
-		
+
 		drawerToggle.setDrawerIndicatorEnabled(true);
 		drawerLayout.setDrawerListener(drawerToggle);
 
 	}
-	
+
 	@Override
 	protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-		
+
 		super.onPostCreate(savedInstanceState);
 		drawerToggle.syncState();
 	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-		
+
 		super.onConfigurationChanged(newConfig);
 		drawerToggle.onConfigurationChanged(newConfig);
 	}
@@ -145,13 +153,72 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
 		drawerAdapter = new NavDrawerListAdapter(this, navDrawerItems);
 		listDrawer.setAdapter(drawerAdapter);
-
 		navMenuIcons.recycle();
+		listDrawer.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				selectItem(position);
+
+			}
+
+		});
 	}
 
+	private void selectItem(int position) {
+		
+		Fragment fragment = null;
+		
+		switch (position) {
+		case 0:
+			fragment = new MainFragment();
+			
+			break;
+		case 1:
+			fragment = new SettingsFragment();
+			break;
+		case 2:
+			fragment = new FeedbackFragment();
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+
+		default:
+			break;
+		}
+		
+		if(fragment != null ){
+			FragmentManager fragmentManag = getFragmentManager();
+			fragmentManag.beginTransaction().replace(R.id.content_frame, fragment).commit();
+			listDrawer.setItemChecked(position, true);
+			listDrawer.setSelection(position);
+			getSupportActionBar().setTitle(navDrawerItems.get(position).getTitle());
+			realPosition = position;
+			drawerLayout.closeDrawer(listDrawer);
+			
+		} else {
+			Log.d(MainActivity.class.getSimpleName(), "Error in creating Fragment");
+		}
+
+	}
+
+	
 	private void populateContent() {
-		getFragmentManager().beginTransaction()
-				.add(R.id.main_frag, new MainFragment()).commit();
+		manager = getFragmentManager();
+		
+		MainFragment mainFragy = new MainFragment();
+		FragmentTransaction trans = manager.beginTransaction();
+		
+		trans.replace(R.id.content_frame, mainFragy,"main");
+		trans.addToBackStack(null);
+		trans.commit();
+		/*getFragmentManager().beginTransaction()
+				.add(R.id.main_frag, new MainFragment()).commit();*/
 
 	}
 
@@ -190,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 			startActivity(dbmman);
 			return true;
 		}
-		if(drawerToggle.onOptionsItemSelected(item)){
+		if (drawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

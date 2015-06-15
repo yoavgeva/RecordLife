@@ -23,10 +23,10 @@
             android:id="@+id/edittext_signup_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/screen_signup_name_hint"
             android:background="@drawable/phone_register_edittext"
             android:drawableLeft="@drawable/ic_username_picture"
+            android:ems="10"
+            android:hint="@string/screen_signup_name_hint"
             android:inputType="text"
             android:paddingLeft="10dp" />
 
@@ -34,11 +34,11 @@
             android:id="@+id/edittext_signup_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/phone_register_edittext"
-            android:ems="10"
-            android:drawableLeft="@drawable/ic_password_picture"
-            android:hint="@string/screen_signup_password_hint"
             android:layout_marginTop="5dip"
+            android:background="@drawable/phone_register_edittext"
+            android:drawableLeft="@drawable/ic_password_picture"
+            android:ems="10"
+            android:hint="@string/screen_signup_password_hint"
             android:inputType="textPassword"
             android:paddingLeft="10dp" />
 
@@ -46,11 +46,11 @@
             android:id="@+id/edittext_signup_pw_repeat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/phone_register_edittext"
-            android:ems="10"
-            android:drawableLeft="@drawable/ic_password_picture"
-            android:hint="@string/screen_signup_password_repeat_hint"
             android:layout_marginTop="5dip"
+            android:background="@drawable/phone_register_edittext"
+            android:drawableLeft="@drawable/ic_password_picture"
+            android:ems="10"
+            android:hint="@string/screen_signup_password_repeat_hint"
             android:inputType="textPassword"
             android:paddingLeft="10dp" />
 
@@ -58,8 +58,8 @@
             android:id="@+id/button_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/register_button"
             android:layout_marginTop="5dip"
+            android:background="@drawable/register_button"
             android:text="@string/screen_signup_button_signup" />
     </LinearLayout>
 
