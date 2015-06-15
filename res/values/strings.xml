@@ -71,8 +71,9 @@
     <string name="settings_sample_instance_category_title">First</string>
     <string name="settings_sample_instance_list_title">Sample Timing</string>
     
-    <!-- NavigationDrawer Actvitiy -->
+    <!-- NavigationDrawer  -->
     <string name="navigation_drawer_desc_open">Open navigation drawer</string>
     <string name="navigation_drawer_desc_close">Close navigation drawer</string>
+    <string name="navigation_icon_description">Icon of navigation subject</string>
 
 </resources>

@@ -2407,32 +2407,37 @@ containing a value of this type.
         public static final int ic_60battery_discharging=0x7f020064;
         public static final int ic_80battery_charging=0x7f020065;
         public static final int ic_80battery_discharging=0x7f020066;
-        public static final int ic_launcher=0x7f020067;
-        public static final int ic_map=0x7f020068;
-        public static final int ic_menu_drawer=0x7f020069;
-        public static final int ic_motion_cycling=0x7f02006a;
-        public static final int ic_motion_driving=0x7f02006b;
-        public static final int ic_motion_running=0x7f02006c;
-        public static final int ic_motion_standing=0x7f02006d;
-        public static final int ic_motion_walking=0x7f02006e;
-        public static final int ic_password_picture=0x7f02006f;
-        public static final int ic_plusone_medium_off_client=0x7f020070;
-        public static final int ic_plusone_small_off_client=0x7f020071;
-        public static final int ic_plusone_standard_off_client=0x7f020072;
-        public static final int ic_plusone_tall_off_client=0x7f020073;
-        public static final int ic_type_airport=0x7f020074;
-        public static final int ic_type_building=0x7f020075;
-        public static final int ic_type_bus=0x7f020076;
-        public static final int ic_type_park=0x7f020077;
-        public static final int ic_type_parking=0x7f020078;
-        public static final int ic_type_road=0x7f020079;
-        public static final int ic_username_picture=0x7f02007a;
-        public static final int notification_template_icon_bg=0x7f020080;
-        public static final int phone_register_edittext=0x7f02007b;
-        public static final int powered_by_google_dark=0x7f02007c;
-        public static final int powered_by_google_light=0x7f02007d;
-        public static final int regi_backgorund=0x7f02007e;
-        public static final int register_button=0x7f02007f;
+        public static final int ic_feedback_drawer=0x7f020067;
+        public static final int ic_journal_drawer=0x7f020068;
+        public static final int ic_launcher=0x7f020069;
+        public static final int ic_logout_drawer=0x7f02006a;
+        public static final int ic_map=0x7f02006b;
+        public static final int ic_menu_drawer=0x7f02006c;
+        public static final int ic_motion_cycling=0x7f02006d;
+        public static final int ic_motion_driving=0x7f02006e;
+        public static final int ic_motion_running=0x7f02006f;
+        public static final int ic_motion_standing=0x7f020070;
+        public static final int ic_motion_walking=0x7f020071;
+        public static final int ic_password_picture=0x7f020072;
+        public static final int ic_plusone_medium_off_client=0x7f020073;
+        public static final int ic_plusone_small_off_client=0x7f020074;
+        public static final int ic_plusone_standard_off_client=0x7f020075;
+        public static final int ic_plusone_tall_off_client=0x7f020076;
+        public static final int ic_preferences_drawer=0x7f020077;
+        public static final int ic_privacy_policy_drawer=0x7f020078;
+        public static final int ic_type_airport=0x7f020079;
+        public static final int ic_type_building=0x7f02007a;
+        public static final int ic_type_bus=0x7f02007b;
+        public static final int ic_type_park=0x7f02007c;
+        public static final int ic_type_parking=0x7f02007d;
+        public static final int ic_type_road=0x7f02007e;
+        public static final int ic_username_picture=0x7f02007f;
+        public static final int notification_template_icon_bg=0x7f020085;
+        public static final int phone_register_edittext=0x7f020080;
+        public static final int powered_by_google_dark=0x7f020081;
+        public static final int powered_by_google_light=0x7f020082;
+        public static final int regi_backgorund=0x7f020083;
+        public static final int register_button=0x7f020084;
     }
     public static final class id {
         public static final int action0=0x7f090088;
@@ -2922,9 +2927,10 @@ containing a value of this type.
         public static final int menu_dates_text=0x7f080064;
         public static final int menu_day_or_week_text=0x7f080063;
         public static final int navigation_drawer_desc_close=0x7f080079;
-        /**  NavigationDrawer Actvitiy 
+        /**  NavigationDrawer  
          */
         public static final int navigation_drawer_desc_open=0x7f080078;
+        public static final int navigation_icon_description=0x7f08007a;
         public static final int password_signup=0x7f080059;
         public static final int picture_battery=0x7f080065;
         public static final int progress_message=0x7f080056;

@@ -6,6 +6,8 @@ import com.liferecords.application.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +52,24 @@ public class NavDrawerListAdapter extends BaseAdapter {
 		
 		ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon_drawer);
 		TextView txtTitle = (TextView) convertView.findViewById(R.id.title_drawer);
-		imgIcon.setImageResource(R.drawable.ic_launcher);
+		
+		imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
+		setTextDesignDrawer(txtTitle);
 		txtTitle.setText(navDrawerItems.get(position).getTitle());
 		
 		return convertView;
+	}
+	
+	private void setTextDesignDrawer(TextView txtTitle) {
+		txtTitle.setTextColor(Color.parseColor("#1e88e5"));
+		txtTitle.setTypeface(setTypeFaceRoboto());
+		
+	}
+
+	private Typeface setTypeFaceRoboto() {
+		Typeface type = Typeface.createFromAsset(context.getAssets(),
+				"roboto_regular.ttf");
+		return type;
 	}
 
 }

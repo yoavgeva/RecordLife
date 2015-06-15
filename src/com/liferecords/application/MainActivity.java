@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -80,11 +81,17 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
 	private void populateNavDrawer() {
 		listDrawer = (ListView) findViewById(R.id.navList);
+		designDrawerList(listDrawer);
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		activityTitle = getTitle().toString();
 		addDrawerItems();
 		setupDrawer();
 
+	}
+
+	private void designDrawerList(ListView listDrawer2) {
+		listDrawer2.setBackgroundColor(Color.parseColor("#f5f5f5"));
+		
 	}
 
 	private void setupDrawer() {

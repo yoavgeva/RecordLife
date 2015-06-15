@@ -20,17 +20,18 @@
     </string-array>
     <!-- Navigation Drawer items -->
     <string-array name="navigation_items">
-        <item>Main</item>
-        <item>Settings</item>
+        <item>Journal</item>
+        <item>Preferences</item>
         <item>FeedBack</item>
         <item>Privacy Policy</item>
+        <item>Logout</item>
     </string-array>
-
     <string-array name="navigation_icons">
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-   </string-array>
+        <item>@drawable/ic_journal_drawer</item>
+        <item>@drawable/ic_preferences_drawer</item>
+        <item>@drawable/ic_feedback_drawer</item>
+        <item>@drawable/ic_privacy_policy_drawer</item>
+        <item>@drawable/ic_logout_drawer</item>
+    </string-array>
 
 </resources>
