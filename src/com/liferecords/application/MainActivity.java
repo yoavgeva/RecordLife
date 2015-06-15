@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 			fragment = new PrivacyFragment();
 			break;
 		case 4:
-			
+			logoutAction();
 			break;
 
 		default:
