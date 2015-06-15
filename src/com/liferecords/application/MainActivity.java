@@ -6,34 +6,35 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v7.app.ActionBarActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.liferecords.application.MainFragment.Listener;
 import com.liferecords.model.DateAdapterItem;
-import com.liferecords.model.MainDataAdapter;
 import com.liferecords.model.Model;
 import com.liferecords.model.ModelAdapterItem;
+import com.liferecords.model.NavDrawerItem;
+import com.liferecords.model.NavDrawerListAdapter;
 import com.liferecords.service.MainService;
 import com.parse.Parse;
 import com.parse.ParseUser;
@@ -50,6 +51,12 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	private List<ModelAdapterItem> itemsChildrenBeta;
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
 	private ExpandableListView exListView;
+	private ListView listDrawer;
+	private DrawerLayout drawerLayout;
+	private NavDrawerListAdapter drawerAdapter;
+	private ActionBarDrawerToggle drawerToggle;
+	private String activityTitle;
+	private ArrayList<NavDrawerItem> navDrawerItems;
 
 	private Model model;
 
@@ -58,22 +65,81 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		super.onCreate(savedInstanceState);
 		startMainService();
 		setContentView(R.layout.activity_main);
-
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
-
-		// exListView = (ExpandableListView) findViewById(R.id.exlistview);
-
-		// createExpListView();
-		actionBar = getSupportActionBar();
 		designActionBar();
-
+		populateNavDrawer();
 		populateContent();
+		
 
 		if (savedInstanceState == null) {
 			checkGpsWorking();
 		}
 
+	}
+
+	private void populateNavDrawer() {
+		listDrawer = (ListView) findViewById(R.id.navList);
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		activityTitle = getTitle().toString();
+		addDrawerItems();
+		setupDrawer();
+
+	}
+
+	private void setupDrawer() {
+		drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+				R.string.navigation_drawer_desc_open,
+				R.string.navigation_drawer_desc_close){
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				
+				super.onDrawerOpened(drawerView);
+				getSupportActionBar().setTitle("Navigate");
+				invalidateOptionsMenu();
+			}
+			
+			@Override
+					public void onDrawerClosed(View drawerView) {
+						
+						super.onDrawerClosed(drawerView);
+						getSupportActionBar().setTitle(activityTitle);
+						invalidateOptionsMenu();
+					}
+		};
+		
+		drawerToggle.setDrawerIndicatorEnabled(true);
+		drawerLayout.setDrawerListener(drawerToggle);
+
+	}
+	
+	@Override
+	protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+		
+		super.onPostCreate(savedInstanceState);
+		drawerToggle.syncState();
+	}
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		
+		super.onConfigurationChanged(newConfig);
+		drawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	private void addDrawerItems() {
+		navMenuTitles = getResources().getStringArray(R.array.navigation_items);
+		navMenuIcons = getResources()
+				.obtainTypedArray(R.array.navigation_icons);
+		navDrawerItems = new ArrayList<NavDrawerItem>();
+		for (int i = 0; i < navMenuTitles.length; i++) {
+			navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons
+					.getResourceId(i, -1)));
+		}
+
+		drawerAdapter = new NavDrawerListAdapter(this, navDrawerItems);
+		listDrawer.setAdapter(drawerAdapter);
+
+		navMenuIcons.recycle();
 	}
 
 	private void populateContent() {
@@ -115,6 +181,9 @@ public class MainActivity extends AppCompatActivity implements Listener {
 			Intent dbmman = new Intent(MainActivity.this,
 					AndroidDatabaseManager.class);
 			startActivity(dbmman);
+			return true;
+		}
+		if(drawerToggle.onOptionsItemSelected(item)){
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -218,7 +287,10 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	 */
 
 	private void designActionBar() {
+		actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setIcon(R.color.transparent);
 		actionBar.show();
 	}
@@ -226,9 +298,10 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	private void createExpListView() {
 
 		populate();
-		//MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,	itemsChildren);
+		// MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,
+		// itemsChildren);
 
-		//exListView.setAdapter(adapter);
+		// exListView.setAdapter(adapter);
 
 	}
 
