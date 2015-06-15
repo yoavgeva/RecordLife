@@ -204,12 +204,13 @@ public class MainFragment extends Fragment {
 		@Override
 		public void onLoaderReset(
 				Loader<Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>>> loader) {
-			mainAdapter
+			//crashed when used haspmap emptymap 
+			/*mainAdapter
 					.swapData(
 							Collections.<DateAdapterItem> emptyList(),
 							(HashMap<DateAdapterItem, List<ModelAdapterItem>>) Collections
 									.<DateAdapterItem, List<ModelAdapterItem>> emptyMap());
-
+*/
 		}
 	};
 
