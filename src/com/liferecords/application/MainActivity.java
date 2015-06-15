@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 			fragment = new FeedbackFragment();
 			break;
 		case 3:
-			
+			fragment = new PrivacyFragment();
 			break;
 		case 4:
 			

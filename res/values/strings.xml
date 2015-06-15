@@ -85,6 +85,8 @@
     <string name="navigation_drawer_desc_open">Open navigation drawer</string>
     <string name="navigation_drawer_desc_close">Close navigation drawer</string>
     <string name="navigation_icon_description">Icon of navigation subject</string>
+    <!-- Privacy Policy Fragment -->
+    
    
 
 </resources>

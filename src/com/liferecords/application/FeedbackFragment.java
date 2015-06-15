@@ -1,7 +1,5 @@
 package com.liferecords.application;
 
-import com.parse.ParseUser;
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
