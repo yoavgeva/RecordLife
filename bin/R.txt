@@ -567,13 +567,11 @@ int id action_bar_subtitle 0x7f09003b
 int id action_bar_title 0x7f09003a
 int id action_context_bar 0x7f090058
 int id action_divider 0x7f09008c
-int id action_logout 0x7f09009a
 int id action_menu_divider 0x7f090036
 int id action_menu_presenter 0x7f090037
 int id action_mode_bar 0x7f090054
 int id action_mode_bar_stub 0x7f090053
 int id action_mode_close_button 0x7f09003c
-int id action_settings 0x7f090098
 int id activity_chooser_view_content 0x7f09003d
 int id adjust_height 0x7f090003
 int id adjust_width 0x7f090002
@@ -603,7 +601,7 @@ int id contentPanel 0x7f090048
 int id content_frame 0x7f09006b
 int id custom 0x7f09004c
 int id customPanel 0x7f09004b
-int id database_manager 0x7f090099
+int id database_manager 0x7f090098
 int id decor_content_parent 0x7f090055
 int id default_activity_button 0x7f090040
 int id dialog 0x7f09002c

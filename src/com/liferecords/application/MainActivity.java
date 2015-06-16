@@ -242,15 +242,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			Intent inte = new Intent(this, SettingsActivity.class);
-			startActivity(inte);
-			return true;
-		}
-		if (id == R.id.action_logout) {
-			logoutAction();
-			return true;
-		}
+		
 		if (id == R.id.database_manager) {
 			Intent dbmman = new Intent(MainActivity.this,
 					AndroidDatabaseManager.class);

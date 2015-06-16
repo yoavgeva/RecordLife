@@ -87,37 +87,7 @@ public class MainFragment extends Fragment {
 		return view;
 	}
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		getActivity().getMenuInflater().inflate(R.menu.main, menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-
-			startActivity(new Intent(getActivity(), SettingsActivity.class));
-			return true;
-		}
-		if (id == R.id.action_logout) {
-			listener.onMenuLogOut();
-			return true;
-		}
-		if (id == R.id.database_manager) {
-
-			startActivity(new Intent(getActivity(),
-					AndroidDatabaseManager.class));
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {

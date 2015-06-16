@@ -38,8 +38,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private final Context context;
 	private final Model model;
 	private List<DateAdapterItem> itemsGroup;
-	//private List<ModelAdapterItem> itemsChildrenAlpha;
-	//private List<ModelAdapterItem> itemsChildrenBeta;
+	// private List<ModelAdapterItem> itemsChildrenAlpha;
+	// private List<ModelAdapterItem> itemsChildrenBeta;
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
 
 	// added haspmap and list<dateadapteritem>
@@ -47,9 +47,9 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 			HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren) {
 		this.context = context;
 		this.model = new Model(this.context);
-		
+
 		this.itemsGroup = itemsGroup;
-		
+
 		this.itemsChildren = itemsChildren;
 
 		// populate();
@@ -113,29 +113,31 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
+		ViewHolder holder = null;
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.listrow_group, parent,
 					false);
+			holder = new ViewHolder(convertView);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 
-		TextView txtGroup = (TextView) convertView
-				.findViewById(R.id.checked_textview_group);
-		setGroupContent(txtGroup, convertView, groupPosition);
+		setGroupContent(holder.textGroupDay, convertView, groupPosition,
+				holder.imageGroupMap);
 
 		return convertView;
 	}
 
 	private void setGroupContent(TextView txtGroup, View convertView,
-			int groupPosition) {
+			int groupPosition, ImageView imageMapGroup) {
 		final DateAdapterItem item = getGroupItems(groupPosition);
 		setDayDesign(txtGroup, item);
 
-		ImageView imageGroupMap = (ImageView) convertView
-				.findViewById(R.id.group_map_icon);
-		setPictureImage(R.drawable.ic_map, imageGroupMap);
-		imageGroupMap.setOnClickListener(new OnClickListener() {
+		setPictureImage(R.drawable.ic_map, imageMapGroup);
+		imageMapGroup.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -193,6 +195,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
+		ViewHolder holder = null;
 
 		final ModelAdapterItem childView = (ModelAdapterItem) getChild(
 				groupPosition, childPosition);
@@ -201,6 +204,10 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.listrow_details, parent,
 					false);
+			holder = new ViewHolder(convertView);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 		convertView.setOnClickListener(new OnClickListener() {
 
@@ -219,7 +226,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 
 			}
 		});
-		setChildView(childView, convertView);
+		setChildView(childView, convertView, holder);
 		return convertView;
 	}
 
@@ -229,28 +236,22 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
-	private void setChildView(ModelAdapterItem childView, View convertView) {
-		TextView txtAdress = (TextView) convertView
-				.findViewById(R.id.textviewdetails);
-		setAdressDesign(childView, txtAdress);
+	private void setChildView(ModelAdapterItem childView, View convertView,
+			ViewHolder holder) {
 
-		TextView txtTime = (TextView) convertView
-				.findViewById(R.id.textview_details_time);
-		setTimeText(txtTime, childView);
-		TextView txtMotion = (TextView) convertView
-				.findViewById(R.id.textview_details_motion);
-		setMotionPicture(txtMotion, childView);
-		TextView txtType = (TextView) convertView
-				.findViewById(R.id.textView_details_type);
-		setTypeText(txtType, childView);
-		TextView imgBattery = (TextView) convertView
-				.findViewById(R.id.textview_details_battery);
-		setBatteryPicture(imgBattery, childView);
-		ImageView imgType = (ImageView) convertView
-				.findViewById(R.id.imageview_details_type);
-		setTypeImage(imgType, childView);
-		View viewBorder = convertView.findViewById(R.id.borderline_details);
-		setBorderLinesDesign(viewBorder);
+		setAdressDesign(childView, holder.txtAdressChild);
+
+		setTimeText(holder.txtTimeChild, childView);
+
+		setMotionPicture(holder.txtMotionChild, childView);
+
+		setTypeText(holder.txtTypeChild, childView);
+
+		setBatteryPicture(holder.imgBatteryChild, childView);
+
+		setTypeImage(holder.imgTypeChild, childView);
+
+		setBorderLinesDesign(holder.viewBorderChild);
 
 	}
 
@@ -475,42 +476,6 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		return distance;
 	}
 
-	/*
-	 * private void populate() {
-	 * 
-	 * Log.d("check if see", "seen " +
-	 * ParseUser.getCurrentUser().getUsername()); this.itemsGroup =
-	 * this.model.getDateAdapterItems(); Collections.sort(itemsGroup, new
-	 * Comparator<DateAdapterItem>() {
-	 * 
-	 * @Override public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
-	 * return rhs.dateWithoutTime - lhs.dateWithoutTime; } });
-	 * Log.d("check query result", "" + this.itemsGroup.size());
-	 * Log.d("check query result", "" + this.itemsGroup.toString());
-	 * 
-	 * this.itemsChildrenAlpha = this.model.getDataDateAdapterItems();
-	 * Collections.sort(itemsChildrenAlpha, new Comparator<ModelAdapterItem>() {
-	 * 
-	 * @Override public int compare(ModelAdapterItem lhs, ModelAdapterItem rhs)
-	 * { return (rhs.countId - lhs.countId); } });
-	 * 
-	 * this.itemsChildren = new HashMap<DateAdapterItem,
-	 * List<ModelAdapterItem>>();
-	 * 
-	 * for (int i = 0; i < this.itemsGroup.size(); i++) { DateAdapterItem
-	 * groupObject = (DateAdapterItem) this.itemsGroup .get(i);
-	 * Log.d("check query result of children", "" +
-	 * this.itemsChildrenAlpha.size()); Log.d("check query result of children",
-	 * "" + this.itemsChildrenAlpha.get(0).toString()); this.itemsChildrenBeta =
-	 * new ArrayList<ModelAdapterItem>(); for (int j = 0; j <
-	 * this.itemsChildrenAlpha.size(); j++) { ModelAdapterItem childrenObject =
-	 * this.itemsChildrenAlpha .get(j); if (groupObject.dateWithoutTime ==
-	 * childrenObject.dateOnly) { this.itemsChildrenBeta.add(childrenObject); }
-	 * } if (groupObject != null) { this.itemsChildren.put(groupObject,
-	 * this.itemsChildrenBeta); Log.d("check query result of children", "" +
-	 * this.itemsChildren.get(groupObject).toString()); } } }
-	 */
-
 	public void swapData(List<DateAdapterItem> itemsGroup,
 			HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren) {
 		this.itemsGroup.clear();
@@ -518,6 +483,37 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		this.itemsChildren.clear();
 		this.itemsChildren.putAll(itemsChildren);
 		notifyDataSetChanged();
+	}
+
+	public static class ViewHolder {
+		TextView textGroupDay;
+		ImageView imageGroupMap;
+		TextView txtAdressChild;
+		TextView txtTimeChild;
+		TextView txtMotionChild;
+		TextView txtTypeChild;
+		TextView imgBatteryChild;
+		ImageView imgTypeChild;
+		View viewBorderChild;
+
+		ViewHolder(View v) {
+			textGroupDay = (TextView) v
+					.findViewById(R.id.checked_textview_group);
+			imageGroupMap = (ImageView) v.findViewById(R.id.group_map_icon);
+			txtAdressChild = (TextView) v.findViewById(R.id.textviewdetails);
+			txtTimeChild = (TextView) v
+					.findViewById(R.id.textview_details_time);
+			txtMotionChild = (TextView) v
+					.findViewById(R.id.textview_details_motion);
+			txtTypeChild = (TextView) v
+					.findViewById(R.id.textView_details_type);
+			imgBatteryChild = (TextView) v
+					.findViewById(R.id.textview_details_battery);
+			imgTypeChild = (ImageView) v
+					.findViewById(R.id.imageview_details_type);
+			viewBorderChild = v.findViewById(R.id.borderline_details);
+
+		}
 	}
 
 }

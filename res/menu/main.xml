@@ -14,20 +14,11 @@
         android:orderInCategory="20"
         android:showAsAction="always"
         android:title="@string/menu_dates_text"/>
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+   
     <item
         android:id="@+id/database_manager"
         android:orderInCategory="90"
         android:showAsAction="never"
         android:title="@string/database_manger"/>
-    <item
-        android:id="@+id/action_logout"
-        android:orderInCategory="80"
-        android:showAsAction="never"
-        android:title="@string/logout_menu"/>
-
+   
 </menu>
