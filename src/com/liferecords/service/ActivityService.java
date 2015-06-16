@@ -19,7 +19,7 @@ public class ActivityService extends Service implements ConnectionCallbacks,
 	static final String TAG = ActivityService.class.getSimpleName();
 	PendingIntent pendingInte;
 	GoogleApiClient activityClientApi;
-	private static final int TIME = 1000 * 60 * 5; // type the minutes last
+	private static final int TIME = 1000 * 60 * 15; // type the minutes last
 
 	// long intervalTiming;
 

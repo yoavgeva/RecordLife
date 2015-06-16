@@ -1,7 +1,5 @@
 package com.liferecords.service;
 
-import com.liferecords.application.SettingsFragment;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Service;
@@ -11,18 +9,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 public class MainService extends Service {
 	static final String TAG = MainService.class.getSimpleName();
 	private final IBinder settingsBinder = new LocalBinder();
-	private static final int TIME = 1000 * 60 * 5; // type the minutes last
+	private static final int TIME = 1000 * 60 * 15; // type the minutes last
 
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 

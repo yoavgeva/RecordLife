@@ -24,7 +24,7 @@ public class LocationServ extends Service implements LocationListener,
 	static final String TAG = LocationServ.class.getSimpleName();
 	public static final String BROADCASTACTION = "com.liferecords.service."
 			+ LocationServ.class.getSimpleName() + ".BROADCAST";
-	private static final int TIME = 1000 * 60 * 5; // type the minutes last
+	private static final int TIME = 1000 * 60 * 15; // type the minutes last
 	LocationRequest locationRequest;
 	//LocationClient locationClient;
 	Intent intent;
