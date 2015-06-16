@@ -22,6 +22,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	private int realPosition = 0;
 	FragmentManager manager;
 
-	
 	private Model model;
 
 	@Override
@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		setContentView(R.layout.activity_main);
 		Parse.initialize(this, "eyqKhSsclg8b8tzuDn9CexsRhFTI3CQlKNKbZe8n",
 				"OVA2i67H7LlNNcUQeZffztzWxTcJJmsxrKwRgaro");
+
 		designActionBar();
 		populateContent();
 		populateNavDrawer();
-		
 
 		if (savedInstanceState == null) {
 			checkGpsWorking();
@@ -117,7 +117,13 @@ public class MainActivity extends AppCompatActivity implements Listener {
 			public void onDrawerClosed(View drawerView) {
 
 				super.onDrawerClosed(drawerView);
-				getSupportActionBar().setTitle(activityTitle);
+				if (realPosition == 0) {
+					setJournalName(actionBar);
+				} else {
+					actionBar.setTitle(navDrawerItems.get(realPosition)
+							.getTitle());
+				}
+				// getSupportActionBar().setTitle(activityTitle);
 				invalidateOptionsMenu();
 			}
 		};
@@ -167,13 +173,13 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	}
 
 	private void selectItem(int position) {
-		
+
 		Fragment fragment = null;
-		
+
 		switch (position) {
 		case 0:
 			fragment = new MainFragment();
-			
+
 			break;
 		case 1:
 			fragment = new SettingsFragment();
@@ -191,34 +197,37 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		default:
 			break;
 		}
-		
-		if(fragment != null ){
+
+		if (fragment != null) {
 			FragmentManager fragmentManag = getFragmentManager();
-			fragmentManag.beginTransaction().replace(R.id.content_frame, fragment).commit();
+			fragmentManag.beginTransaction()
+					.replace(R.id.content_frame, fragment).commit();
 			listDrawer.setItemChecked(position, true);
 			listDrawer.setSelection(position);
-			getSupportActionBar().setTitle(navDrawerItems.get(position).getTitle());
+
 			realPosition = position;
 			drawerLayout.closeDrawer(listDrawer);
-			
+
 		} else {
-			Log.d(MainActivity.class.getSimpleName(), "Error in creating Fragment");
+			Log.d(MainActivity.class.getSimpleName(),
+					"Error in creating Fragment");
 		}
 
 	}
 
-	
 	private void populateContent() {
 		manager = getFragmentManager();
-		
+
 		MainFragment mainFragy = new MainFragment();
 		FragmentTransaction trans = manager.beginTransaction();
-		
-		trans.replace(R.id.content_frame, mainFragy,"main");
+
+		trans.replace(R.id.content_frame, mainFragy, "main");
 		trans.addToBackStack(null);
 		trans.commit();
-		/*getFragmentManager().beginTransaction()
-				.add(R.id.main_frag, new MainFragment()).commit();*/
+		/*
+		 * getFragmentManager().beginTransaction() .add(R.id.main_frag, new
+		 * MainFragment()).commit();
+		 */
 
 	}
 
@@ -242,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		
+
 		if (id == R.id.database_manager) {
 			Intent dbmman = new Intent(MainActivity.this,
 					AndroidDatabaseManager.class);
@@ -354,20 +363,24 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
 	private void designActionBar() {
 		actionBar = getSupportActionBar();
-		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setIcon(R.color.transparent);
+		setJournalName(actionBar);
 		actionBar.show();
 	}
 
-	private void createExpListView() {
+	private void setJournalName(ActionBar actionBar2) {
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		String stra = pref.getString(SettingsFragment.KEY_EDIT_NAME_PREFERENCE,
+				null);
+		if (stra != null || !stra.isEmpty()) {
+			actionBar2.setTitle(stra + "'s Journal");
+		} else {
 
-		populate();
-		// MainDataAdapter adapter = new MainDataAdapter(this, itemsGroup,
-		// itemsChildren);
-
-		// exListView.setAdapter(adapter);
+			actionBar2.setTitle(ParseUser.getCurrentUser().getUsername()
+					+ "'s Journal");
+		}
 
 	}
 

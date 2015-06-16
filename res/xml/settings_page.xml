@@ -12,6 +12,13 @@
             android:entryValues="@array/instance_time_values" />
         
     </PreferenceCategory>
+    <PreferenceCategory 
+        android:title="Journal Name">
+        <EditTextPreference
+            android:title="Set Name"
+            android:key="editNamePref"
+            />
+    </PreferenceCategory>
    
 
 </PreferenceScreen>

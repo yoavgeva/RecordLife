@@ -20,9 +20,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
@@ -84,6 +81,7 @@ public class MainFragment extends Fragment {
 				false);
 		lv = (ExpandableListView) view.findViewById(R.id.exlistview);
 		
+		
 		return view;
 	}
 
@@ -94,6 +92,7 @@ public class MainFragment extends Fragment {
 		lv.setAdapter(mainAdapter);
 		
 		getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
+		
 		
 		super.onActivityCreated(savedInstanceState);
 
@@ -133,6 +132,13 @@ public class MainFragment extends Fragment {
 	public void onStop() {
 		unRegisterReceiever();
 		super.onStop();
+	}
+	
+	@Override
+	public void onResume() {
+		
+		super.onResume();
+		
 	}
 
 	@Override
