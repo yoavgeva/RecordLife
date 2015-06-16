@@ -6,6 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="database_manger">DataBase</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    
 
     <!-- Sign Up screen Strings -->
     <string name="screen_signup_name_hint">Name</string>

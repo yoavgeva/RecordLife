@@ -1,10 +1,6 @@
 package com.liferecords.application;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -31,14 +27,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.liferecords.application.MainFragment.Listener;
-import com.liferecords.model.DateAdapterItem;
-import com.liferecords.model.Model;
-import com.liferecords.model.ModelAdapterItem;
 import com.liferecords.model.NavDrawerItem;
 import com.liferecords.model.NavDrawerListAdapter;
 import com.liferecords.service.MainService;
@@ -47,26 +38,22 @@ import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity implements Listener {
 
-	TextView textV;
+	
 	android.support.v7.app.ActionBar actionBar;
 	public static final String CONNECTED_OR_NOT = "connected";
 	String[] navMenuTitles;
 	TypedArray navMenuIcons;
-	private List<DateAdapterItem> itemsGroup;
-	private List<ModelAdapterItem> itemsChildrenAlpha;
-	private List<ModelAdapterItem> itemsChildrenBeta;
-	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
-	private ExpandableListView exListView;
+	
 	private ListView listDrawer;
 	private DrawerLayout drawerLayout;
 	private NavDrawerListAdapter drawerAdapter;
 	private ActionBarDrawerToggle drawerToggle;
-	private String activityTitle;
+	
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private int realPosition = 0;
 	FragmentManager manager;
 
-	private Model model;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		listDrawer = (ListView) findViewById(R.id.navList);
 		designDrawerList(listDrawer);
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		activityTitle = getTitle().toString();
+		
 		addDrawerItems();
 		setupDrawer();
 
@@ -410,56 +397,6 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		return logged;
 	}
 
-	private void populate() {
-
-		Log.d("check if see", "seen "
-				+ ParseUser.getCurrentUser().getUsername());
-		model = new Model(getApplicationContext());
-		itemsGroup = new ArrayList<DateAdapterItem>();
-		itemsGroup = model.getDateAdapterItems();
-		Collections.sort(itemsGroup, new Comparator<DateAdapterItem>() {
-
-			@Override
-			public int compare(DateAdapterItem lhs, DateAdapterItem rhs) {
-				return rhs.dateWithoutTime - lhs.dateWithoutTime;
-			}
-		});
-		Log.d("check query result", "" + itemsGroup.size());
-		Log.d("check query result", "" + itemsGroup.toString());
-
-		itemsChildrenAlpha = new ArrayList<ModelAdapterItem>();
-		itemsChildrenAlpha = model.getDataDateAdapterItems();
-		Collections.sort(itemsChildrenAlpha,
-				new Comparator<ModelAdapterItem>() {
-
-					@Override
-					public int compare(ModelAdapterItem lhs,
-							ModelAdapterItem rhs) {
-						return (rhs.countId - lhs.countId);
-					}
-				});
-
-		itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();
-
-		for (int i = 0; i < itemsGroup.size(); i++) {
-			DateAdapterItem groupObject = (DateAdapterItem) itemsGroup.get(i);
-			Log.d("check query result of children",
-					"" + itemsChildrenAlpha.size());
-			Log.d("check query result of children", ""
-					+ itemsChildrenAlpha.get(0).toString());
-			itemsChildrenBeta = new ArrayList<ModelAdapterItem>();
-			for (int j = 0; j < itemsChildrenAlpha.size(); j++) {
-				ModelAdapterItem childrenObject = itemsChildrenAlpha.get(j);
-				if (groupObject.dateWithoutTime == childrenObject.dateOnly) {
-					itemsChildrenBeta.add(childrenObject);
-				}
-			}
-			if (groupObject != null) {
-				itemsChildren.put(groupObject, itemsChildrenBeta);
-				Log.d("check query result of children",
-						"" + itemsChildren.get(groupObject).toString());
-			}
-		}
-	}
+	
 
 }

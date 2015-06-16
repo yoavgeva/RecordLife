@@ -24,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.liferecords.model.DateAdapterItem;
 import com.liferecords.model.MainDataAdapter;
 import com.liferecords.model.Model;
@@ -35,7 +37,10 @@ public class MainFragment extends Fragment {
 
 	private static final String TAG = MainFragment.class.getSimpleName();
 	private static final int LOADER_ID = 1;
+	
 
+	private AdView adView;
+	private AdRequest adRequest;
 	private MainDataAdapter mainAdapter;
 	private ExpandableListView lv;
 	private List<DateAdapterItem> itemsGroup;
@@ -46,7 +51,7 @@ public class MainFragment extends Fragment {
 		public void onReceive(Context context, Intent intent) {
 			Log.d(TAG, intent.getAction());
 			if (intent.getAction().equals(SyncService.ACTION)) {
-				
+				getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
 				return;
 			}
 
@@ -67,7 +72,8 @@ public class MainFragment extends Fragment {
 		
 		setHasOptionsMenu(true);
 		Context content = getActivity();
-		mainAdapter = new MainDataAdapter(content,itemsGroup,itemsChildren);	
+		mainAdapter = new MainDataAdapter(content,itemsGroup,itemsChildren);
+		
 
 		
 		super.onCreate(savedInstanceState);
@@ -80,7 +86,7 @@ public class MainFragment extends Fragment {
 		View view = inflater.inflate(R.layout.listview_fragment, container,
 				false);
 		lv = (ExpandableListView) view.findViewById(R.id.exlistview);
-		
+		adView = (AdView) view.findViewById(R.id.adView);
 		
 		return view;
 	}
@@ -92,6 +98,10 @@ public class MainFragment extends Fragment {
 		lv.setAdapter(mainAdapter);
 		
 		getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
+		
+		adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
 		
 		
 		super.onActivityCreated(savedInstanceState);

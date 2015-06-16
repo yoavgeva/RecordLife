@@ -2,8 +2,6 @@ package com.liferecords.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -31,36 +29,28 @@ import android.widget.TextView;
 
 import com.liferecords.application.MapActivity;
 import com.liferecords.application.R;
-import com.parse.ParseUser;
 
 public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	private final Context context;
-	private final Model model;
+	
 	private List<DateAdapterItem> itemsGroup;
-	// private List<ModelAdapterItem> itemsChildrenAlpha;
-	// private List<ModelAdapterItem> itemsChildrenBeta;
+	private List<ModelAdapterItem> itemsMap;
+	private ModelAdapterItem addedItem;
+	
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
 
-	// added haspmap and list<dateadapteritem>
+	
 	public MainDataAdapter(Context context, List<DateAdapterItem> itemsGroup,
 			HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren) {
 		this.context = context;
-		this.model = new Model(this.context);
-
 		this.itemsGroup = itemsGroup;
-
 		this.itemsChildren = itemsChildren;
 
-		// populate();
+		
 	}
 
-	/*
-	 * public void setData(List<DateAdapterItem>
-	 * itemsGroupSet,HashMap<DateAdapterItem, List<ModelAdapterItem>>
-	 * itemsChildrenSet){ if(itemsGroupSet != null || itemsChildrenSet != null){
-	 * itemsGroup = itemsGroupSet; itemsChildren = itemsChildrenSet; } }
-	 */
+	
 
 	@Override
 	public int getGroupCount() {
@@ -141,8 +131,8 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 
 			@Override
 			public void onClick(View v) {
-				List<ModelAdapterItem> itemsMap = new ArrayList<ModelAdapterItem>();
-				ModelAdapterItem addedItem = new ModelAdapterItem();
+				itemsMap = new ArrayList<ModelAdapterItem>();
+				addedItem = new ModelAdapterItem();
 				addedItem = itemsChildren.get(item).get(0);
 				itemsMap.add(addedItem);
 
@@ -214,7 +204,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 			@Override
 			public void onClick(View v) {
 
-				ModelAdapterItem addedItem = new ModelAdapterItem();
+				addedItem = new ModelAdapterItem();
 				addedItem = childView;
 				Bundle bundle = new Bundle();
 				bundle.putParcelable("item", addedItem);
