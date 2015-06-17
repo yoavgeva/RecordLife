@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -281,12 +282,20 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		ParseUser.logOut();
 		checkLogged(0);
 		stopMainService();
+		updateNamePreference("");
 		Intent intent = new Intent(MainActivity.this,
 				SignUpOrLoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 
+	}
+	private void updateNamePreference(String name) {
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString(SettingsFragment.KEY_EDIT_NAME_PREFERENCE, name);
+		editor.commit();
 	}
 
 	private void dialogLocationNotWorking() {
@@ -352,6 +361,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		actionBar = getSupportActionBar();
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1e88e5")));
 		setJournalName(actionBar);
 		actionBar.show();
 	}
@@ -361,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 				.getDefaultSharedPreferences(this);
 		String stra = pref.getString(SettingsFragment.KEY_EDIT_NAME_PREFERENCE,
 				null);
-		if (stra != null || !stra.isEmpty()) {
+		if (!stra.isEmpty()) {
 			actionBar2.setTitle(stra + "'s Journal");
 		} else {
 

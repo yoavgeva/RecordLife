@@ -62,7 +62,7 @@ public class MainFragment extends Fragment {
 		void onMenuLogOut();
 	}
 
-	private Listener listener;
+	//private Listener listener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -155,7 +155,7 @@ public class MainFragment extends Fragment {
 	public void onDetach() {
 
 		super.onDetach();
-		listener = null;
+		//listener = null;
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class MainFragment extends Fragment {
 
 		super.onAttach(activity);
 		try {
-			listener = (Listener) activity;
+			//listener = (Listener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement listener");
@@ -226,8 +226,8 @@ public class MainFragment extends Fragment {
 					return rhs.dateWithoutTime - lhs.dateWithoutTime;
 				}
 			});
-			Log.d("check query result", "" + itemsGroup.size());
-			Log.d("check query result", "" + itemsGroup.toString());
+			Log.d("check query result group", "" + itemsGroup.size());
+			Log.d("check query result group", "" + itemsGroup.toString());
 			List<ModelAdapterItem> itemsChildrenAlpha = new ArrayList<ModelAdapterItem>();
 
 			itemsChildrenAlpha = model.getDataDateAdapterItems();

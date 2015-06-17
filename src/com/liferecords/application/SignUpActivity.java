@@ -1,8 +1,5 @@
 package com.liferecords.application;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -123,7 +120,7 @@ public class SignUpActivity extends Activity {
 		ParseUser user = new ParseUser();
 		user.setUsername(userNameView.getText().toString());
 		user.setPassword(passwordView.getText().toString());
-		user.setEmail(emailView.getText().toString());
+		//user.setEmail(emailView.getText().toString());
 		user.signUpInBackground(new SignUpCallback() {
 
 			@Override
@@ -199,14 +196,14 @@ public class SignUpActivity extends Activity {
 		editor.commit();
 
 	}
-	// if register will use email than use it
+/*	// if register will use email than use it
 	private boolean isValidEmailAddress(String email) {
 		String ePattern = "/[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i";
 		Pattern p = java.util.regex.Pattern.compile(ePattern);
 		Matcher m = p.matcher(email);
 		return m.matches();
-	}
-// if register will use email than use it
+	}*/
+/*// if register will use email than use it
 	private void checkForEmailErrors() {
 		if (!isValidEmailAddress(emailView.getText().toString())) {
 			Toast.makeText(SignUpActivity.this,
@@ -215,5 +212,5 @@ public class SignUpActivity extends Activity {
 			return;
 		}
 
-	}
+	}*/
 }

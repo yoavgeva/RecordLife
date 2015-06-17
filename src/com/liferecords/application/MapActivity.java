@@ -71,6 +71,11 @@ public class MapActivity extends Activity {
 				Log.d("amout of items in map", "no bundle");
 			}
 		}
+		Log.d(MapActivity.class.getSimpleName(),
+				"distance"
+						+ distanceBetween(itemsMapFrag.get(0).latitude,
+								itemsMapFrag.get(0).longitude,
+								itemsMapFrag.get(1).latitude, itemsMapFrag.get(1).longitude));
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(
 				R.id.location_map)).getMap();
@@ -106,7 +111,7 @@ public class MapActivity extends Activity {
 				@Override
 				public void onMapClick(LatLng arg0) {
 					map.stopAnimation();
-					setCameraFirstLocation();
+					
 				}
 			});
 		}
@@ -124,6 +129,7 @@ public class MapActivity extends Activity {
 				} else {
 					map.clear();
 					setUpMap();
+					pictureOn = false;
 				}
 
 				return false;
@@ -141,6 +147,7 @@ public class MapActivity extends Activity {
 			return download_image(params[0]);
 		}
 
+		@SuppressLint("InflateParams")
 		@Override
 		protected void onPostExecute(WrapperMarker result) {
 			if (result == null) {
@@ -212,6 +219,7 @@ public class MapActivity extends Activity {
 	private void setMarkerOnMap(ImageView motionImage, ImageView batteryImage,
 			View marker, TextView timeText) {
 		for (int i = 0; i < itemsMapFrag.size(); i++) {
+			Log.d(MapActivity.class.getSimpleName(), "" + itemsMapFrag.get(i));
 			setMotionPicture(motionImage, itemsMapFrag.get(i));
 			setBatteryPicture(batteryImage, itemsMapFrag.get(i));
 			setTimeText(timeText, itemsMapFrag.get(i));
@@ -219,8 +227,7 @@ public class MapActivity extends Activity {
 					.position(
 							new LatLng(itemsMapFrag.get(i).latitude,
 									itemsMapFrag.get(i).longitude))
-					.title("title")
-					.snippet("snippet")
+					
 					.icon(BitmapDescriptorFactory
 							.fromBitmap(createDrawableFromView(this, marker))));
 
@@ -236,6 +243,7 @@ public class MapActivity extends Activity {
 			LatLng point = new LatLng(itemsMapFrag.get(i).latitude,
 					itemsMapFrag.get(i).longitude);
 			options.add(point);
+			
 
 		}
 		map.addPolyline(options);
@@ -361,12 +369,15 @@ public class MapActivity extends Activity {
 
 				CameraPosition cameraPosition = new CameraPosition.Builder()
 						.target(currentLatlng).bearing(targetBearting).zoom(14)
-						.tilt(45).build();
+						.build();
 				map.animateCamera(
 						CameraUpdateFactory.newCameraPosition(cameraPosition),
 						2000, myCancelablecallback);
+				
 			}
 
+			
+		
 		}
 
 		@Override
@@ -376,5 +387,13 @@ public class MapActivity extends Activity {
 		}
 	};
 
-	
+	public float distanceBetween(double startlangtitude, double startlongitude,
+			double endlangitude, double endlongitude) {
+		float[] results = new float[2];
+		Location.distanceBetween(startlangtitude, startlongitude, endlangitude,
+				endlongitude, results);
+		float distance = results[0];
+		return distance;
+	}
+
 }

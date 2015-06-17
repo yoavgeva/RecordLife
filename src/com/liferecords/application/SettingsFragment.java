@@ -1,19 +1,15 @@
 package com.liferecords.application;
 
-import com.liferecords.service.MainService;
-import com.liferecords.service.MainService.LocalBinder;
-
-import android.content.ComponentName;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.liferecords.service.MainService;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnSharedPreferenceChangeListener {
@@ -62,7 +58,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	private void checkEditNameEmpty() {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String stra = pref.getString(KEY_EDIT_NAME_PREFERENCE, null);
-		if(stra != null || !stra.isEmpty()){
+		if(stra != null ){
 			editPref.setSummary(stra);
 		}
 		

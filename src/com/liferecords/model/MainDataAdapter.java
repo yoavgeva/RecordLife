@@ -33,7 +33,8 @@ import com.liferecords.application.R;
 public class MainDataAdapter extends BaseExpandableListAdapter {
 
 	private final Context context;
-	
+	//public static double HALFSECOND = 0.5;
+	 public static int JGREG= 15 + 31*(10+12*1582);
 	private List<DateAdapterItem> itemsGroup;
 	private List<ModelAdapterItem> itemsMap;
 	private ModelAdapterItem addedItem;
@@ -160,22 +161,49 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	}
 
 	private void setDayDesign(TextView txtGroup, DateAdapterItem item) {
-		String date = Integer.toString(item.timeCreated);
-		int year = Integer.parseInt(date.substring(0, 4));
-		int month = Integer.parseInt(date.substring(4, 6));
-		int day = Integer.parseInt(date.substring(6, 8));
-		Calendar calendar = new GregorianCalendar(year, month - 1, day);
-		Log.d(MainDataAdapter.class.getSimpleName(), "" + year + month + day);
+		
+		//String date = Integer.toString(item.dateWithoutTime);
+		//int year = Integer.parseInt(date.substring(0, 4));
+		//int month = Integer.parseInt(date.substring(4, 6));
+		//int day = Integer.parseInt(date.substring(6, 8));
+		double july = item.dateWithoutTime;
+		int[] daytoyear = fromJulian(july);
+		
+		Calendar calendar = new GregorianCalendar(daytoyear[0], daytoyear[1] - 1, daytoyear[2]);
+		Log.d(MainDataAdapter.class.getSimpleName(), "" + daytoyear[0] + daytoyear[1] + daytoyear[2]);
 		String dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK,
 				Calendar.LONG, Locale.getDefault());
 		String monthName = calendar.getDisplayName(Calendar.MONTH,
 				Calendar.LONG, Locale.getDefault());
-		txtGroup.setText(dayName + ", " + monthName + " " + day);
+		txtGroup.setText(dayName + ", " + monthName + " " + daytoyear[2]);
 		txtGroup.setTypeface(setTypeFaceRoboto());
 		txtGroup.setTextSize(18f);
 		txtGroup.setTextColor(Color.parseColor("#3066BC"));
 
 	}
+	
+	 public static int[] fromJulian(double injulian) {
+		   int jalpha,ja,jb,jc,jd,je,year,month,day;
+		  // double julian = injulian + HALFSECOND / 86400.0;
+		   ja = (int) injulian;
+		   if (ja>= JGREG) {    
+		     jalpha = (int) (((ja - 1867216) - 0.25) / 36524.25);
+		     ja = ja + 1 + jalpha - jalpha / 4;
+		   }
+		    
+		   jb = ja + 1524;
+		   jc = (int) (6680.0 + ((jb - 2439870) - 122.1) / 365.25);
+		   jd = 365 * jc + jc / 4;
+		   je = (int) ((jb - jd) / 30.6001);
+		   day = jb - jd - (int) (30.6001 * je);
+		   month = je - 1;
+		   if (month > 12) month = month - 12;
+		   year = jc - 4715;
+		   if (month > 2) year--;
+		   if (year <= 0) year--;
+		    
+		   return new int[] {year, month, day};
+		  }
 
 	public ModelAdapterItem getChildItems(int position) {
 		return (ModelAdapterItem) itemsChildren.get(position);
