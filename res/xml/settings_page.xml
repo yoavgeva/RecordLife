@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory
-        android:title="@string/settings_sample_instance_category_title">
-         <ListPreference
-            android:title="@string/settings_sample_instance_list_title"
-            android:summary="Selet the time you want date to be sampled for your journal"
-            android:key="listTiming"
-            android:defaultValue="30"
-            android:entries="@array/instance_time_set"
-            android:entryValues="@array/instance_time_values" />
-        
-    </PreferenceCategory>
+   
     <PreferenceCategory 
         android:title="Journal Name">
         <EditTextPreference

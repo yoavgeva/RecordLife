@@ -14,6 +14,8 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -283,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		checkLogged(0);
 		stopMainService();
 		updateNamePreference("");
+		sendNotifiaction();
 		Intent intent = new Intent(MainActivity.this,
 				SignUpOrLoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -372,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		String stra = pref.getString(SettingsFragment.KEY_EDIT_NAME_PREFERENCE,
 				null);
 		if (!stra.isEmpty()) {
-			actionBar2.setTitle(stra + "'s Journal");
+			actionBar2.setTitle(stra);
 		} else {
 
 			actionBar2.setTitle(ParseUser.getCurrentUser().getUsername()
@@ -407,6 +410,10 @@ public class MainActivity extends AppCompatActivity implements Listener {
 		return logged;
 	}
 
-	
+	private void sendNotifiaction(){
+		
+		Intent intent = new Intent(this, DispatchActivity.class);
+		NotificationReceiver.notificatePush(this, 1, "LifeRecords", "Goodbye", "Every moment has a story in it, come back and store those moments.", intent);
+	}
 
 }

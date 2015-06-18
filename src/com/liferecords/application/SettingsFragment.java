@@ -25,14 +25,14 @@ public class SettingsFragment extends PreferenceFragment implements
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		if (key.equals(KEY_LIST_PREFERENCE)) {
+		/*if (key.equals(KEY_LIST_PREFERENCE)) {
 			listInstanceTimes.setSummary("Current Value is "
 					+ listInstanceTimes.getEntry().toString());
 			long setTi = Long.parseLong(listInstanceTimes.getValue());
 
-			updateTimingPreference(setTi);
+			//updateTimingPreference(setTi);
 			Log.d(SettingsFragment.class.getSimpleName(), "" + setTi);
-		}
+		}*/
 		if (key.equals(KEY_EDIT_NAME_PREFERENCE)) {
 			editPref.setSummary(editPref.getText());
 			String namePre = editPref.getText();
@@ -47,8 +47,8 @@ public class SettingsFragment extends PreferenceFragment implements
 
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings_page);
-		listInstanceTimes = (ListPreference) getPreferenceScreen()
-				.findPreference(KEY_LIST_PREFERENCE);
+		/*listInstanceTimes = (ListPreference) getPreferenceScreen()
+				.findPreference(KEY_LIST_PREFERENCE);*/
 		editPref = (EditTextPreference) getPreferenceScreen().findPreference(
 				KEY_EDIT_NAME_PREFERENCE);
 		checkEditNameEmpty();
@@ -68,8 +68,8 @@ public class SettingsFragment extends PreferenceFragment implements
 	public void onResume() {
 
 		super.onResume();
-		listInstanceTimes.setSummary("Current Value is "
-				+ listInstanceTimes.getEntry().toString());
+		/*listInstanceTimes.setSummary("Current Value is "
+				+ listInstanceTimes.getEntry().toString());*/
 		getPreferenceScreen().getSharedPreferences()
 				.registerOnSharedPreferenceChangeListener(this);
 
@@ -83,14 +83,14 @@ public class SettingsFragment extends PreferenceFragment implements
 				.unregisterOnSharedPreferenceChangeListener(this);
 	}
 
-	private void updateTimingPreference(long timeValue) {
+	/*private void updateTimingPreference(long timeValue) {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		SharedPreferences.Editor editor = sharedPref.edit();
 		editor.putLong(KEY_INTERVAL_TIME, timeValue);
 		editor.commit();
 	}
-
+*/
 	private void updateNamePreference(String name) {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());

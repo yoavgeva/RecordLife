@@ -111,5 +111,7 @@ public class SyncService extends IntentService {
 		return isEnabled;
 
 	}
+	
+	
 
 }
