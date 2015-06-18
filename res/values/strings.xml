@@ -7,7 +7,11 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="database_manger">DataBase</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    
+
+    <!-- Sign up Login Strings -->
+
+    <string name="text_motto_signup_login">Every moment is a story</string>
+    <string name="logo_image_signup_login">Logo of liferecords</string>
 
     <!-- Sign Up screen Strings -->
     <string name="screen_signup_name_hint">Name</string>
@@ -33,14 +37,13 @@
     <string name="progress_title">Please wait.</string>
     <string name="progress_message">Signing up. Please wait.</string>
     <string name="title_activity_login">LoginActivity</string>
-    
-     <!-- FeedBack Fragment -->
+
+    <!-- FeedBack Fragment -->
     <string name="edittext_hint_feedback_subject">Subject</string>
     <string name="edittext_hint_feeedback_content">Message</string>
     <string name="button_feedback_send">Send feedback</string>
     <string name="error_blank_subject">enter a subject</string>
     <string name="error_blank_content">enter a message</string>
-    
 
     <!-- login screen -->
     <string name="username_signup">Username</string>
@@ -71,24 +74,21 @@
     <string name="details_type_road">Road</string>
     <string name="group_map_icon">Map of the places</string>
     <string name="details_image_type">Image of type of place</string>
-    
-    
+
     <!-- Map Activity -->
     <string name="image_icon_map_desc">Icon Map</string>
     <string name="image_motion_map_desc">Motion Picture</string>
     <string name="image_battery_map_desc">Battery status picture</string>
     <string name="image_streetview_map_desc">StreetView Picture</string>
-    
+
     <!-- Settings Activity -->
     <string name="settings_sample_instance_category_title">First</string>
     <string name="settings_sample_instance_list_title">Sample Timing</string>
-    
-    <!-- NavigationDrawer  -->
+
+    <!-- NavigationDrawer -->
     <string name="navigation_drawer_desc_open">Open navigation drawer</string>
     <string name="navigation_drawer_desc_close">Close navigation drawer</string>
     <string name="navigation_icon_description">Icon of navigation subject</string>
     <!-- Privacy Policy Fragment -->
-    
-   
 
 </resources>

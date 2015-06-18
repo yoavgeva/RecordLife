@@ -4,17 +4,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 public class NotificationReceiver {
 	public static final String TAG = "NotificationUtils";
-	private static final int NOTIFICATION_DEFAULT_ON = 1000;
-	private static final int NOTIFICATION_DEFAULT_OFF = 4000;
-	private static final int NOTIFICATION_DEFAULT_COLOR = Color.YELLOW;
-
+	
 	public static void notificatePush(Context context, int notificationId,
 			String tickerText, String contentTitle, String contentText,
 			Intent intent) {

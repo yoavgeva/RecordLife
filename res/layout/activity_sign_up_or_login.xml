@@ -8,6 +8,26 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.liferecords.application.SignUpOrLoginActivity" >
+    
+    
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/logo_image_signup_login"
+        android:src="@drawable/ic_launcher" />
+    
+    
+    <TextView
+        android:id="@+id/motto_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo_image"
+        android:layout_marginLeft="16dp"
+        android:text="@string/text_motto_signup_login"
+         />
 
     <LinearLayout
         android:id="@+id/linear_signup_login"
@@ -15,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_below="@+id/motto_text"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
