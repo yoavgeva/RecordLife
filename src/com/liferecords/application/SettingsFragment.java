@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -19,7 +18,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	public static final String KEY_INTERVAL_TIME = "timeInterval";
 	public static final String KEY_EDIT_NAME_PREFERENCE = "editNamePref";
 
-	private ListPreference listInstanceTimes;
+	//private ListPreference listInstanceTimes;
 	private EditTextPreference editPref;
 
 	@Override

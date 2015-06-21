@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liferecords.application.MapActivity;
@@ -39,6 +40,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 	private List<ModelAdapterItem> itemsMap;
 	private ModelAdapterItem addedItem;
 	
+	
 	private HashMap<DateAdapterItem, List<ModelAdapterItem>> itemsChildren;
 
 	
@@ -47,6 +49,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		this.context = context;
 		this.itemsGroup = itemsGroup;
 		this.itemsChildren = itemsChildren;
+		
 
 		
 	}
@@ -270,8 +273,14 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		setTypeImage(holder.imgTypeChild, childView);
 
 		setBorderLinesDesign(holder.viewBorderChild);
+		
+		
 
 	}
+
+	
+
+
 
 	private void setBorderLinesDesign(View viewBorder) {
 		viewBorder.setBackgroundColor(Color.parseColor("#CED3E8"));
@@ -513,6 +522,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 		TextView imgBatteryChild;
 		ImageView imgTypeChild;
 		View viewBorderChild;
+		LinearLayout mainChildLayout;
 
 		ViewHolder(View v) {
 			textGroupDay = (TextView) v
@@ -530,6 +540,7 @@ public class MainDataAdapter extends BaseExpandableListAdapter {
 			imgTypeChild = (ImageView) v
 					.findViewById(R.id.imageview_details_type);
 			viewBorderChild = v.findViewById(R.id.borderline_details);
+			mainChildLayout = (LinearLayout) v.findViewById(R.id.main_child_linearlayout);
 
 		}
 	}

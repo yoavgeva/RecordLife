@@ -14,8 +14,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -240,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
+		//int id = item.getItemId();
 
 		/*if (id == R.id.database_manager) {
 			Intent dbmman = new Intent(MainActivity.this,

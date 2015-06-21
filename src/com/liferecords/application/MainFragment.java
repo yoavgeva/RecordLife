@@ -37,7 +37,6 @@ public class MainFragment extends Fragment {
 
 	private static final String TAG = MainFragment.class.getSimpleName();
 	private static final int LOADER_ID = 1;
-	
 
 	private AdView adView;
 	private AdRequest adRequest;
@@ -62,48 +61,43 @@ public class MainFragment extends Fragment {
 		void onMenuLogOut();
 	}
 
-	//private Listener listener;
+	// private Listener listener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		itemsGroup = new ArrayList<DateAdapterItem>();
-		itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();	
-		
+		itemsChildren = new HashMap<DateAdapterItem, List<ModelAdapterItem>>();
+
 		setHasOptionsMenu(true);
 		Context content = getActivity();
-		mainAdapter = new MainDataAdapter(content,itemsGroup,itemsChildren);
-		
+		mainAdapter = new MainDataAdapter(content, itemsGroup, itemsChildren);
 
-		
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		View view = inflater.inflate(R.layout.listview_fragment, container,
 				false);
 		lv = (ExpandableListView) view.findViewById(R.id.exlistview);
 		adView = (AdView) view.findViewById(R.id.adView);
-		
+
 		return view;
 	}
 
-	
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		lv.setAdapter(mainAdapter);
-		
-		getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
-		
-		adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
 
-		
-		
+		lv.setAdapter(mainAdapter);
+
+		getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
+
+		adRequest = new AdRequest.Builder().build();
+		adView.loadAd(adRequest);
+
 		super.onActivityCreated(savedInstanceState);
 
 	}
@@ -111,9 +105,7 @@ public class MainFragment extends Fragment {
 	public void onStart() {
 
 		registerReceiver();
-		
-		
-		
+
 		/*
 		 * if (mainAdapter == null) { Context context = getActivity();
 		 * mainAdapter = new MainDataAdapter(context);
@@ -143,19 +135,19 @@ public class MainFragment extends Fragment {
 		unRegisterReceiever();
 		super.onStop();
 	}
-	
+
 	@Override
 	public void onResume() {
-		
+
 		super.onResume();
-		
+
 	}
 
 	@Override
 	public void onDetach() {
 
 		super.onDetach();
-		//listener = null;
+		// listener = null;
 	}
 
 	@Override
@@ -163,7 +155,7 @@ public class MainFragment extends Fragment {
 
 		super.onAttach(activity);
 		try {
-			//listener = (Listener) activity;
+			// listener = (Listener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement listener");
@@ -190,13 +182,12 @@ public class MainFragment extends Fragment {
 		@Override
 		public void onLoaderReset(
 				Loader<Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>>> loader) {
-			//crashed when used haspmap emptymap 
-			/*mainAdapter
-					.swapData(
-							Collections.<DateAdapterItem> emptyList(),
-							(HashMap<DateAdapterItem, List<ModelAdapterItem>>) Collections
-									.<DateAdapterItem, List<ModelAdapterItem>> emptyMap());
-*/
+			// crashed when used haspmap emptymap
+			/*
+			 * mainAdapter .swapData( Collections.<DateAdapterItem> emptyList(),
+			 * (HashMap<DateAdapterItem, List<ModelAdapterItem>>) Collections
+			 * .<DateAdapterItem, List<ModelAdapterItem>> emptyMap());
+			 */
 		}
 	};
 
@@ -270,7 +261,8 @@ public class MainFragment extends Fragment {
 		@Override
 		public void deliverResult(
 				Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>> data) {
-			Log.d(TAG, "Group " + data.first.size() + " children " + data.second.size());
+			Log.d(TAG, "Group " + data.first.size() + " children "
+					+ data.second.size());
 
 			super.deliverResult(data);
 
