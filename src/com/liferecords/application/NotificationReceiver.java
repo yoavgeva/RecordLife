@@ -28,6 +28,7 @@ public class NotificationReceiver {
 		mBuilder.setContentIntent(resultPendingIntent);
 		mBuilder.setAutoCancel(true);
 		mBuilder.setOnlyAlertOnce(true);
+		
 
 		// Gets an instance of the NotificationManager service
 		NotificationManager notifyMgr = (NotificationManager) context

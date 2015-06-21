@@ -252,28 +252,34 @@ public class LoginActivity extends Activity {
 
 	private void setLoginButton() {
 		Button button = (Button) findViewById(R.id.button_loginscreen);
-		button.setTypeface(setTypeFaceAspire(), Typeface.BOLD);
-		button.setTextSize(35f);
+		button.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		button.setTextSize(26f);
+		button.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 
-	private Typeface setTypeFaceAspire(){
+	private Typeface setTypeFaceVantage(){
 		Typeface type = Typeface.createFromAsset(getAssets(),
-				"aspire-demibold.ttf");
+				"vantage.ttf");
 		return type;
 	}
+	
 	
 	private void setUserNameText(){
 		EditText userNameText = (EditText) findViewById(R.id.edittext_username_login);
 		userNameText.setTextSize(30f);
-		userNameText.setHintTextColor(Color.BLACK);
+		userNameText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		userNameText.setHintTextColor(Color.parseColor("#FCFEFC"));
+		userNameText.setTextColor(Color.parseColor("#FCFEFC"));
 		
 		
 	}
 	private void setPasswordTtext(){
 		EditText userNameText = (EditText) findViewById(R.id.edittext_password_login);
 		userNameText.setTextSize(30f);
-		userNameText.setHintTextColor(Color.BLACK);
+		userNameText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		userNameText.setHintTextColor(Color.parseColor("#FCFEFC"));
+		userNameText.setTextColor(Color.parseColor("#FCFEFC"));
 		
 		
 	}

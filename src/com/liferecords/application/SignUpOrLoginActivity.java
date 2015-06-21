@@ -4,6 +4,7 @@ import com.liferecords.tools.TextViewAnimator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -61,6 +62,11 @@ public class SignUpOrLoginActivity extends Activity {
 		setSignupButtonDesign();
 	}
 
+	private Typeface setTypeFaceVantage(){
+		Typeface type = Typeface.createFromAsset(getAssets(),
+				"vantage.ttf");
+		return type;
+	}
 	private Typeface setTypeFaceAspire() {
 		Typeface type = Typeface.createFromAsset(getAssets(),
 				"aspire-demibold.ttf");
@@ -69,14 +75,16 @@ public class SignUpOrLoginActivity extends Activity {
 
 	private void setLoginButtonDesign() {
 		loginButton = (Button) findViewById(R.id.button_login);
-		loginButton.setTypeface(setTypeFaceAspire(), Typeface.NORMAL);
-		loginButton.setTextSize(22f);
+		loginButton.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		loginButton.setTextSize(26f);
+		loginButton.setTextColor(Color.parseColor("#FCFEFC"));
 	}
 
 	private void setSignupButtonDesign() {
 		signupButton = (Button) findViewById(R.id.button_signup_login);
-		signupButton.setTypeface(setTypeFaceAspire(), Typeface.NORMAL);
-		signupButton.setTextSize(22f);
+		signupButton.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		signupButton.setTextSize(26f);
+		signupButton.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 
@@ -127,6 +135,7 @@ public class SignUpOrLoginActivity extends Activity {
 
 		mottoTextView.setTypeface(setTypeFaceAspire(), Typeface.NORMAL);
 		mottoTextView.setTextSize(50f);
+		mottoTextView.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 

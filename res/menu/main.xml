@@ -2,23 +2,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.liferecords.application.MainActivity" >
 
-    <item
-        android:id="@+id/menu_main_spinner_day_or_week"
-        android:actionViewClass="android.widget.Spinner"
-        android:orderInCategory="10"
-        android:showAsAction="always"
-        android:title="@string/menu_day_or_week_text"/>
-    <item
-        android:id="@+id/menu_main_spinner_dates"
-        android:actionViewClass="android.widget.Spinner"
-        android:orderInCategory="20"
-        android:showAsAction="always"
-        android:title="@string/menu_dates_text"/>
-   
-    <item
-        android:id="@+id/database_manager"
-        android:orderInCategory="90"
-        android:showAsAction="never"
-        android:title="@string/database_manger"/>
-   
+  
 </menu>

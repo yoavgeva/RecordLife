@@ -2493,7 +2493,6 @@ containing a value of this type.
         public static final int content_frame=0x7f09006b;
         public static final int custom=0x7f09004c;
         public static final int customPanel=0x7f09004b;
-        public static final int database_manager=0x7f09009b;
         public static final int decor_content_parent=0x7f090055;
         public static final int default_activity_button=0x7f090040;
         public static final int dialog=0x7f09002c;
@@ -2537,8 +2536,6 @@ containing a value of this type.
         public static final int logo_image=0x7f090071;
         public static final int match_parent=0x7f090010;
         public static final int media_actions=0x7f09008e;
-        public static final int menu_main_spinner_dates=0x7f09009a;
-        public static final int menu_main_spinner_day_or_week=0x7f090099;
         public static final int middle=0x7f09002f;
         public static final int monochrome=0x7f090018;
         public static final int motion_picture_map=0x7f090077;

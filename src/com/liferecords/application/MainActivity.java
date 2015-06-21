@@ -242,12 +242,12 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 
-		if (id == R.id.database_manager) {
+		/*if (id == R.id.database_manager) {
 			Intent dbmman = new Intent(MainActivity.this,
 					AndroidDatabaseManager.class);
 			startActivity(dbmman);
 			return true;
-		}
+		}*/
 		if (drawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 	private void sendNotifiaction(){
 		
 		Intent intent = new Intent(this, DispatchActivity.class);
-		NotificationReceiver.notificatePush(this, 1, "LifeRecords", "Goodbye", "Every moment has a story in it, come back and store those moments.", intent);
+		NotificationReceiver.notificatePush(this, 1, "LifeRecords", "Come back", "Every moment has a story in it, come back and store those moments.", intent);
 	}
 
 }

@@ -40,7 +40,7 @@ public class SignUpActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				checkSignUpErrors();
-				//checkForEmailErrors();
+				// checkForEmailErrors();
 				signUpParseUser();
 
 			}
@@ -120,7 +120,7 @@ public class SignUpActivity extends Activity {
 		ParseUser user = new ParseUser();
 		user.setUsername(userNameView.getText().toString());
 		user.setPassword(passwordView.getText().toString());
-		//user.setEmail(emailView.getText().toString());
+		// user.setEmail(emailView.getText().toString());
 		user.signUpInBackground(new SignUpCallback() {
 
 			@Override
@@ -154,37 +154,44 @@ public class SignUpActivity extends Activity {
 		editor.commit();
 	}
 
-	private Typeface setTypeFaceAspire() {
-		Typeface type = Typeface.createFromAsset(getAssets(),
-				"aspire-demibold.ttf");
+	private Typeface setTypeFaceVantage() {
+		Typeface type = Typeface.createFromAsset(getAssets(), "vantage.ttf");
 		return type;
 	}
 
 	private void setUserNameSignupDesign() {
 		EditText userNameText = (EditText) findViewById(R.id.edittext_signup_name);
 		userNameText.setTextSize(25f);
-		userNameText.setHintTextColor(Color.BLACK);
+
+		userNameText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		userNameText.setHintTextColor(Color.parseColor("#FCFEFC"));
+		userNameText.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 
 	private void setSignupButtonDesign() {
 		Button button = (Button) findViewById(R.id.button_signup);
-		button.setTypeface(setTypeFaceAspire(), Typeface.BOLD);
-		button.setTextSize(35f);
+		button.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		button.setTextSize(26f);
+		button.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 
 	private void setPasswordDesign() {
 		EditText passwordText = (EditText) findViewById(R.id.edittext_signup_pw);
 		passwordText.setTextSize(25f);
-		passwordText.setHintTextColor(Color.BLACK);
+		passwordText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		passwordText.setHintTextColor(Color.parseColor("#FCFEFC"));
+		passwordText.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 
 	private void setPasswordRepetDesign() {
 		EditText passwordRepetText = (EditText) findViewById(R.id.edittext_signup_pw_repeat);
 		passwordRepetText.setTextSize(25f);
-		passwordRepetText.setHintTextColor(Color.BLACK);
+		passwordRepetText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		passwordRepetText.setHintTextColor(Color.parseColor("#FCFEFC"));
+		passwordRepetText.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 
@@ -196,21 +203,21 @@ public class SignUpActivity extends Activity {
 		editor.commit();
 
 	}
-/*	// if register will use email than use it
-	private boolean isValidEmailAddress(String email) {
-		String ePattern = "/[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i";
-		Pattern p = java.util.regex.Pattern.compile(ePattern);
-		Matcher m = p.matcher(email);
-		return m.matches();
-	}*/
-/*// if register will use email than use it
-	private void checkForEmailErrors() {
-		if (!isValidEmailAddress(emailView.getText().toString())) {
-			Toast.makeText(SignUpActivity.this,
-					getResources().getString(R.string.error_invalid_email),
-					Toast.LENGTH_LONG).show();
-			return;
-		}
-
-	}*/
+	/*
+	 * // if register will use email than use it private boolean
+	 * isValidEmailAddress(String email) { String ePattern =
+	 * "/[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i"; Pattern p =
+	 * java.util.regex.Pattern.compile(ePattern); Matcher m = p.matcher(email);
+	 * return m.matches(); }
+	 */
+	/*
+	 * // if register will use email than use it private void
+	 * checkForEmailErrors() { if
+	 * (!isValidEmailAddress(emailView.getText().toString())) {
+	 * Toast.makeText(SignUpActivity.this,
+	 * getResources().getString(R.string.error_invalid_email),
+	 * Toast.LENGTH_LONG).show(); return; }
+	 * 
+	 * }
+	 */
 }
