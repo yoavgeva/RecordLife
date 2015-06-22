@@ -2,6 +2,7 @@ package com.liferecords.application;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,6 +42,9 @@ public class FeedbackFragment extends Fragment {
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		setEditTextDesign(editSubject);
+		setEditTextDesign(editContent);
+		setButtonDesgin(sendButton);
 		sendButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -52,6 +56,20 @@ public class FeedbackFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 	
+	private void setEditTextDesign(EditText editSubject2) {
+		editSubject2.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
+		editSubject2.setTextSize(25f);
+		
+		
+	}
+	
+	private void setButtonDesgin(Button editSubject2) {
+		editSubject2.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
+		editSubject2.setTextSize(25f);
+		
+		
+	}
+
 	private void sendEmail(){
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
@@ -99,5 +117,11 @@ public class FeedbackFragment extends Fragment {
 		} else {
 			return true;
 		}
+	}
+	
+	private Typeface setTypeFaceRobotoCondones() {
+		Typeface type = Typeface.createFromAsset(getActivity().getAssets(),
+				"robotocondensed_light.ttf");
+		return type;
 	}
 }

@@ -2,4 +2,5 @@
 <resources>
     <color name="transparent">#00000000</color>
     <color name="lightgrey_details">#CEDAE300 </color>
+    <color name="white_cursor">#FCFEFC</color>
 </resources>

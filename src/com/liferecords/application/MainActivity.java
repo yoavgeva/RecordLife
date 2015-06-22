@@ -22,6 +22,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -372,8 +373,8 @@ public class MainActivity extends AppCompatActivity implements Listener {
 				.getDefaultSharedPreferences(this);
 		String stra = pref.getString(SettingsFragment.KEY_EDIT_NAME_PREFERENCE,
 				null);
-		if (!stra.isEmpty()) {
-			actionBar2.setTitle(stra);
+		if (!TextUtils.isEmpty(stra)) {
+			actionBar2.setTitle(stra  + "'s Journal");
 		} else {
 
 			actionBar2.setTitle(ParseUser.getCurrentUser().getUsername()

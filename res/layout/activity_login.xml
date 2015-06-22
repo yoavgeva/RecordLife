@@ -9,6 +9,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.liferecords.application.LoginActivity" >
 
+    <TextView
+        android:id="@+id/welcome_text_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/welcome_text_login" />
+
     <LinearLayout
         android:id="@+id/linear_login"
         android:layout_width="match_parent"
@@ -23,12 +33,13 @@
             android:id="@+id/edittext_username_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/phone_register_edittext"
-            android:ems="10"
             android:drawableLeft="@drawable/ic_username_picture"
-            android:inputType="text"
+            android:ems="10"
             android:hint="@string/username_signup"
-            android:paddingLeft="10dp" >
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/white_cursor"
+            android:textCursorDrawable="@null" >
 
             <requestFocus />
         </EditText>
@@ -38,12 +49,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
-            android:background="@drawable/phone_register_edittext"
-            android:ems="10"
             android:drawableLeft="@drawable/ic_password_picture"
+            android:ems="10"
             android:hint="@string/password_signup"
             android:inputType="textPassword"
-            android:paddingLeft="10dip" />
+            android:paddingLeft="10dip"
+            android:textColor="@color/white_cursor"
+            android:textCursorDrawable="@null" />
 
         <Button
             android:id="@+id/button_loginscreen"

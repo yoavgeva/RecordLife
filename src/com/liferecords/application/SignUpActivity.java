@@ -6,14 +6,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.liferecords.tools.TextViewAnimator;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -21,6 +26,7 @@ import com.parse.SignUpCallback;
 public class SignUpActivity extends Activity {
 
 	EditText userNameView, passwordView, passwordAgainView, emailView;
+	TextView textWelcome;
 	Button signUpButton;
 	SharedPreferences sharedpref;
 	SharedPreferences.Editor editor;
@@ -70,6 +76,7 @@ public class SignUpActivity extends Activity {
 		setSignupButtonDesign();
 		setPasswordDesign();
 		setPasswordRepetDesign();
+		setWelcomeDesign();
 	}
 
 	private void checkSignUpErrors() {
@@ -154,24 +161,20 @@ public class SignUpActivity extends Activity {
 		editor.commit();
 	}
 
-	private Typeface setTypeFaceVantage() {
-		Typeface type = Typeface.createFromAsset(getAssets(), "vantage.ttf");
-		return type;
-	}
-
 	private void setUserNameSignupDesign() {
 		EditText userNameText = (EditText) findViewById(R.id.edittext_signup_name);
 		userNameText.setTextSize(25f);
 
-		userNameText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		userNameText.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
 		userNameText.setHintTextColor(Color.parseColor("#FCFEFC"));
 		userNameText.setTextColor(Color.parseColor("#FCFEFC"));
+		userNameText.getBackground().setColorFilter(Color.WHITE,Mode.SRC_ATOP);
 
 	}
 
 	private void setSignupButtonDesign() {
 		Button button = (Button) findViewById(R.id.button_signup);
-		button.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		button.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
 		button.setTextSize(26f);
 		button.setTextColor(Color.parseColor("#FCFEFC"));
 
@@ -180,18 +183,21 @@ public class SignUpActivity extends Activity {
 	private void setPasswordDesign() {
 		EditText passwordText = (EditText) findViewById(R.id.edittext_signup_pw);
 		passwordText.setTextSize(25f);
-		passwordText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		passwordText.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
 		passwordText.setHintTextColor(Color.parseColor("#FCFEFC"));
 		passwordText.setTextColor(Color.parseColor("#FCFEFC"));
+		passwordText.getBackground().setColorFilter(Color.WHITE,Mode.SRC_ATOP);
 
 	}
 
 	private void setPasswordRepetDesign() {
 		EditText passwordRepetText = (EditText) findViewById(R.id.edittext_signup_pw_repeat);
 		passwordRepetText.setTextSize(25f);
-		passwordRepetText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		passwordRepetText.setTypeface(setTypeFaceRobotoCondones(),
+				Typeface.NORMAL);
 		passwordRepetText.setHintTextColor(Color.parseColor("#FCFEFC"));
 		passwordRepetText.setTextColor(Color.parseColor("#FCFEFC"));
+		passwordRepetText.getBackground().setColorFilter(Color.WHITE,Mode.SRC_ATOP);
 
 	}
 
@@ -203,6 +209,34 @@ public class SignUpActivity extends Activity {
 		editor.commit();
 
 	}
+
+	private Typeface setTypeFaceRobotoCondones() {
+		Typeface type = Typeface.createFromAsset(getAssets(),
+				"robotocondensed_light.ttf");
+		return type;
+	}
+
+	private void setWelcomeDesign() {
+		textWelcome = (TextView) findViewById(R.id.welcome_text_signup);
+
+		textWelcome.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
+		textWelcome.setTextSize(25f);
+		textWelcome.setTextColor(Color.parseColor("#FCFEFC"));
+		animateMottoText(textWelcome);
+
+	}
+
+	private void animateMottoText(TextView textWelcome) {
+
+		Animation mottoTextViewAnim = AnimationUtils.loadAnimation(this,
+				R.anim.fade_in_left);
+		textWelcome.startAnimation(mottoTextViewAnim);
+		String text = getString(R.string.welcome_text_signup);
+		TextViewAnimator animator = TextViewAnimator.newInstance(textWelcome,
+				text, 70);
+		animator.start();
+	}
+
 	/*
 	 * // if register will use email than use it private boolean
 	 * isValidEmailAddress(String email) { String ePattern =

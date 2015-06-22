@@ -8,19 +8,24 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liferecords.db.DataDBAdapter;
 import com.liferecords.model.Account;
 import com.liferecords.model.PostObjectsParse;
+import com.liferecords.tools.TextViewAnimator;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.LogInCallback;
@@ -38,6 +43,7 @@ public class LoginActivity extends Activity {
 	SharedPreferences.Editor editor;
 	private static ArrayList<ParseObject> allObjects;
 	DataDBAdapter helper;
+	private TextView textWelcome;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,7 @@ public class LoginActivity extends Activity {
 		setLoginButton();
 		setUserNameText();
 		setPasswordTtext();
+		setWelcomeDesign();
 	}
 
 	private void checkLoginErrors() {
@@ -252,15 +259,15 @@ public class LoginActivity extends Activity {
 
 	private void setLoginButton() {
 		Button button = (Button) findViewById(R.id.button_loginscreen);
-		button.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		button.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
 		button.setTextSize(26f);
 		button.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
 
-	private Typeface setTypeFaceVantage(){
+	private Typeface setTypeFaceRobotoCondones(){
 		Typeface type = Typeface.createFromAsset(getAssets(),
-				"vantage.ttf");
+				"robotocondensed_light.ttf");
 		return type;
 	}
 	
@@ -268,18 +275,21 @@ public class LoginActivity extends Activity {
 	private void setUserNameText(){
 		EditText userNameText = (EditText) findViewById(R.id.edittext_username_login);
 		userNameText.setTextSize(30f);
-		userNameText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		userNameText.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
 		userNameText.setHintTextColor(Color.parseColor("#FCFEFC"));
 		userNameText.setTextColor(Color.parseColor("#FCFEFC"));
+		userNameText.getBackground().setColorFilter(Color.WHITE,Mode.SRC_ATOP);
 		
 		
 	}
 	private void setPasswordTtext(){
 		EditText userNameText = (EditText) findViewById(R.id.edittext_password_login);
 		userNameText.setTextSize(30f);
-		userNameText.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		userNameText.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
 		userNameText.setHintTextColor(Color.parseColor("#FCFEFC"));
 		userNameText.setTextColor(Color.parseColor("#FCFEFC"));
+		userNameText.getBackground().setColorFilter(Color.WHITE,Mode.SRC_ATOP);
+		
 		
 		
 	}
@@ -291,6 +301,26 @@ public class LoginActivity extends Activity {
 		editor.putInt(MainActivity.CONNECTED_OR_NOT, connected);
 		editor.commit();
 
+	}
+	private void setWelcomeDesign() {
+		textWelcome = (TextView)findViewById(R.id.welcome_text_login);
+
+		textWelcome.setTypeface(setTypeFaceRobotoCondones(), Typeface.NORMAL);
+		textWelcome.setTextSize(25f);
+		textWelcome.setTextColor(Color.parseColor("#FCFEFC"));
+		animateMottoText(textWelcome);
+
+	}
+	
+	private void animateMottoText(TextView textWelcome) {
+		
+		Animation mottoTextViewAnim = AnimationUtils.loadAnimation(this,
+				R.anim.fade_in_left);
+		textWelcome.startAnimation(mottoTextViewAnim);
+		String text = getString(R.string.welcome_text_login);
+		TextViewAnimator animator = TextViewAnimator.newInstance(textWelcome,
+				text, 70);
+		animator.start();
 	}
 	
 

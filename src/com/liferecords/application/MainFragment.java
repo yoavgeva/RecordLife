@@ -15,14 +15,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -38,7 +42,9 @@ public class MainFragment extends Fragment {
 	private static final String TAG = MainFragment.class.getSimpleName();
 	private static final int LOADER_ID = 1;
 
+	private View view;
 	private AdView adView;
+	private TextView textEmpty;
 	private AdRequest adRequest;
 	private MainDataAdapter mainAdapter;
 	private ExpandableListView lv;
@@ -80,8 +86,8 @@ public class MainFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.listview_fragment, container,
-				false);
+		view = inflater.inflate(R.layout.listview_fragment, container, false);
+
 		lv = (ExpandableListView) view.findViewById(R.id.exlistview);
 		adView = (AdView) view.findViewById(R.id.adView);
 
@@ -90,13 +96,14 @@ public class MainFragment extends Fragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-
 		lv.setAdapter(mainAdapter);
 
 		getLoaderManager().initLoader(LOADER_ID, null, loaderCallBack);
 
 		adRequest = new AdRequest.Builder().build();
 		adView.loadAd(adRequest);
+		lv.setEmptyView(view.findViewById(R.id.empty));
+		setEmptyTextDesign((TextView) view.findViewById(R.id.empty));
 
 		super.onActivityCreated(savedInstanceState);
 
@@ -160,6 +167,21 @@ public class MainFragment extends Fragment {
 			throw new ClassCastException(activity.toString()
 					+ " must implement listener");
 		}
+	}
+
+	private void setEmptyTextDesign(TextView emptyTextView){
+		Spanned sp = Html.fromHtml("<h2>Come back in a few minuntes and you will see your journal filling up.</h2>" 
+	+"<p>Few tips for easy usage:</p>" 
+	+"<ul><li><p>Pressing on the map icon or any item in a day will let you see the locations on the map.</p></li><li><p>Pressing on a marker in the map will show you a picture of the location.</p></li>"
+	+ "<li><p>LifeRecords will work best if it can retreive your locaion, please keep your locaion on for better expereince.</p></li></ul></string>" );
+		emptyTextView.setText(sp);
+		emptyTextView.setTypeface(setTypeFaceRobotoCondones(),Typeface.NORMAL);
+	}
+	
+	private Typeface setTypeFaceRobotoCondones() {
+		Typeface type = Typeface.createFromAsset(getActivity().getAssets(),
+				"robotocondensed_light.ttf");
+		return type;
 	}
 
 	private LoaderManager.LoaderCallbacks<Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>>> loaderCallBack = new LoaderManager.LoaderCallbacks<Pair<List<DateAdapterItem>, HashMap<DateAdapterItem, List<ModelAdapterItem>>>>() {

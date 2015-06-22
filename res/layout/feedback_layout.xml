@@ -11,12 +11,13 @@
     <EditText
         android:id="@+id/edittext_subject"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@drawable/feedback_subject_background"
+        android:layout_height="wrap_content"
+       
         android:hint="@string/edittext_hint_feedback_subject"
         android:inputType="textEmailSubject"
         android:maxLength="50"
         android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
         android:singleLine="true" />
 
     <EditText
@@ -24,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
-        android:background="@drawable/feedback_subject_background"
+       
         android:hint="@string/edittext_hint_feeedback_content"
         android:inputType="textCapCharacters|textMultiLine"
         android:lines="5"

@@ -62,27 +62,23 @@ public class SignUpOrLoginActivity extends Activity {
 		setSignupButtonDesign();
 	}
 
-	private Typeface setTypeFaceVantage(){
+	
+	private Typeface setTypeFacerobotocondosedlight() {
 		Typeface type = Typeface.createFromAsset(getAssets(),
-				"vantage.ttf");
-		return type;
-	}
-	private Typeface setTypeFaceAspire() {
-		Typeface type = Typeface.createFromAsset(getAssets(),
-				"aspire-demibold.ttf");
+				"robotocondensed_light.ttf");
 		return type;
 	}
 
 	private void setLoginButtonDesign() {
 		loginButton = (Button) findViewById(R.id.button_login);
-		loginButton.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		loginButton.setTypeface(setTypeFacerobotocondosedlight(), Typeface.NORMAL);
 		loginButton.setTextSize(26f);
 		loginButton.setTextColor(Color.parseColor("#FCFEFC"));
 	}
 
 	private void setSignupButtonDesign() {
 		signupButton = (Button) findViewById(R.id.button_signup_login);
-		signupButton.setTypeface(setTypeFaceVantage(), Typeface.NORMAL);
+		signupButton.setTypeface(setTypeFacerobotocondosedlight(), Typeface.NORMAL);
 		signupButton.setTextSize(26f);
 		signupButton.setTextColor(Color.parseColor("#FCFEFC"));
 
@@ -133,8 +129,8 @@ public class SignUpOrLoginActivity extends Activity {
 
 	private void setMottoDesign() {
 
-		mottoTextView.setTypeface(setTypeFaceAspire(), Typeface.NORMAL);
-		mottoTextView.setTextSize(50f);
+		mottoTextView.setTypeface(setTypeFacerobotocondosedlight(), Typeface.NORMAL);
+		mottoTextView.setTextSize(20f);
 		mottoTextView.setTextColor(Color.parseColor("#FCFEFC"));
 
 	}
