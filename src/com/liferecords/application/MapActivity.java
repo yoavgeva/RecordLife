@@ -71,11 +71,7 @@ public class MapActivity extends Activity {
 				Log.d("amout of items in map", "no bundle");
 			}
 		}
-		Log.d(MapActivity.class.getSimpleName(),
-				"distance"
-						+ distanceBetween(itemsMapFrag.get(0).latitude,
-								itemsMapFrag.get(0).longitude,
-								itemsMapFrag.get(1).latitude, itemsMapFrag.get(1).longitude));
+		
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(
 				R.id.location_map)).getMap();
