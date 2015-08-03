@@ -2,8 +2,6 @@ package com.liferecords.model;
 
 import java.util.ArrayList;
 
-import com.liferecords.application.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -14,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.liferecords.app.R;
 
 public class NavDrawerListAdapter extends BaseAdapter {
 

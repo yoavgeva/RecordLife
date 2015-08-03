@@ -28,8 +28,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.liferecords.application.MapActivity;
-import com.liferecords.application.R;
+import com.liferecords.app.MapActivity;
+import com.liferecords.app.R;
 
 public class MainDataAdapter extends BaseExpandableListAdapter {
 
